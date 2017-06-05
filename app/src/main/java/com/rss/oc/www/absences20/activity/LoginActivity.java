@@ -264,7 +264,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
 
 
             UtilisateurDAO utilisateurDAO = new UtilisateurDAO(context);
-            Boolean test = utilisateurDAO.verificationConnection(mEmail,mPassword);
+            Boolean test = utilisateurDAO.verificationConnection(mPassword,mEmail);
 
             return test;
         }

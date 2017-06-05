@@ -69,15 +69,20 @@ public class UtilisateurDAO extends DAOBase {
             do {
 
                 login = cursor.getString(indexLogin);
+                Log.i("login",login);
+                Log.i("mlogin",mLogin);
 
                 if(mLogin.equals(login)){
                     password = cursor.getString(indexPassword);
-                    if(mPassword.equals(password))
+                    if(mPassword.equals(password)){
                         test = true;
+                        Log.i("trouvé","trouvé");
+                    }
+
                 }
             } while (cursor.moveToNext());
 
-            Log.i("trouvé","trouvé");
+
 
         } else {
 

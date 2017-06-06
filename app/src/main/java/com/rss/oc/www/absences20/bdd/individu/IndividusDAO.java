@@ -19,7 +19,7 @@ public class IndividusDAO extends DAOBase {
     public static final String PRENOM = "prenom";
     public static final String KEY_USER = "id_user";
     public static final String STATUT = "statut";
-    public static final String EMAIL = "email";
+
 
 
     public IndividusDAO(Context pContext) {
@@ -34,7 +34,7 @@ public class IndividusDAO extends DAOBase {
         value.put(IndividusDAO.NOM, i.getNom());
         value.put(IndividusDAO.PRENOM, i.getPrenom());
         value.put(IndividusDAO.STATUT, i.getStatutIndividu());
-        value.put(IndividusDAO.EMAIL, i.getEmail());
+
         openDBWrite();
         mDb.insert(IndividusDAO.TABLE_NAME, null, value);
         close();

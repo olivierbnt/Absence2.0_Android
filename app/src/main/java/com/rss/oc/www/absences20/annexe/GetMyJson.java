@@ -2,6 +2,7 @@ package com.rss.oc.www.absences20.annexe;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 

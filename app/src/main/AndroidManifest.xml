@@ -19,7 +19,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.ChargementActivity" />
+        <activity android:name=".activity.ChargementActivity">
+
+        </activity>
         <activity android:name=".activity.ProfesseurActivity" />
         <activity android:name=".activity.EtudiantAbsencesActivity" />
         <activity android:name=".activity.EtudiantProfileActivity" />

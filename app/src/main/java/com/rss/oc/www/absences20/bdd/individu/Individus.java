@@ -13,16 +13,15 @@ public class Individus {
     private String statut;
     private String nom;
     private String prenom;
-    private String email;
 
-    public Individus(long id, long id_user,String statut,String nom,String prenom, String email) {
+    public Individus(long id, long id_user,String statut,String nom,String prenom) {
         super();
         this.id = id;
         this.id_user = id_user;
         this.statut = statut;
         this.nom = nom;
         this.prenom =prenom;
-        this.email = email ;
+
     }
 
     long getIdIndividu() {
@@ -65,12 +64,6 @@ public class Individus {
         this.prenom = prenom;
     }
 
-    String getEmail() {
-        return email;
-    }
 
-    private void setEmail(String email) {
-        this.email = email;
-    }
 
 }

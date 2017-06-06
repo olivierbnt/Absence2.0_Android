@@ -34,7 +34,7 @@ public class CoursDAO extends DAOBase {
     }
 
 
-    public void ajouterUtilisateur(Cours c) {
+    public void ajouterCours(Cours c) {
 
 
 

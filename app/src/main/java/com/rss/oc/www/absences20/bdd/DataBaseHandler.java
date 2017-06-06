@@ -36,7 +36,15 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public static final String INDIVIDU_PRENOM = "prenom";
     public static final String INDIVIDU_KEY_USER = "id_user";
     public static final String INDIVIDU_STATUT = "statut";
-    public static final String INDIVIDU_EMAIL = "email";
+
+    public static final String ABSENCE_KEY = "id";
+    public static final String ABSENCE_KEY_INDIVIDU = "id_individu";
+    public static final String ABSENCE_KEY_COURS = "id_cours";
+    public static final String ABSENCE_TYPE_INDIVIDU = "type_individu";
+    public static final String ABSENCE_MOTIF = "motif";
+    public static final String ABSENCE_VALEUR = "valeur";
+
+
 
 
 
@@ -71,23 +79,36 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public static final String COURS_TABLE_DROP = "DROP TABLE IF EXISTS " + COURS_TABLE_NAME + ";";
 
 
-    public static final String INDIVIDU_TABLE_NAME = "Individu";
+    public static final String INDIVIDU_TABLE_NAME = "Individus";
     public static final String INDIVIDU_TABLE_CREATE =
             "CREATE TABLE " + INDIVIDU_TABLE_NAME + " (" +
                     INDIVIDU_KEY             + " INTEGER, " +
                     INDIVIDU_KEY_USER        + " INTEGER, " +
                     INDIVIDU_NOM             + " TEXT, " +
                     INDIVIDU_PRENOM          + " TEXT, " +
-                    INDIVIDU_STATUT          + " TEXT, " +
-                    INDIVIDU_EMAIL           + " TEXT);";
+                    INDIVIDU_STATUT          + " TEXT); ";
 
     public static final String INDIVIDU_TABLE_DROP = "DROP TABLE IF EXISTS " + INDIVIDU_TABLE_NAME + ";";
+
+    public static final String ABSENCE_TABLE_NAME = "Absences";
+    public static final String ABSENCE_TABLE_CREATE =
+            "CREATE TABLE " + ABSENCE_TABLE_NAME + " (" +
+                    ABSENCE_KEY              + " INTEGER, " +
+                    ABSENCE_KEY_INDIVIDU     + " INTEGER, " +
+                    ABSENCE_KEY_COURS        + " INTEGER, " +
+                    ABSENCE_TYPE_INDIVIDU    + " TEXT, " +
+                    ABSENCE_MOTIF            + " TEXT, " +
+                    ABSENCE_VALEUR          + " TEXT); ";
+
+    public static final String ABSENCE_TABLE_DROP = "DROP TABLE IF EXISTS " + ABSENCE_TABLE_NAME + ";";
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(UTILISATEUR_TABLE_DROP);
         db.execSQL(COURS_TABLE_DROP);
         db.execSQL(INDIVIDU_TABLE_DROP);
+        db.execSQL(ABSENCE_TABLE_DROP);
         onCreate(db);
 
     }
@@ -104,6 +125,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         db.execSQL(UTILISATEUR_TABLE_CREATE);
         db.execSQL(COURS_TABLE_CREATE);
         db.execSQL(INDIVIDU_TABLE_CREATE);
+        db.execSQL(ABSENCE_TABLE_CREATE);
 
 
     }

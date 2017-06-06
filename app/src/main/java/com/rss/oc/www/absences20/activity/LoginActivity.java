@@ -299,13 +299,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
     }
 
 
-    private void loadMainActivity () {
+    public void loadMainActivity () {
         Intent myintent = new Intent(this, MainActivity.class);
         startActivity(myintent);
 
     }
 
-    private void loadProfesseurActivity () {
+    public void loadProfesseurActivity () {
         Intent myintent = new Intent(this, ProfesseurActivity.class);
         startActivity(myintent);
     }

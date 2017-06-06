@@ -30,9 +30,10 @@
               />
 
             <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/action_settings"
+                android:text="@string/action_accueil"
                 style="@style/TextView.ToolbarTitle"/>
 
 

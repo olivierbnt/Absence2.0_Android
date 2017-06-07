@@ -15,9 +15,7 @@ import com.rss.oc.www.absences20.R;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by anttiv on 28/02/16.
- */
+
 public class BeaconArrayAdapter extends ArrayAdapter<Beacon> implements Filterable {
     private static final int DARK_GREEN = Color.argb(255, 0, 150, 0);
     private static final int DARK_RED = Color.argb(255, 150, 0, 0);

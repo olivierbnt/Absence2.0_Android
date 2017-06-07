@@ -1,8 +1,6 @@
 package com.rss.oc.www.absences20.activity;
 
-/**
- * Created by anttiv on 09/02/16.
- */
+
 class Beacon {
     private static final String BULLET = "● ";
     final String deviceAddress;

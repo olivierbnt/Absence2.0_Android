@@ -23,7 +23,8 @@
 
         <ImageView
             style="@style/ImageView.GuillotineItem"
-            android:src="@drawable/ic_profile" />
+            android:src="@drawable/ic_home_white_24dp"
+            />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/accueil_group_text"
@@ -37,7 +38,7 @@
 
         <ImageView
             style="@style/ImageView.GuillotineItem"
-            android:src="@drawable/ic_profile" />
+            android:src="@drawable/ic_person_white_24dp" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/profile_group_text"
@@ -51,7 +52,7 @@
 
         <ImageView
             style="@style/ImageView.GuillotineItem"
-            android:src="@android:drawable/ic_menu_delete" />
+            android:src="@drawable/ic_view_week_white_24dp" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/absence_group_text"
@@ -65,7 +66,7 @@
 
         <ImageView
             style="@style/ImageView.GuillotineItem"
-            android:src="@drawable/ic_settings" />
+            android:src="@drawable/ic_settings_applications_white_24dp" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/settins_group_text"
@@ -83,7 +84,7 @@
 
         <ImageView
             style="@style/ImageView.GuillotineItem"
-            android:src="@android:drawable/ic_menu_delete" />
+            android:src="@drawable/ic_exit_to_app_white_24dp" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/deconnection_group_text"

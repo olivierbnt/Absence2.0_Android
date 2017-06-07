@@ -36,7 +36,7 @@ public class ProfesseurActivity extends AppCompatActivity {
     View ItemProfile;
     View ItemParametres;
     View ItemDeconnection;
-    private String[] prenoms = new String[]{"Benoit","Brice","Yann"/*,"Jocelyn","Arthur","Glwadys","Olivier","Pierre","Jean"*/};
+    private String[] prenoms = new String[]{"Benoit","Brice","Yann","Jocelyn","Arthur","Glwadys","Olivier","Pierre","Jean"};
 
 
     @Override
@@ -61,6 +61,7 @@ public class ProfesseurActivity extends AppCompatActivity {
 
 
         TextView toolbar = (TextView) findViewById(R.id.toolbar_title);
+        toolbar.setText(getString(R.string.action_absences));
         new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
                 .setStartDelay(RIPPLE_DURATION)
                 .setActionBarViewForAnimation(toolbar)

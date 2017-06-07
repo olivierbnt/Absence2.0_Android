@@ -31,6 +31,7 @@
     <string name="action_deconnecter">SE DECONNECTER</string>
     <string name="title_activity_page_prof">PageProf</string>
     <string name="title_activity_login">Connexion</string>
+
     <string name="retard">Retard</string>
     <string name="absent">Absent</string>
     <string name="present">Présent</string>

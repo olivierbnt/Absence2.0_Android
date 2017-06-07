@@ -4,14 +4,15 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-
-    <!--Autoriisations pour Beacon-->
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <!--bluetooth LE necessaire-->
-    <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
+    <!-- Autoriisations pour Beacon -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- bluetooth LE necessaire -->
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -23,8 +24,8 @@
         <activity android:name=".activity.MainActivity">
 
         </activity>
-
         <activity android:name=".activity.LoginActivity" />
+
         <activity android:name=".activity.ChargementActivity">
 
         </activity>
@@ -35,10 +36,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
         <activity android:name=".activity.EtudiantAbsencesActivity" />
         <activity android:name=".activity.EtudiantProfileActivity" />
         <activity android:name=".activity.BeaconViewerActivity" />
-        <activity android:name=".activity.EtudiantSettingsActivity"></activity>
+        <activity android:name=".activity.EtudiantSettingsActivity" />
 
     </application>
 

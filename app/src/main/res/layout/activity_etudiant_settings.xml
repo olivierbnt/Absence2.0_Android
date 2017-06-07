@@ -29,6 +29,9 @@
                 android:src="@drawable/ic_menu_90"
                 />
 
+
+
+
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
@@ -38,7 +41,11 @@
 
 
 
+
+
         </android.support.v7.widget.Toolbar>
+
+
 
 
 

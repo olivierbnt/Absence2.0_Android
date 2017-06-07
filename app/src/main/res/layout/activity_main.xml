@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -46,6 +47,12 @@
             android:layout_height="wrap_content"
             android:text="Reseau Beacon" />
 
+        <fragment
+            android:id="@+id/fragment_on_off"
+            android:name="com.rss.oc.www.absences20.activity.OnOffFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout="@layout/fragment_on_off" />
 
 
     </LinearLayout>

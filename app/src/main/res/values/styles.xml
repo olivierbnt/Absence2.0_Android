@@ -47,6 +47,14 @@
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
+    <style name="TextView.List_prof">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/guillotine_small_margin</item>
+        <item name="android:textSize">@dimen/item_list_prof</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
 
     <style name="TextView.GuillotineItem.Selected">
         <item name="android:textColor">@color/selected_item_color</item>

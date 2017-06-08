@@ -47,7 +47,9 @@
         <com.tjerkw.slideexpandable.library.ActionSlideExpandableListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/list_absences"></com.tjerkw.slideexpandable.library.ActionSlideExpandableListView>
+            android:id="@+id/list_absences"
+            android:divider="#000"
+            android:dividerHeight="2dp"></com.tjerkw.slideexpandable.library.ActionSlideExpandableListView>
 
 
     </LinearLayout>

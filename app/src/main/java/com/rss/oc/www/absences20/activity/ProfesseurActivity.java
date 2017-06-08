@@ -51,7 +51,7 @@ public class ProfesseurActivity extends AppCompatActivity {
     Button button_absence;
     ImageButton button_presence_epf;
     Button button_retard;
-    private String[] prenoms = new String[]{};
+    private String[] prenoms = new String[]{"Benoit","Brice","Yann","Jocelyn","Arthur","Glwadys","Olivier","Pierre","Jean"};
     private static final int DIALOG_PRESENT = 10;
     private static final int DIALOG_ABSENT = 20;
     private static final int DIALOG_RETARD = 30;
@@ -89,6 +89,7 @@ public class ProfesseurActivity extends AppCompatActivity {
                 .setActionBarViewForAnimation(toolbar)
                 .setClosedOnStart(true)
                 .build();
+
 
 
         ListAdapter listAdapter = new ArrayAdapter<String>(ProfesseurActivity.this,
@@ -170,10 +171,6 @@ public class ProfesseurActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
 
         }
-    }
-
-    private void list (){
-
     }
 
 }

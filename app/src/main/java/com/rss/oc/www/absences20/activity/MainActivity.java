@@ -41,12 +41,17 @@ public class MainActivity extends AppCompatActivity {
     View ItemParametres;
     View ItemDeconnection;
 
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         addListenerOnButton();
+
 
 
         View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null);

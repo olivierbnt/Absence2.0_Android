@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import com.rss.oc.www.absences20.R;
 
@@ -87,6 +88,7 @@ public class OnOffFragment extends Fragment {
         init();
         ArrayList<Beacon> arrayList = new ArrayList<>();
         arrayAdapter = new BeaconArrayAdapter(getActivity(), R.layout.beacon_list_item, arrayList);
+
         scanCallback = new ScanCallback() {
             @Override
             public void onScanResult(int callbackType, ScanResult result) {

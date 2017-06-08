@@ -78,7 +78,7 @@ public class BeaconViewerFragment extends Fragment {
 
     public BeaconViewerFragment() {
         // Required empty public constructor
-        arrayAdapter.
+
     }
 
     @Override

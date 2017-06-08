@@ -40,7 +40,7 @@ import java.util.Map;
 public class OnOffFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String TAG = "BeaconViewerFragment";
+    private static final String TAG = "OnOffFragment";
     private static final int REQUEST_ENABLE_BLUETOOTH = 1;
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 2;
 
@@ -70,9 +70,8 @@ public class OnOffFragment extends Fragment {
     //private List<ScanFilter> scanFilters;
     private ScanCallback scanCallback;
     private Map<String /* device address */, Beacon> deviceToBeaconMap = new HashMap<>();
-
     private ArrayList<Beacon> arrayList;
-    private BeaconArrayAdapter arrayAdapter;
+    private BeaconLightArrayAdapter LightarrayAdapter;
 
     private SharedPreferences sharedPreferences;
     private int onLostTimeoutMillis;
@@ -84,10 +83,10 @@ public class OnOffFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i(TAG, "running init");
+        Log.i(TAG, "running init ");
         init();
         ArrayList<Beacon> arrayList = new ArrayList<>();
-        arrayAdapter = new BeaconArrayAdapter(getActivity(), R.layout.beacon_list_item, arrayList);
+        LightarrayAdapter = new BeaconLightArrayAdapter(getActivity(), R.layout.fragment_on_off, arrayList);
 
         scanCallback = new ScanCallback() {
             @Override
@@ -107,7 +106,7 @@ public class OnOffFragment extends Fragment {
                     beacon = new Beacon(deviceAddress, result.getRssi());
                     Log.i(TAG, "putting device: " + deviceAddress + " to BeaconMap and arrayAdapter");
                     deviceToBeaconMap.put(deviceAddress, beacon);
-                    arrayAdapter.add(beacon);
+                    LightarrayAdapter.add(beacon);
                 } else {
                     deviceToBeaconMap.get(deviceAddress).lastSeenTimestamp = System.currentTimeMillis();
                     deviceToBeaconMap.get(deviceAddress).rssi = result.getRssi();
@@ -226,7 +225,7 @@ public class OnOffFragment extends Fragment {
                 logDeviceError(deviceAddress, err);
                 break;
         }
-        arrayAdapter.notifyDataSetChanged();
+        LightarrayAdapter.notifyDataSetChanged();
     }
 
     private void setOnLostRunnable() {
@@ -239,7 +238,7 @@ public class OnOffFragment extends Fragment {
                     Beacon beacon = itr.next().getValue();
                     if ((time - beacon.lastSeenTimestamp) > onLostTimeoutMillis) {
                         itr.remove();
-                        arrayAdapter.remove(beacon);
+                        LightarrayAdapter.remove(beacon);
                     }
                 }
                 handler.postDelayed(this, onLostTimeoutMillis);

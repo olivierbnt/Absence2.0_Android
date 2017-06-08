@@ -1,0 +1,42 @@
+[
+    {
+        "merged": "C:\\workspace\\projet-absences\\Absence2.0_Android\\lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_popup_enter.xml",
+        "source": "C:\\Users\\BRICE CESAR\\.android\\build-cache\\10da21201f6e8d2ab3cce2722409585841793405\\output\\res\\anim\\abc_popup_enter.xml"
+    },
+    {
+        "merged": "C:\\workspace\\projet-absences\\Absence2.0_Android\\lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_slide_in_top.xml",
+        "source": "C:\\Users\\BRICE CESAR\\.android\\build-cache\\10da21201f6e8d2ab3cce2722409585841793405\\output\\res\\anim\\abc_slide_in_top.xml"
+    },
+    {
+        "merged": "C:\\workspace\\projet-absences\\Absence2.0_Android\\lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_shrink_fade_out_from_bottom.xml",
+        "source": "C:\\Users\\BRICE CESAR\\.android\\build-cache\\10da21201f6e8d2ab3cce2722409585841793405\\output\\res\\anim\\abc_shrink_fade_out_from_bottom.xml"
+    },
+    {
+        "merged": "C:\\workspace\\projet-absences\\Absence2.0_Android\\lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_slide_out_bottom.xml",
+        "source": "C:\\Users\\BRICE CESAR\\.android\\build-cache\\10da21201f6e8d2ab3cce2722409585841793405\\output\\res\\anim\\abc_slide_out_bottom.xml"
+    },
+    {
+        "merged": "C:\\workspace\\projet-absences\\Absence2.0_Android\\lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_popup_exit.xml",
+        "source": "C:\\Users\\BRICE CESAR\\.android\\build-cache\\10da21201f6e8d2ab3cce2722409585841793405\\output\\res\\anim\\abc_popup_exit.xml"
+    },
+    {
+        "merged": "C:\\workspace\\projet-absences\\Absence2.0_Android\\lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_fade_out.xml",
+        "source": "C:\\Users\\BRICE CESAR\\.android\\build-cache\\10da21201f6e8d2ab3cce2722409585841793405\\output\\res\\anim\\abc_fade_out.xml"
+    },
+    {
+        "merged": "C:\\workspace\\projet-absences\\Absence2.0_Android\\lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_grow_fade_in_from_bottom.xml",
+        "source": "C:\\Users\\BRICE CESAR\\.android\\build-cache\\10da21201f6e8d2ab3cce2722409585841793405\\output\\res\\anim\\abc_grow_fade_in_from_bottom.xml"
+    },
+    {
+        "merged": "C:\\workspace\\projet-absences\\Absence2.0_Android\\lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_fade_in.xml",
+        "source": "C:\\Users\\BRICE CESAR\\.android\\build-cache\\10da21201f6e8d2ab3cce2722409585841793405\\output\\res\\anim\\abc_fade_in.xml"
+    },
+    {
+        "merged": "C:\\workspace\\projet-absences\\Absence2.0_Android\\lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_slide_in_bottom.xml",
+        "source": "C:\\Users\\BRICE CESAR\\.android\\build-cache\\10da21201f6e8d2ab3cce2722409585841793405\\output\\res\\anim\\abc_slide_in_bottom.xml"
+    },
+    {
+        "merged": "C:\\workspace\\projet-absences\\Absence2.0_Android\\lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_slide_out_top.xml",
+        "source": "C:\\Users\\BRICE CESAR\\.android\\build-cache\\10da21201f6e8d2ab3cce2722409585841793405\\output\\res\\anim\\abc_slide_out_top.xml"
+    }
+]

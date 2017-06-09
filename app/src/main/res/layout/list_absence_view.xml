@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:slide="http://schemas.android.com/apk/res/com.tjerkw.slideexpandable.library"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -45,7 +46,7 @@
             android:background="@color/guillotine_background">
 
             <ImageButton
-                android:id="@+id/button_absence"
+                android:id="@+id/button_absence_epf"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.5"
@@ -59,7 +60,7 @@
                 app:srcCompat="@android:drawable/presence_invisible" />
 
             <ImageButton
-                android:id="@+id/button_presnce"
+                android:id="@+id/button_presence_epf"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.5"

@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Absence.iml" filepath="$PROJECT_DIR$/Absence.iml" />
       <module fileurl="file://$PROJECT_DIR$/Absence2.0_Android.iml" filepath="$PROJECT_DIR$/Absence2.0_Android.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/library/library.iml" filepath="$PROJECT_DIR$/app/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/library/library.iml" filepath="$PROJECT_DIR$/app/library/library.iml" />
     </modules>
   </component>

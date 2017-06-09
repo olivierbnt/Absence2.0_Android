@@ -1,4 +1,4 @@
-package com.tjerkw.slideexpandable.library;
+package com.rss.oc.www.absences20.library;
 
 import android.util.Log;
 import android.view.View;

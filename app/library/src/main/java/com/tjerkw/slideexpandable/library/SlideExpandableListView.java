@@ -1,4 +1,4 @@
-package com.rss.oc.www.absences20.library;
+package com.tjerkw.slideexpandable.library;
 
 import android.os.Parcelable;
 import android.util.AttributeSet;

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/guillotine_background_dark"
     android:orientation="vertical">
+
     <View
         android:layout_gravity="top"
         android:layout_width="match_parent"
@@ -41,6 +42,15 @@
         </android.support.v7.widget.Toolbar>
 
 
+        <ListView
+            android:id="@+id/list_absences_etudiant"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </ListView>
 
     </LinearLayout>
+
+
+
 </FrameLayout>

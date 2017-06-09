@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -74,6 +75,47 @@ public class MainActivity extends AppCompatActivity   {
         View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null);
         root.addView(guillotineMenu);
         //View fragment_beacon =  LayoutInflater.from(this).inflate(R.layout.fragment_main, null);
+
+
+        ItemAccueil = guillotineMenu.findViewById(R.id.accueil_group);
+        ItemAbsence = guillotineMenu.findViewById(R.id.absence_group);
+        ItemProfile = guillotineMenu.findViewById(R.id.profile_group);
+        ItemParametres = guillotineMenu.findViewById(R.id.settins_group);
+        ItemDeconnection = guillotineMenu.findViewById(R.id.deconnection_group);
+        TextView textAc = (TextView) findViewById(R.id.accueil_group_text);
+        textAc.setTextColor(getResources().getColor(R.color.selected_item_color));
+        progressBar = (ProgressBar)findViewById(R.id.progressBarBeacon);
+        final ImageView aPresent = (ImageView)findViewById(R.id.arrivee_present);
+        final ImageView aAbsent = (ImageView)findViewById(R.id.arrivee_absent);
+        final ImageView dPresent = (ImageView)findViewById(R.id.depart_present);
+        final ImageView dAbsent = (ImageView)findViewById(R.id.depart_absent);
+        final TextView confirmation = (TextView) findViewById(R.id.confirmation);
+        final TextView raprochez = (TextView) findViewById(R.id.raprochez);
+        confirmation.setVisibility(View.INVISIBLE);
+        aPresent.setVisibility(View.INVISIBLE);
+        dPresent.setVisibility(View.INVISIBLE);
+
+
+
+
+
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setTitle(null);
+        }
+
+
+        TextView toolbar = (TextView) findViewById(R.id.toolbar_title);
+        new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
+                .setStartDelay(RIPPLE_DURATION)
+                .setActionBarViewForAnimation(toolbar)
+                .setClosedOnStart(true)
+                .build();
+
+        onClickMenu(ItemAccueil,ItemAbsence,ItemParametres,ItemProfile,ItemDeconnection,toolbar);
+
+
+
         final BeaconViewerFragment fr = (BeaconViewerFragment) getFragmentManager().findFragmentById(R.id.fragment_beacon);
         if(fr != null) {
 
@@ -94,14 +136,27 @@ public class MainActivity extends AppCompatActivity   {
 
                                     //prepare for a progress bar dialog
                                     int nombreBeacons  = arrayAdapter.getCount();
-                                   //for (int i = 0; i < arrayAdapter.getCount(); i++){
-                                  // }
+                                    //for (int i = 0; i < arrayAdapter.getCount(); i++){
+                                    // }
                                     progressBar.setMax(4);
                                     progressBar.setProgress(nombreBeacons);
                                     progressBar.setProgressDrawable(getResources().getDrawable(my_progress));
 
                                     if (nombreBeacons == 4 ){
+                                        aPresent.setVisibility(View.VISIBLE);
+                                        aAbsent.setVisibility(View.INVISIBLE);
+                                        confirmation.setVisibility(View.VISIBLE);
+                                        raprochez.setVisibility(View.INVISIBLE);
+                                    }else{
+                                        confirmation.setVisibility(View.INVISIBLE);
+                                        raprochez.setVisibility(View.VISIBLE);
 
+                                    }
+
+                                    // Ajouter condition de départ temporelle
+                                    if (nombreBeacons == 4 ){
+                                       // aPresent.setVisibility(View.VISIBLE);
+                                       // aAbsent.setVisibility(View.INVISIBLE);
                                     }
 
                                 }
@@ -116,38 +171,6 @@ public class MainActivity extends AppCompatActivity   {
 
             // ... do some fun stuff
         }
-
-        ItemAccueil = guillotineMenu.findViewById(R.id.accueil_group);
-        ItemAbsence = guillotineMenu.findViewById(R.id.absence_group);
-        ItemProfile = guillotineMenu.findViewById(R.id.profile_group);
-        ItemParametres = guillotineMenu.findViewById(R.id.settins_group);
-        ItemDeconnection = guillotineMenu.findViewById(R.id.deconnection_group);
-        TextView textAc = (TextView) findViewById(R.id.accueil_group_text);
-        textAc.setTextColor(getResources().getColor(R.color.selected_item_color));
-        progressBar = (ProgressBar)findViewById(R.id.progressBarBeacon);
-
-
-
-
-
-        //reset progress bar status
-       // progressBarStatus =fragment_beacon.
-
-
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle(null);
-        }
-
-
-        TextView toolbar = (TextView) findViewById(R.id.toolbar_title);
-        new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
-                .setStartDelay(RIPPLE_DURATION)
-                .setActionBarViewForAnimation(toolbar)
-                .setClosedOnStart(true)
-                .build();
-
-        onClickMenu(ItemAccueil,ItemAbsence,ItemParametres,ItemProfile,ItemDeconnection,toolbar);
 
 
 

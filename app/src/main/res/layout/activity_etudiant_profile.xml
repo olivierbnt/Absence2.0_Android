@@ -20,27 +20,187 @@
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
-            app:contentInsetStart="0dp"
-            style="@style/Toolbar">
+            style="@style/Toolbar"
+            app:contentInsetStart="0dp">
 
             <ImageView
                 android:id="@+id/content_hamburger"
                 style="@style/ImageView.Hamburger"
-                android:src="@drawable/ic_menu_90"
-                />
+                android:src="@drawable/ic_menu_90" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/toolbar_title"
+                style="@style/TextView.ToolbarTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/action_accueil"
-                style="@style/TextView.ToolbarTitle"/>
-
+                android:text="@string/action_accueil" />
 
 
         </android.support.v7.widget.Toolbar>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="#d6d7d7"
+            android:orientation="horizontal">
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="@dimen/margin_left_profil"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/black"
+                android:src="@drawable/ic_profile"
+                app:civ_border_color="#FF000000"
+                app:civ_border_width="2dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/text_profile_nom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Nom" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/text_profile_prenom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Prénom" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/text_profile_statut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Statut" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="?android:attr/colorBackground"
+
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/margin_left_profil"
+                android:text="Téléphones" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#d6d7d7"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/margin_left_profil"
+                app:srcCompat="@android:drawable/stat_sys_vp_phone_call_on_hold" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:text="Mobile" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/profile_text_mobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/separation_profil"
+                android:background="@drawable/my_border"
+                android:text="Mobile" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="?android:attr/colorBackground"
+
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/margin_left_profil"
+                android:text="Email" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#d6d7d7"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/margin_left_profil"
+                app:srcCompat="@android:drawable/stat_sys_vp_phone_call_on_hold" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:text="EPF" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="?android:attr/colorBackground"
+
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/margin_left_profil"
+                android:text="Adresse" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#d6d7d7"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+
+                android:text="32 Rue de Tilssit" />
+        </LinearLayout>
 
     </LinearLayout>
 </FrameLayout>

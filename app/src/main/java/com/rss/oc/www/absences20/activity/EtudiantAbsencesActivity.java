@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.rss.oc.www.absences20.R;
@@ -33,7 +31,6 @@ public class EtudiantAbsencesActivity extends AppCompatActivity {
     View ItemProfile;
     View ItemParametres;
     View ItemDeconnection;
-    private String[] list = {"Infracstructures","Protection de l'information","JAVA","Gouvernance des SI" };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,10 +68,6 @@ public class EtudiantAbsencesActivity extends AppCompatActivity {
 
         onClickMenu(ItemAccueil,ItemAbsence,ItemParametres,ItemProfile,ItemDeconnection,toolbar);
 
-        ListView listView = (ListView) findViewById(R.id.list_absences_etudiant);
-
-        listView.setAdapter(new ArrayAdapter<String>(EtudiantAbsencesActivity.this, R.layout.list_item_absence_etudiant,
-                R.id.text_absence_etudiant,list));
 
 
 

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.rss.oc.www.absences20.R;
@@ -56,44 +57,14 @@ public class BeaconArrayAdapter extends ArrayAdapter<Beacon> implements Filterab
         // a recycled view of some other row that isn't in view. You need to set every
         // field regardless of emptiness to avoid displaying erroneous data.
 
-        final Beacon beacon = getItem(position);
 
-        TextView deviceAddress = (TextView) convertView.findViewById(R.id.deviceAddress);
-        deviceAddress.setText(beacon.deviceAddress);
 
-        TextView rssi = (TextView) convertView.findViewById(R.id.rssi);
-        rssi.setText(String.valueOf(beacon.rssi));
+        ImageView dot = (ImageView) convertView.findViewById(R.id.dot);
 
-        TextView distance = (TextView) convertView.findViewById(R.id.distance);
-        if (beacon.hasUidFrame) {
-            distance.setText(
-                    String.format("%.2f m", distanceFromRssi(beacon.rssi, beacon.uidStatus.txPower)));
-        } else {
-            distance.setText("unknown");
-        }
 
-        TextView urlLabel = (TextView) convertView.findViewById(R.id.urlLabel);
-        TextView urlStatus = (TextView) convertView.findViewById(R.id.urlStatus);
-        if (!beacon.hasUrlFrame) {
-            grey(urlLabel);
-            urlStatus.setText("");
-        } else {
-            if (beacon.urlStatus.getErrors().isEmpty()) {
-                green(urlLabel);
-            } else {
-                red(urlLabel);
-            }
-            urlStatus.setText(beacon.urlStatus.toString());
-        }
 
-        LinearLayout frameStatusGroup = (LinearLayout) convertView.findViewById(R.id.frameStatusGroup);
-        if (!beacon.frameStatus.getErrors().isEmpty()) {
-            TextView frameStatus = (TextView) convertView.findViewById(R.id.frameStatus);
-            frameStatus.setText(beacon.frameStatus.toString());
-            frameStatusGroup.setVisibility(View.VISIBLE);
-        } else {
-            frameStatusGroup.setVisibility(View.GONE);
-        }
+
+
 
         return convertView;
     }

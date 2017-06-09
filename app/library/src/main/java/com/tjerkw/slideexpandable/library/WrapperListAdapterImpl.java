@@ -1,4 +1,4 @@
-package com.rss.oc.www.absences20.library;
+package com.tjerkw.slideexpandable.library;
 
 import android.database.DataSetObserver;
 import android.view.View;

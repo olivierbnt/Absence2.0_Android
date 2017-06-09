@@ -30,15 +30,17 @@
 
         </activity>
         <activity android:name=".activity.ProfesseurActivity">
+
+        </activity>
+
+
+        <activity android:name=".activity.EtudiantAbsencesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
-        <activity android:name=".activity.EtudiantAbsencesActivity" />
         <activity android:name=".activity.EtudiantProfileActivity" />
         <activity android:name=".activity.BeaconViewerActivity" />
         <activity android:name=".activity.EtudiantSettingsActivity" />

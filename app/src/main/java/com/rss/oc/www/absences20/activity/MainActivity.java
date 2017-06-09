@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import android.view.View.OnClickListener;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.rss.oc.www.absences20.R;
@@ -28,8 +29,9 @@ import com.yalantis.guillotine.animation.GuillotineAnimation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity   {
     private static final long RIPPLE_DURATION = 250;
+    private static final String TAG = "MainActivity";
 
     Button button;
     @BindView(R.id.toolbar)
@@ -43,8 +45,10 @@ public class MainActivity extends AppCompatActivity {
     View ItemProfile;
     View ItemParametres;
     View ItemDeconnection;
-    ProgressDialog progressBar;
+    ProgressBar progressBar;
     Fragment fragment_beacon;
+    public BeaconArrayAdapter arrayAdapter;
+
 
     private int progressBarStatus = 0;
     private Handler progressBarHandler = new Handler();
@@ -61,10 +65,20 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         addListenerOnButton();
 
+        fragment_beacon = new BeaconViewerFragment();
+
 
 
         View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null);
         root.addView(guillotineMenu);
+        //View fragment_beacon =  LayoutInflater.from(this).inflate(R.layout.fragment_main, null);
+        BeaconViewerFragment fr = (BeaconViewerFragment) getFragmentManager().findFragmentById(R.id.fragment_beacon);
+        if(fr != null) {
+            arrayAdapter = fr.getMyList();
+            Log.i(TAG, "ArrayAdapterUpdate");
+
+            // ... do some fun stuff
+        }
 
         ItemAccueil = guillotineMenu.findViewById(R.id.accueil_group);
         ItemAbsence = guillotineMenu.findViewById(R.id.absence_group);
@@ -73,18 +87,17 @@ public class MainActivity extends AppCompatActivity {
         ItemDeconnection = guillotineMenu.findViewById(R.id.deconnection_group);
         TextView textAc = (TextView) findViewById(R.id.accueil_group_text);
         textAc.setTextColor(getResources().getColor(R.color.selected_item_color));
+        progressBar = (ProgressBar)findViewById(R.id.progressBarBeacon);
 
-        // prepare for a progress bar dialog
-        //progressBar = new ProgressDialog(v.getContext());
-        //progressBar.setCancelable(true);
-        //progressBar.setMessage("File downloading ...");
-        //progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        //progressBar.setProgress(0);
-        //progressBar.setMax(100);
-        //progressBar.show();
+        //prepare for a progress bar dialog
+        int nombreBeacons  = arrayAdapter.getCount();
+        progressBar.setProgress(2);
+        progressBar.setMax(3);
+
+
 
         //reset progress bar status
-       // progressBarStatus =fragment_beacon.getActivity();
+       // progressBarStatus =fragment_beacon.
 
 
         if (toolbar != null) {

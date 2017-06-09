@@ -1,5 +1,6 @@
 package com.rss.oc.www.absences20.activity;
 
+
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.support.v7.app.AppCompatActivity;
@@ -51,11 +52,10 @@ public class ProfesseurActivity extends AppCompatActivity {
     Button button_absence;
     ImageButton button_presence_epf;
     Button button_retard;
-    private String[] prenoms = new String[]{"Benoit","Brice","Yann","Jocelyn","Arthur","Glwadys","Olivier","Pierre","Jean"};
+    private String[] prenoms = new String[]{"Benoit", "Brice", "Yann", "Jocelyn", "Arthur", "Glwadys", "Olivier", "Pierre", "Jean"};
     private static final int DIALOG_PRESENT = 10;
     private static final int DIALOG_ABSENT = 20;
     private static final int DIALOG_RETARD = 30;
-
 
 
     @Override
@@ -64,7 +64,6 @@ public class ProfesseurActivity extends AppCompatActivity {
         setContentView(R.layout.activity_professeur);
         ButterKnife.bind(this);
         View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine_prof, null);
-        View list_absence = LayoutInflater.from(this).inflate(R.layout.list_absence_view, null);
 
         root.addView(guillotineMenu);
 
@@ -73,7 +72,6 @@ public class ProfesseurActivity extends AppCompatActivity {
         ItemProfile = guillotineMenu.findViewById(R.id.profile_group);
         ItemParametres = guillotineMenu.findViewById(R.id.settins_group);
         ItemDeconnection = guillotineMenu.findViewById(R.id.deconnection_group);
-
 
 
         if (toolbar != null) {
@@ -91,11 +89,11 @@ public class ProfesseurActivity extends AppCompatActivity {
                 .build();
 
 
-
         ListAdapter listAdapter = new ArrayAdapter<String>(ProfesseurActivity.this,
-           R.layout.list_absence_view,R.id.text ,prenoms);
+                R.layout.list_absence_view, R.id.text, prenoms);
 
-       SlideExpandableListAdapter slideExpandableListAdapter = new SlideExpandableListAdapter(
+
+        SlideExpandableListAdapter slideExpandableListAdapter = new SlideExpandableListAdapter(
                 listAdapter,
                 R.id.expandable_toggle_button,
                 R.id.expandable
@@ -105,18 +103,17 @@ public class ProfesseurActivity extends AppCompatActivity {
         listView.setAdapter(slideExpandableListAdapter);
 
 
-
         listView.setItemActionListener(new ActionSlideExpandableListView.OnActionClickListener() {
             @Override
             public void onClick(View listView, View buttonView, int position) {
-                if (buttonView.getId()==R.id.button_presence_epf)
+                if (buttonView.getId() == R.id.button_presence_epf)
                     showDialog(DIALOG_PRESENT);
-                if (buttonView.getId()==R.id.button_absence_epf)
+                if (buttonView.getId() == R.id.button_absence_epf)
                     showDialog(DIALOG_ABSENT);
-                if (buttonView.getId()==R.id.boutton_retard)
+                if (buttonView.getId() == R.id.boutton_retard)
                     showDialog(DIALOG_RETARD);
             }
-        },R.id.button_absence_epf,R.id.boutton_retard,R.id.button_presence_epf);
+        }, R.id.button_absence_epf, R.id.boutton_retard, R.id.button_presence_epf);
 
 
     }
@@ -171,6 +168,6 @@ public class ProfesseurActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
 
         }
-    }
 
+    }
 }

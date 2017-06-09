@@ -2,6 +2,7 @@
 
 package com.rss.oc.www.absences20.activity;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
@@ -72,19 +73,28 @@ public class BeaconViewerFragment extends Fragment {
     private Map<String /* device address */, Beacon> deviceToBeaconMap = new HashMap<>();
 
     private ArrayList<Beacon> arrayList;
-    private BeaconArrayAdapter arrayAdapter;
+    public BeaconArrayAdapter arrayAdapter;
 
     private SharedPreferences sharedPreferences;
     private int onLostTimeoutMillis;
+
+
+
 
     public BeaconViewerFragment() {
         // Required empty public constructor
 
     }
 
+    public BeaconArrayAdapter getMyList(){
+        return arrayAdapter;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         Log.i(TAG, "running init");
         init();
         ArrayList<Beacon> arrayList = new ArrayList<>();
@@ -157,7 +167,6 @@ public class BeaconViewerFragment extends Fragment {
 
         ListView listView = (ListView) view.findViewById(R.id.listView);
         listView.setAdapter(arrayAdapter);
-        listView.setEmptyView(view.findViewById(R.id.placeholder));
         return view;
     }
 

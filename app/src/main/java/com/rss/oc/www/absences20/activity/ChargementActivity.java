@@ -14,6 +14,10 @@ import com.rss.oc.www.absences20.bdd.Cours.Cours;
 import com.rss.oc.www.absences20.bdd.Cours.CoursDAO;
 import com.rss.oc.www.absences20.bdd.absences.Absences;
 import com.rss.oc.www.absences20.bdd.absences.AbsencesDAO;
+import com.rss.oc.www.absences20.bdd.groupe_individu.Groupe_individus;
+import com.rss.oc.www.absences20.bdd.groupe_individu.Groupe_individusDAO;
+import com.rss.oc.www.absences20.bdd.groupes.Groupes;
+import com.rss.oc.www.absences20.bdd.groupes.GroupesDAO;
 import com.rss.oc.www.absences20.bdd.individu.Individus;
 import com.rss.oc.www.absences20.bdd.individu.IndividusDAO;
 import com.rss.oc.www.absences20.bdd.utilisateurs.UtilisateurDAO;
@@ -68,6 +72,8 @@ public class ChargementActivity extends AppCompatActivity {
         String cours;
         String individus;
         String absences;
+        String groupeBase;
+        String groupe_individusBase;
 
         try {
             URL url = new URL("https://saliferous-automobi.000webhostapp.com/api/v1/all?login=gestion@admin.fr&password=admiNEPF2017&api_key=9b6292e91c2525e8e36c52d5cae4e268");
@@ -137,6 +143,30 @@ public class ChargementActivity extends AppCompatActivity {
                     AbsencesDAO absencesDAO = new AbsencesDAO(context);
                     absencesDAO.ajouterAbsences(absences_epf);
 
+
+                }
+
+                groupeBase = jsonResponse.getString("groupes");
+                JSONArray jsonArrayGroupes = new JSONArray(groupeBase);
+                for (int i=0; i<jsonArrayGroupes.length(); i++ ){
+                    JSONObject jsonObject = jsonArrayGroupes.getJSONObject(i);
+                    long id = jsonObject.getInt("id");
+                    String libelle = jsonObject.getString("libelle");
+                    Groupes groupes_epf = new Groupes(id,libelle);
+                    GroupesDAO groupesDAO = new GroupesDAO(context);
+                    groupesDAO.ajouterGroupes(groupes_epf);
+
+                }
+
+                groupe_individusBase = jsonResponse.getString("groupe_individus");
+                JSONArray jsonArrayGroupe_individu = new JSONArray(groupe_individusBase);
+                for (int i=0; i<jsonArrayGroupe_individu.length(); i++ ){
+                    JSONObject jsonObject = jsonArrayGroupe_individu.getJSONObject(i);
+                    long individus_id = jsonObject.getInt("individus_id");
+                    long groupe_id = jsonObject.getInt("groupe_id");
+                    Groupe_individus groupe_individus_epf = new Groupe_individus(individus_id,groupe_id);
+                    Groupe_individusDAO groupe_individusDAO = new Groupe_individusDAO(context);
+                    groupe_individusDAO.ajouterGroupe_individus(groupe_individus_epf);
 
                 }
 

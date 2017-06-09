@@ -11,10 +11,17 @@
         android:background="@color/prof_background_list">
 
 
-        
+        <ImageView
+            android:id="@+id/imageViewIndicateurStatut"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            app:srcCompat="@android:drawable/presence_online" />
+
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center_vertical"
             style="@style/TextView.List_prof"
 
             android:id="@+id/text"/>
@@ -31,6 +38,7 @@
             android:background="@color/prof_background_list"/>
 
     </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -43,28 +51,78 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:background="@color/guillotine_background">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1">
 
-            <ImageButton
-                android:id="@+id/button_absence_epf"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="0.5"
-                app:srcCompat="@android:drawable/ic_delete" />
+                <ImageButton
+                    android:id="@+id/button_absence_epf"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="0.5"
+                    app:srcCompat="@android:drawable/ic_delete" />
 
-            <ImageButton
-                android:id="@+id/boutton_retard"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="0.5"
-                app:srcCompat="@android:drawable/presence_invisible" />
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/absent"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"/>
 
-            <ImageButton
+            </LinearLayout>
 
-                android:id="@+id/button_presence_epf"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="0.5"
-                app:srcCompat="@android:drawable/presence_online" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/boutton_retard"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="0.5"
+                    app:srcCompat="@android:drawable/presence_invisible" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/retard"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageButton
+
+                    android:id="@+id/button_presence_epf"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="0.5"
+                    app:srcCompat="@android:drawable/presence_online" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/present"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"/>
+
+            </LinearLayout>
+
+
+
 
         </LinearLayout>
         <LinearLayout
@@ -73,28 +131,10 @@
             android:orientation="horizontal"
             android:background="@color/guillotine_background">
 
-            <android.support.v7.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/absent"
-                android:layout_marginLeft="20dp"
-                android:textColor="@color/white"
-                android:textSize="20sp"/>
 
-            <android.support.v7.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/retard"
-                android:layout_marginLeft="60dp"
-                android:textColor="@color/white"
-                android:textSize="20sp"/>
-            <android.support.v7.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/present"
-                android:layout_marginLeft="60dp"
-                android:textColor="@color/white"
-                android:textSize="20sp"/>
+
+
+
         </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"

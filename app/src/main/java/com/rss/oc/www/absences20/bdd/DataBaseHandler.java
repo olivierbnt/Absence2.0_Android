@@ -45,6 +45,12 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public static final String ABSENCE_VALEUR = "valeur";
 
 
+    public static final String GROUPE_KEY ="id";
+    public static final String GROUPE_LIBELLE = "libelle";
+
+    public static final String GROUPE_INDIVIDUS_INDIVIDUS_KEY = "individus_id";
+    public static final String GROUPE_INDIVIDUS_GROUPE_ID = "groupe_id";
+
 
 
 
@@ -103,12 +109,34 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public static final String ABSENCE_TABLE_DROP = "DROP TABLE IF EXISTS " + ABSENCE_TABLE_NAME + ";";
 
 
+    public static final String GROUPE_TABLE_NAME = "groupes";
+    public static final String GROUPE_TABLE_CREATE =
+            "CREATE TABLE " + GROUPE_TABLE_NAME + " (" +
+                    GROUPE_KEY + " INTEGER, " +
+                    GROUPE_LIBELLE + " TEXT);";
+
+    public static final String GROUPE_TABLE_DROP ="DROP TABLE IF EXISTS " + GROUPE_TABLE_NAME + ";";
+
+
+    public static final String GROUPE_INDIVIDUS_TABLE_NAME ="groupe_individus";
+    public static final String GROUPE_INDIVIDUS_TABLE_CREATE =
+            "CREATE TABLE " + GROUPE_INDIVIDUS_TABLE_NAME + " (" +
+                    GROUPE_INDIVIDUS_INDIVIDUS_KEY + " INTEGER, " +
+                    GROUPE_INDIVIDUS_GROUPE_ID + " INTEGER);";
+
+    public static final String GROUPE_INDIVIDUS_TABLE_DROP ="DROP TABLE IF EXISTS " + GROUPE_INDIVIDUS_TABLE_NAME + ";";
+
+
+
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(UTILISATEUR_TABLE_DROP);
         db.execSQL(COURS_TABLE_DROP);
         db.execSQL(INDIVIDU_TABLE_DROP);
         db.execSQL(ABSENCE_TABLE_DROP);
+        db.execSQL(GROUPE_TABLE_DROP);
+        db.execSQL(GROUPE_INDIVIDUS_TABLE_DROP);
         onCreate(db);
 
     }
@@ -126,6 +154,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         db.execSQL(COURS_TABLE_CREATE);
         db.execSQL(INDIVIDU_TABLE_CREATE);
         db.execSQL(ABSENCE_TABLE_CREATE);
+        db.execSQL(GROUPE_TABLE_CREATE);
+        db.execSQL(GROUPE_INDIVIDUS_TABLE_CREATE);
 
 
     }

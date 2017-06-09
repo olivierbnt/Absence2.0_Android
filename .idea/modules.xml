@@ -9,7 +9,6 @@
       <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/library/library.iml" filepath="$PROJECT_DIR$/app/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/library/library.iml" filepath="$PROJECT_DIR$/app/library/library.iml" />
-
     </modules>
   </component>
 </project>

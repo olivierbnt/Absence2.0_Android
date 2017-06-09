@@ -1,7 +1,9 @@
-package com.tjerkw.slideexpandable.library;
+package com.rss.oc.www.absences20.library;
 
 import android.view.View;
 import android.widget.ListAdapter;
+
+import com.rss.oc.www.absences20.R;
 
 /**
  * ListAdapter that adds sliding functionality to a list.

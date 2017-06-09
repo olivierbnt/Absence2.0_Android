@@ -1,10 +1,13 @@
 package com.rss.oc.www.absences20.activity;
 
 
+import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.RequiresApi;
 
 import android.support.v7.app.AppCompatActivity;
@@ -40,6 +43,16 @@ public class MainActivity extends AppCompatActivity {
     View ItemProfile;
     View ItemParametres;
     View ItemDeconnection;
+    ProgressDialog progressBar;
+    Fragment fragment_beacon;
+
+    private int progressBarStatus = 0;
+    private Handler progressBarHandler = new Handler();
+
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         addListenerOnButton();
+
 
 
         View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null);
@@ -59,6 +73,19 @@ public class MainActivity extends AppCompatActivity {
         ItemDeconnection = guillotineMenu.findViewById(R.id.deconnection_group);
         TextView textAc = (TextView) findViewById(R.id.accueil_group_text);
         textAc.setTextColor(getResources().getColor(R.color.selected_item_color));
+
+        // prepare for a progress bar dialog
+        //progressBar = new ProgressDialog(v.getContext());
+        //progressBar.setCancelable(true);
+        //progressBar.setMessage("File downloading ...");
+        //progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        //progressBar.setProgress(0);
+        //progressBar.setMax(100);
+        //progressBar.show();
+
+        //reset progress bar status
+       // progressBarStatus =fragment_beacon.getActivity();
+
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);

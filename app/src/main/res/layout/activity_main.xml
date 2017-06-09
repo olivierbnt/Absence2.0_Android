@@ -17,7 +17,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="1">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -47,12 +48,21 @@
             android:layout_height="wrap_content"
             android:text="Reseau Beacon" />
 
+        <ProgressBar
+            android:id="@+id/indeterminateBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
         <fragment
-            android:id="@+id/fragment_on_off"
-            android:name="com.rss.oc.www.absences20.activity.OnOffFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout="@layout/fragment_on_off" />
+            android:id="@+id/fragment_beacon"
+            android:name="com.rss.oc.www.absences20.activity.BeaconViewerFragment"
+            android:layout_width="366dp"
+            android:layout_height="95dp"
+            android:layout_weight="0.36"
+            tools:layout="@layout/fragment_main" />
+
+
 
 
     </LinearLayout>

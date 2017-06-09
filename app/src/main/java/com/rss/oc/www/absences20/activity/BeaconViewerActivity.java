@@ -40,7 +40,7 @@ public class BeaconViewerActivity extends AppCompatActivity {
             Toast.makeText(this, "Location permissions already granted", Toast.LENGTH_SHORT).show();
         }
         Log.d(TAG, "running onCreate in BeaconViewerActivity");
-        setContentView(R.layout.beacon_viewer);
+        setContentView(R.layout.beacon_list_item);
     }
 
 }

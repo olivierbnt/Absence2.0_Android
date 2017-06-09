@@ -23,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
 import com.rss.oc.www.absences20.R;
 
 import java.util.ArrayList;
@@ -78,6 +79,7 @@ public class BeaconViewerFragment extends Fragment {
 
     public BeaconViewerFragment() {
         // Required empty public constructor
+
     }
 
     @Override
@@ -97,23 +99,27 @@ public class BeaconViewerFragment extends Fragment {
                 }
 
                 String deviceAddress = result.getDevice().getAddress();
-                Log.i(TAG, "DeviceAddress: " + deviceAddress);
-                Beacon beacon;
-                if (!deviceToBeaconMap.containsKey(deviceAddress)) {
-                    int hash = deviceAddress.hashCode();
-                    boolean amIhere = deviceToBeaconMap.containsKey(deviceAddress);
-                    beacon = new Beacon(deviceAddress, result.getRssi());
-                    Log.i(TAG, "putting device: " + deviceAddress + " to BeaconMap and arrayAdapter");
-                    deviceToBeaconMap.put(deviceAddress, beacon);
-                    arrayAdapter.add(beacon);
-                } else {
-                    deviceToBeaconMap.get(deviceAddress).lastSeenTimestamp = System.currentTimeMillis();
-                    deviceToBeaconMap.get(deviceAddress).rssi = result.getRssi();
-                }
 
-                byte[] serviceData = scanRecord.getServiceData(EDDYSTONE_SERVICE_UUID);
-                //Log.i(TAG,"serviceData: " + Utils.toHexString(serviceData));
-                handleServiceData(deviceAddress, serviceData);
+                // Selectin des beacons de la salle
+                if (deviceAddress.contentEquals("F3:C6:86:1D:E0:4C")||deviceAddress.contentEquals("D4:8D:80:53:EE:AC")||deviceAddress.contentEquals("CD:BC:4F:E5:3E:78"))  {
+                    Log.i(TAG, "DeviceAddress: " + deviceAddress);
+                    Beacon beacon;
+                    if (!deviceToBeaconMap.containsKey(deviceAddress)) {
+                        int hash = deviceAddress.hashCode();
+                        boolean amIhere = deviceToBeaconMap.containsKey(deviceAddress);
+                        beacon = new Beacon(deviceAddress, result.getRssi());
+                        Log.i(TAG, "putting device: " + deviceAddress + " to BeaconMap and arrayAdapter");
+                        deviceToBeaconMap.put(deviceAddress, beacon);
+                        arrayAdapter.add(beacon);
+                    } else {
+                        deviceToBeaconMap.get(deviceAddress).lastSeenTimestamp = System.currentTimeMillis();
+                        deviceToBeaconMap.get(deviceAddress).rssi = result.getRssi();
+                    }
+
+                    byte[] serviceData = scanRecord.getServiceData(EDDYSTONE_SERVICE_UUID);
+                    //Log.i(TAG,"serviceData: " + Utils.toHexString(serviceData));
+                    handleServiceData(deviceAddress, serviceData);
+                }
             }
 
             @Override

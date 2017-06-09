@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.rss.oc.www.absences20.R;
@@ -43,6 +44,8 @@ public class BeaconArrayAdapter extends ArrayAdapter<Beacon> implements Filterab
         return Math.pow(10, (pathLoss - 41) / 20.0);
     }
 
+
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
@@ -54,117 +57,14 @@ public class BeaconArrayAdapter extends ArrayAdapter<Beacon> implements Filterab
         // a recycled view of some other row that isn't in view. You need to set every
         // field regardless of emptiness to avoid displaying erroneous data.
 
-        final Beacon beacon = getItem(position);
 
-        TextView deviceAddress = (TextView) convertView.findViewById(R.id.deviceAddress);
-        deviceAddress.setText(beacon.deviceAddress);
 
-        TextView rssi = (TextView) convertView.findViewById(R.id.rssi);
-        rssi.setText(String.valueOf(beacon.rssi));
+        ImageView dot = (ImageView) convertView.findViewById(R.id.dot);
 
-        TextView distance = (TextView) convertView.findViewById(R.id.distance);
-        if (beacon.hasUidFrame) {
-            distance.setText(
-                    String.format("%.2f m", distanceFromRssi(beacon.rssi, beacon.uidStatus.txPower)));
-        } else {
-            distance.setText("unknown");
-        }
 
-        TextView uidLabel = (TextView) convertView.findViewById(R.id.uidLabel);
-        TextView uidNamespace = (TextView) convertView.findViewById(R.id.uidNamespace);
-        TextView uidInstance = (TextView) convertView.findViewById(R.id.uidInstance);
-        TextView uidRfu = (TextView) convertView.findViewById(R.id.uidRfu);
-        TextView uidTxPower = (TextView) convertView.findViewById(R.id.uidTxPower);
-        View uidErrorGroup = convertView.findViewById(R.id.uidErrorGroup);
 
-        View uidGroup = convertView.findViewById(R.id.uidGroup);
-        if (!beacon.hasUidFrame) {
-            grey(uidLabel);
-            uidGroup.setVisibility(View.GONE);
-        } else {
-            if (beacon.uidStatus.getErrors().isEmpty()) {
-                green(uidLabel);
-                uidErrorGroup.setVisibility(View.GONE);
-            } else {
-                if (beacon.uidStatus.errTx != null && !beacon.uidStatus.errTx.isEmpty()) {
-                    red(uidTxPower);
-                }
-                if (beacon.uidStatus.errUid != null && !beacon.uidStatus.errUid.isEmpty()) {
-                    red(uidNamespace);
-                    red(uidInstance);
-                }
-                if (beacon.uidStatus.errNamespace != null && !beacon.uidStatus.errNamespace.isEmpty()) {
-                    red(uidNamespace);
-                }
-                if (beacon.uidStatus.errInstance != null && !beacon.uidStatus.errInstance.isEmpty()) {
-                    red(uidInstance);
-                }
-                if (beacon.uidStatus.errRfu != null && !beacon.uidStatus.errRfu.isEmpty()) {
-                    red(uidRfu);
-                }
-                uidErrorGroup.setVisibility(View.VISIBLE);
-                ((TextView) convertView.findViewById(R.id.uidErrors)).setText(beacon.uidStatus.getErrors());
-            }
 
-            uidNamespace.setText(beacon.uidStatus.uidNamespaceValue);
-            uidInstance.setText(beacon.uidStatus.uidInstanceValue);
-            uidRfu.setText(beacon.uidStatus.uidRfuValue);
-            uidTxPower.setText(String.valueOf(beacon.uidStatus.txPower));
-            uidGroup.setVisibility(View.VISIBLE);
-        }
 
-        TextView tlmLabel = (TextView) convertView.findViewById(R.id.tlmLabel);
-        TextView tlmVersion = (TextView) convertView.findViewById(R.id.tlmVersion);
-        TextView tlmVoltage = (TextView) convertView.findViewById(R.id.tlmVoltage);
-        TextView tlmTemp = (TextView) convertView.findViewById(R.id.tlmTemp);
-        TextView tlmAdvCnt = (TextView) convertView.findViewById(R.id.tlmAdvCount);
-        TextView tlmSecCnt = (TextView) convertView.findViewById(R.id.tlmSecCnt);
-        View tlmErrorGroup = convertView.findViewById(R.id.tlmErrorGroup);
-
-        View tlmGroup = convertView.findViewById(R.id.tlmGroup);
-        if (!beacon.hasTlmFrame) {
-            grey(tlmLabel);
-            tlmGroup.setVisibility(View.GONE);
-        } else {
-            if (beacon.tlmStatus.toString().isEmpty()) {
-                green(tlmLabel);
-                tlmErrorGroup.setVisibility(View.GONE);
-            } else {
-                red(tlmLabel);
-                tlmErrorGroup.setVisibility(View.VISIBLE);
-                ((TextView) convertView.findViewById(R.id.tlmErrors)).setText(beacon.tlmStatus.getErrors());
-
-            }
-            tlmVersion.setText(beacon.tlmStatus.version);
-            tlmVoltage.setText(beacon.tlmStatus.voltage);
-            tlmTemp.setText(beacon.tlmStatus.temp);
-            tlmAdvCnt.setText(beacon.tlmStatus.advCnt);
-            tlmSecCnt.setText(beacon.tlmStatus.secCnt);
-            tlmGroup.setVisibility(View.VISIBLE);
-        }
-
-        TextView urlLabel = (TextView) convertView.findViewById(R.id.urlLabel);
-        TextView urlStatus = (TextView) convertView.findViewById(R.id.urlStatus);
-        if (!beacon.hasUrlFrame) {
-            grey(urlLabel);
-            urlStatus.setText("");
-        } else {
-            if (beacon.urlStatus.getErrors().isEmpty()) {
-                green(urlLabel);
-            } else {
-                red(urlLabel);
-            }
-            urlStatus.setText(beacon.urlStatus.toString());
-        }
-
-        LinearLayout frameStatusGroup = (LinearLayout) convertView.findViewById(R.id.frameStatusGroup);
-        if (!beacon.frameStatus.getErrors().isEmpty()) {
-            TextView frameStatus = (TextView) convertView.findViewById(R.id.frameStatus);
-            frameStatus.setText(beacon.frameStatus.toString());
-            frameStatusGroup.setVisibility(View.VISIBLE);
-        } else {
-            frameStatusGroup.setVisibility(View.GONE);
-        }
 
         return convertView;
     }

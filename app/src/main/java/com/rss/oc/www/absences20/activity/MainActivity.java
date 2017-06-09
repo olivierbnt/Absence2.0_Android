@@ -29,6 +29,8 @@ import com.yalantis.guillotine.animation.GuillotineAnimation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.rss.oc.www.absences20.R.drawable.my_progress;
+
 public class MainActivity extends AppCompatActivity   {
     private static final long RIPPLE_DURATION = 250;
     private static final String TAG = "MainActivity";
@@ -72,10 +74,45 @@ public class MainActivity extends AppCompatActivity   {
         View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null);
         root.addView(guillotineMenu);
         //View fragment_beacon =  LayoutInflater.from(this).inflate(R.layout.fragment_main, null);
-        BeaconViewerFragment fr = (BeaconViewerFragment) getFragmentManager().findFragmentById(R.id.fragment_beacon);
+        final BeaconViewerFragment fr = (BeaconViewerFragment) getFragmentManager().findFragmentById(R.id.fragment_beacon);
         if(fr != null) {
+
+
+            // nouveau thread pour mettre a jour la progressBar afin de representer les beacons
             arrayAdapter = fr.getMyList();
             Log.i(TAG, "ArrayAdapterUpdate");
+
+            Thread t = new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        while (!isInterrupted()) {
+                            Thread.sleep(500);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    //prepare for a progress bar dialog
+                                    int nombreBeacons  = arrayAdapter.getCount();
+                                   //for (int i = 0; i < arrayAdapter.getCount(); i++){
+                                  // }
+                                    progressBar.setMax(4);
+                                    progressBar.setProgress(nombreBeacons);
+                                    progressBar.setProgressDrawable(getResources().getDrawable(my_progress));
+
+                                    if (nombreBeacons == 4 ){
+
+                                    }
+
+                                }
+                            });
+                        }
+                    } catch (InterruptedException e) {
+                    }
+                }
+            };
+
+            t.start();
 
             // ... do some fun stuff
         }
@@ -89,10 +126,7 @@ public class MainActivity extends AppCompatActivity   {
         textAc.setTextColor(getResources().getColor(R.color.selected_item_color));
         progressBar = (ProgressBar)findViewById(R.id.progressBarBeacon);
 
-        //prepare for a progress bar dialog
-        int nombreBeacons  = arrayAdapter.getCount();
-        progressBar.setProgress(2);
-        progressBar.setMax(3);
+
 
 
 
@@ -210,21 +244,6 @@ public class MainActivity extends AppCompatActivity   {
     public void addListenerOnButton() {
 
         final Context context = this;
-
-        button = (Button) findViewById(R.id.buttonBeaconActivity);
-
-        button.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-
-                Intent intent = new Intent(context, BeaconViewerActivity.class);
-                startActivity(intent);
-
-            }
-
-        });
-
     }
 
 }

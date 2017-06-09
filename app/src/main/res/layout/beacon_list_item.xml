@@ -13,9 +13,4 @@
     <!-- TLM frame -->
 
 
-    <ImageView
-        android:id="@+id/dot"
-        android:layout_width="43dp"
-        android:layout_height="43dp"
-        app:srcCompat="@drawable/green_dot" />
 </LinearLayout>

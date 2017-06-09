@@ -59,7 +59,7 @@ public class BeaconArrayAdapter extends ArrayAdapter<Beacon> implements Filterab
 
 
 
-        ImageView dot = (ImageView) convertView.findViewById(R.id.dot);
+       // ImageView dot = (ImageView) convertView.findViewById(R.id.dot);
 
 
 

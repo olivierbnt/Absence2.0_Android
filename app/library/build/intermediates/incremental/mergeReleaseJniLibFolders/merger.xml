@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="C:\workspace\projet-absences\Absence2.0_Android\app\library\src\main\jniLibs"/></dataSet><dataSet config="release"><source path="C:\workspace\projet-absences\Absence2.0_Android\app\library\src\release\jniLibs"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/Users/olivierbonnet/Desktop/Projet Filiere/Absence/app/library/src/main/jniLibs"/></dataSet><dataSet config="release"><source path="/Users/olivierbonnet/Desktop/Projet Filiere/Absence/app/library/src/release/jniLibs"/></dataSet></merger>

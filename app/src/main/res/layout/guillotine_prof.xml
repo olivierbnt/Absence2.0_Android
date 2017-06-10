@@ -57,7 +57,7 @@
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/absence_group_text"
             style="@style/TextView.GuillotineItem"
-            android:text="@string/action_absences" />
+            android:text="@string/action_liste_etudiants" />
     </LinearLayout>
 
     <LinearLayout

@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.rss.oc.www.absences20.bdd.Cours.CoursDAO;
 import com.rss.oc.www.absences20.bdd.DAOBase;
+import com.rss.oc.www.absences20.bdd.DataBaseHandler;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,8 @@ public class IndividusDAO extends DAOBase {
     public static final String TABLE_NAME = "Individus";
     public static final String KEY = "id";
     public static final String NOM = "nom";
+    public static final String VAL_DEBUT = "val_debut";
+    public static final String VAL_FIN = "val_fin";
     public static final String PRENOM = "prenom";
     public static final String KEY_USER = "id_user";
     public static final String STATUT = "statut";
@@ -34,6 +37,8 @@ public class IndividusDAO extends DAOBase {
         ContentValues value = new ContentValues();
         value.put(IndividusDAO.KEY, i.getIdIndividu());
         value.put(IndividusDAO.KEY_USER, i.getId_user());
+        value.put(IndividusDAO.VAL_DEBUT, i.getVal_debut());
+        value.put(IndividusDAO.VAL_FIN, i.getVal_fin());
         value.put(IndividusDAO.NOM, i.getNom());
         value.put(IndividusDAO.PRENOM, i.getPrenom());
         value.put(IndividusDAO.STATUT, i.getStatutIndividu());
@@ -44,7 +49,7 @@ public class IndividusDAO extends DAOBase {
         Log.i("Table Individus","Ajoutée");
     }
 
-    public ArrayList<String> listIndividusInstant (long [] listId){
+    public ArrayList<String> listIndividusInstant (ArrayList<Long> listId){
 
         ArrayList<String> listFinal= new ArrayList<String>();
         int j = 0;
@@ -63,11 +68,11 @@ public class IndividusDAO extends DAOBase {
                 String nom = cursor.getString(indexNom);
                 String prenom = cursor.getString(indexPrenom);
 
-                for (int i=0;i<listId.length;i++){
-                    if (individusId==listId[i]){
+
+                for (long l: listId){
+                    if (individusId==l){
                         Log.i("Nom",nom);
                         listFinal.add(j,nom+" "+prenom);
-                        i=listId.length;
                         j++;
                     }
                 }
@@ -78,5 +83,62 @@ public class IndividusDAO extends DAOBase {
         close();
 
         return listFinal;
+    }
+
+    public ArrayList<Long> listIndicateur (ArrayList<Long> list){
+        ArrayList<Long> listFinal= new ArrayList<Long>();
+        int j = 0;
+        openDBRead();
+
+        Cursor cursor = mDb.rawQuery("select " +KEY+","+VAL_DEBUT+ " from " + TABLE_NAME, null);
+
+        if (cursor.moveToNext()){
+            int indexId = cursor.getColumnIndex(KEY);
+            int indexVal_debut = cursor.getColumnIndex(VAL_DEBUT);
+
+            do{
+
+                long individusId = cursor.getInt(indexId);
+                long val_debut = cursor.getInt(indexVal_debut);
+
+                for (long l: list){
+                    if (individusId==l){
+
+                        listFinal.add(j,val_debut);
+                        j++;
+                    }
+                }
+
+
+            }while (cursor.moveToNext());
+        }
+        close();
+
+        return listFinal;
+    }
+
+    public void validerPresenceDebut(long id){
+        ContentValues value = new ContentValues();
+        value.put(IndividusDAO.VAL_DEBUT,1);
+        mDb.update(TABLE_NAME,value,"id="+id,null);
+    }
+    public void validerRetardDebut(long id){
+
+        ContentValues value = new ContentValues();
+        value.put(IndividusDAO.VAL_DEBUT,2);
+        mDb.update(TABLE_NAME,value,"id="+id,null);
+    }
+
+    public void validerPresenceFin(long id){
+        ContentValues value = new ContentValues();
+        value.put(IndividusDAO.VAL_FIN,1);
+        mDb.update(TABLE_NAME,value,"id="+id,null);
+    }
+
+    public void resetPresence(long id){
+        ContentValues value = new ContentValues();
+        value.put(IndividusDAO.VAL_DEBUT,0);
+        value.put(IndividusDAO.VAL_FIN,0);
+        mDb.update(TABLE_NAME,value,"id="+id,null);
     }
 }

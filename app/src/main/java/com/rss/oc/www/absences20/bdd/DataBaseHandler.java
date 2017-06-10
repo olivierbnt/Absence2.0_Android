@@ -36,6 +36,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public static final String INDIVIDU_PRENOM = "prenom";
     public static final String INDIVIDU_KEY_USER = "id_user";
     public static final String INDIVIDU_STATUT = "statut";
+    public static final String INDIVIDU_VAL_DEBUT = "val_debut";
+    public static final String INDIVIDU_VAL_FIN = "val_fin";
 
     public static final String ABSENCE_KEY = "id";
     public static final String ABSENCE_KEY_INDIVIDU = "id_individu";
@@ -92,6 +94,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                     INDIVIDU_KEY_USER        + " INTEGER, " +
                     INDIVIDU_NOM             + " TEXT, " +
                     INDIVIDU_PRENOM          + " TEXT, " +
+                    INDIVIDU_VAL_DEBUT       + " INTEGER, " +
+                    INDIVIDU_VAL_FIN         + " INTEGER, " +
                     INDIVIDU_STATUT          + " TEXT); ";
 
     public static final String INDIVIDU_TABLE_DROP = "DROP TABLE IF EXISTS " + INDIVIDU_TABLE_NAME + ";";

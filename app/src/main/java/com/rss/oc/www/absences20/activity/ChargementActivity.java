@@ -33,6 +33,8 @@ import java.net.URL;
 public class ChargementActivity extends AppCompatActivity {
 
     Context context =this;
+    public final int VAL_DEBUT=0;
+    public final int VAL_FIN=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +126,7 @@ public class ChargementActivity extends AppCompatActivity {
                     String statut=jsonObject.getString("statut");
                     String nom = jsonObject.getString("nom");
                     String prenom=jsonObject.getString("prenom");
-                    Individus individus_epf = new Individus(id,0,statut,nom,prenom);
+                    Individus individus_epf = new Individus(id,0,VAL_DEBUT,VAL_FIN,statut,nom,prenom);
                     IndividusDAO individusDAO = new IndividusDAO(context);
                     individusDAO.ajouterIndividu(individus_epf);
                 }

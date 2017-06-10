@@ -3,6 +3,7 @@ package com.rss.oc.www.absences20.activity;
 
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.support.annotation.DrawableRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -30,6 +32,7 @@ import com.rss.oc.www.absences20.bdd.groupe_individu.Groupe_individusDAO;
 import com.rss.oc.www.absences20.bdd.groupes.Groupes;
 import com.rss.oc.www.absences20.bdd.groupes.GroupesDAO;
 import com.rss.oc.www.absences20.bdd.individu.IndividusDAO;
+import com.rss.oc.www.absences20.library.WrapperListAdapterImpl;
 import com.tjerkw.slideexpandable.library.ActionSlideExpandableListView;
 
 import com.tjerkw.slideexpandable.library.SlideExpandableListAdapter;
@@ -46,6 +49,8 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static java.security.AccessController.getContext;
+
 public class ProfesseurActivity extends AppCompatActivity {
 
     private static final long RIPPLE_DURATION = 250;
@@ -61,13 +66,16 @@ public class ProfesseurActivity extends AppCompatActivity {
     View ItemProfile;
     View ItemParametres;
     View ItemDeconnection;
-    View button_presence;
+    ImageView indicateurPresence;
+    View listAbsenceView;
     Button button_absence;
     ImageButton button_presence_epf;
     Button button_retard;
     private String[] prenoms = new String[]{"Benoit", "Brice", "Yann", "Jocelyn", "Arthur", "Glwadys", "Olivier", "Pierre", "Jean"};
     private String [] listIndividus = new String[75];
     private ArrayList<String> obj = new ArrayList<String>();
+    private ArrayList<Long> listIdIndividus = new ArrayList<Long>();
+    private ArrayList<Long> listIndicateur = new ArrayList<Long>();
     private static final int DIALOG_PRESENT = 10;
     private static final int DIALOG_ABSENT = 20;
     private static final int DIALOG_RETARD = 30;
@@ -80,6 +88,11 @@ public class ProfesseurActivity extends AppCompatActivity {
         setContentView(R.layout.activity_professeur);
         ButterKnife.bind(this);
         View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine_prof, null);
+       // listAbsenceView= LayoutInflater.from(this).inflate(R.layout.list_absence_view, null);
+
+        LayoutInflater inflater =
+                (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        listAbsenceView = inflater.inflate(R.layout.list_absence_view, null, true);
 
         root.addView(guillotineMenu);
 
@@ -103,14 +116,14 @@ public class ProfesseurActivity extends AppCompatActivity {
         GroupesDAO groupesDAO = new GroupesDAO(context);
         long idGroupe = groupesDAO.getIdGroupe(libelleCours);
         Groupe_individusDAO groupe_individusDAO = new Groupe_individusDAO(context);
-        long [] listIdIndividusInstant = groupe_individusDAO.listIdIndividusInstant(idGroupe);
+        ArrayList<Long> listIdIndividusInstant = groupe_individusDAO.listIdIndividusInstant(idGroupe);
 
         IndividusDAO individusDAO = new IndividusDAO(context);
         obj = individusDAO.listIndividusInstant(listIdIndividusInstant);
-
+        listIndicateur = individusDAO.listIndicateur(listIdIndividusInstant);
 
         TextView toolbar = (TextView) findViewById(R.id.toolbar_title);
-        toolbar.setText(getString(R.string.action_absences));
+        toolbar.setText(getString(R.string.action_liste_etudiants));
         new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
                 .setStartDelay(RIPPLE_DURATION)
                 .setActionBarViewForAnimation(toolbar)
@@ -122,17 +135,43 @@ public class ProfesseurActivity extends AppCompatActivity {
                 R.layout.list_absence_view, R.id.text, obj);
 
 
+        WrapperListAdapterImpl wrap = new WrapperListAdapterImpl(listAdapter) {
+            @Override
+            public View getView(int position, View view, ViewGroup viewGroup) {
+
+                View row = getLayoutInflater().inflate(R.layout.list_absence_view,viewGroup,false);
+
+                   long l = listIndicateur.get(position);
+                   if(l==0){
+                       indicateurPresence = (ImageView) row.findViewById(R.id.imageViewIndicateurStatut);
+                       indicateurPresence.setImageResource(R.drawable.ic_3d_rotation_black_24dp);
+                   }
+                   if(l==2){
+
+                       indicateurPresence = (ImageView) row.findViewById(R.id.imageViewIndicateurStatut);
+                       indicateurPresence.setImageResource(R.drawable.ic_accessible_black_24dp);
+                   }
+
+                return wrapped.getView(position,row,viewGroup);
+
+            }
+        };
+
+
+
         SlideExpandableListAdapter slideExpandableListAdapter = new SlideExpandableListAdapter(
-                listAdapter,
+                wrap,
                 R.id.expandable_toggle_button,
                 R.id.expandable
         );
+
 
         ActionSlideExpandableListView listView = (ActionSlideExpandableListView) findViewById(R.id.list_absences);
         listView.setAdapter(slideExpandableListAdapter);
 
 
         listView.setItemActionListener(new ActionSlideExpandableListView.OnActionClickListener() {
+
             @Override
             public void onClick(View listView, View buttonView, int position) {
                 if (buttonView.getId() == R.id.button_presence_epf)

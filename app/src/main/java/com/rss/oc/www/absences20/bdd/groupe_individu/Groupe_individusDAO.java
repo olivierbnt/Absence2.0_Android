@@ -7,6 +7,8 @@ import android.util.Log;
 
 import com.rss.oc.www.absences20.bdd.DAOBase;
 
+import java.util.ArrayList;
+
 /**
  * Created by famille on 09/06/2017.
  */
@@ -31,9 +33,9 @@ public class Groupe_individusDAO extends DAOBase {
         Log.i("Table Groupe_individus","Ajoutée");
     }
 
-    public long [] listIdIndividusInstant (long idGroupeInstant){
+    public ArrayList<Long> listIdIndividusInstant (long idGroupeInstant){
 
-        long[] listFinal= new long[75];
+        ArrayList<Long> listFinal= new ArrayList<>();
         int i =0;
 
         openDBRead();
@@ -50,7 +52,7 @@ public class Groupe_individusDAO extends DAOBase {
                 long groupeId = cursor.getInt(indexGroupeId);
                 if (idGroupeInstant==groupeId){
 
-                    listFinal[i] = individusId;
+                    listFinal.add(i,individusId);
                     i++;
                 }
 

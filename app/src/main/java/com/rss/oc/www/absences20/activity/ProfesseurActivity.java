@@ -25,10 +25,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rss.oc.www.absences20.R;
+import com.rss.oc.www.absences20.bdd.Cours.CoursDAO;
+import com.rss.oc.www.absences20.bdd.groupe_individu.Groupe_individusDAO;
+import com.rss.oc.www.absences20.bdd.groupes.Groupes;
+import com.rss.oc.www.absences20.bdd.groupes.GroupesDAO;
+import com.rss.oc.www.absences20.bdd.individu.IndividusDAO;
 import com.tjerkw.slideexpandable.library.ActionSlideExpandableListView;
 
 import com.tjerkw.slideexpandable.library.SlideExpandableListAdapter;
 import com.yalantis.guillotine.animation.GuillotineAnimation;
+
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,9 +66,12 @@ public class ProfesseurActivity extends AppCompatActivity {
     ImageButton button_presence_epf;
     Button button_retard;
     private String[] prenoms = new String[]{"Benoit", "Brice", "Yann", "Jocelyn", "Arthur", "Glwadys", "Olivier", "Pierre", "Jean"};
+    private String [] listIndividus = new String[75];
+    private ArrayList<String> obj = new ArrayList<String>();
     private static final int DIALOG_PRESENT = 10;
     private static final int DIALOG_ABSENT = 20;
     private static final int DIALOG_RETARD = 30;
+    private Context context=this;
 
 
     @Override
@@ -79,6 +95,19 @@ public class ProfesseurActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(null);
         }
 
+        CoursDAO coursDAO = new CoursDAO(context);
+        long idCoursInstant=coursDAO.getIdCoursInstant();
+        Log.i("id_cours", String.valueOf(coursDAO.getIdCoursInstant()));
+        String libelleCours = coursDAO.getLibelleGroupeInstant(idCoursInstant);
+        Log.i("libelleCours",libelleCours);
+        GroupesDAO groupesDAO = new GroupesDAO(context);
+        long idGroupe = groupesDAO.getIdGroupe(libelleCours);
+        Groupe_individusDAO groupe_individusDAO = new Groupe_individusDAO(context);
+        long [] listIdIndividusInstant = groupe_individusDAO.listIdIndividusInstant(idGroupe);
+
+        IndividusDAO individusDAO = new IndividusDAO(context);
+        obj = individusDAO.listIndividusInstant(listIdIndividusInstant);
+
 
         TextView toolbar = (TextView) findViewById(R.id.toolbar_title);
         toolbar.setText(getString(R.string.action_absences));
@@ -90,7 +119,7 @@ public class ProfesseurActivity extends AppCompatActivity {
 
 
         ListAdapter listAdapter = new ArrayAdapter<String>(ProfesseurActivity.this,
-                R.layout.list_absence_view, R.id.text, prenoms);
+                R.layout.list_absence_view, R.id.text, obj);
 
 
         SlideExpandableListAdapter slideExpandableListAdapter = new SlideExpandableListAdapter(
@@ -170,4 +199,55 @@ public class ProfesseurActivity extends AppCompatActivity {
         }
 
     }
+
+    private Boolean isDate (int mDay, int mMonth, int mYear){
+        Boolean result = false;
+
+        final Calendar c = Calendar.getInstance(Locale.FRANCE);
+        int Year = c.get(Calendar.YEAR);
+        int Month = c.get(Calendar.MONTH);
+        int Day = c.get(Calendar.DAY_OF_MONTH);
+
+        if(mDay==Day&&mMonth==Month&&mYear==Year)
+            result = true;
+
+        return result;
+
+    }
+
+    private Boolean isHour (String debut, String fin){
+        Boolean result = false;
+
+        String pattern = "dd-MM-yyyy HH:mm:ss";
+        SimpleDateFormat dt = new SimpleDateFormat(pattern);
+      //  SimpleDateFormat minute = new SimpleDateFormat("mm");
+
+        Calendar c = Calendar.getInstance();
+        String dateInstant= dt.format(c.getTime());
+
+        try {
+            Date dateDebut = dt.parse(debut);
+            Date dateFin  = dt.parse(fin);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if((dateInstant.compareTo(debut)>0)&&(dateInstant.compareTo(fin)<0))
+            result=true;
+
+
+        return result;
+    }
+
+    private String chaineDate (String heure, int mDay,int mMonth,int mYear){
+        String chaine =null;
+        String day = String.valueOf(mDay);
+        String month = String.valueOf(mMonth);
+        String year = String.valueOf(mYear);
+        chaine =day+"-"+month+"-"+year+" "+heure;
+
+        return chaine;
+    }
+
+
 }

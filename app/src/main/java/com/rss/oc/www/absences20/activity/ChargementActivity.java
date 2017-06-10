@@ -115,19 +115,19 @@ public class ChargementActivity extends AppCompatActivity {
                     coursDAO.ajouterCours(cours_classe);
                 }
 
-               /* individus = jsonResponse.getString("individus");
+                individus = jsonResponse.getString("individus");
                 JSONArray jsonArrayIndividus = new JSONArray(individus);
                 for(int i=0;i<jsonArrayIndividus.length();i++){
                     JSONObject jsonObject =jsonArrayIndividus.getJSONObject(i);
                     long id = jsonObject.getInt("id");
-                    long id_user=jsonObject.getInt("id_user");
+//                    long id_user=jsonObject.getInt("id_user");
                     String statut=jsonObject.getString("statut");
                     String nom = jsonObject.getString("nom");
                     String prenom=jsonObject.getString("prenom");
-                    Individus individus_epf = new Individus(id,id_user,statut,nom,prenom);
+                    Individus individus_epf = new Individus(id,0,statut,nom,prenom);
                     IndividusDAO individusDAO = new IndividusDAO(context);
                     individusDAO.ajouterIndividu(individus_epf);
-                }*/
+                }
 
                 absences = jsonResponse.getString("absences");
                 JSONArray jsonArrayAbsences = new JSONArray(absences);

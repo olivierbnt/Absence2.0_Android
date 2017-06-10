@@ -1,5 +1,7 @@
 package com.rss.oc.www.absences20.bdd.Cours;
 
+import java.sql.Time;
+
 /**
  * Created by BRICE CESAR on 29/05/2017.
  */

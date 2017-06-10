@@ -2,6 +2,7 @@ package com.rss.oc.www.absences20.bdd.groupe_individu;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.util.Log;
 
 import com.rss.oc.www.absences20.bdd.DAOBase;
@@ -29,4 +30,36 @@ public class Groupe_individusDAO extends DAOBase {
         close();
         Log.i("Table Groupe_individus","Ajoutée");
     }
+
+    public long [] listIdIndividusInstant (long idGroupeInstant){
+
+        long[] listFinal= new long[75];
+        int i =0;
+
+        openDBRead();
+
+        Cursor cursor = mDb.rawQuery("select " +INDIVIDUS_KEY+","+GROUPE_ID+ " from " + TABLE_NAME, null);
+
+        if (cursor.moveToNext()){
+            int indexIndividusId = cursor.getColumnIndex(INDIVIDUS_KEY);
+            int indexGroupeId = cursor.getColumnIndex(GROUPE_ID);
+
+            do{
+
+                long individusId = cursor.getInt(indexIndividusId);
+                long groupeId = cursor.getInt(indexGroupeId);
+                if (idGroupeInstant==groupeId){
+
+                    listFinal[i] = individusId;
+                    i++;
+                }
+
+
+            }while (cursor.moveToNext());
+        }
+        close();
+
+        return listFinal;
+    }
+
 }

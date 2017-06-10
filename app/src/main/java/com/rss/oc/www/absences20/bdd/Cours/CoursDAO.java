@@ -2,9 +2,15 @@ package com.rss.oc.www.absences20.bdd.Cours;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.util.Log;
 
 import com.rss.oc.www.absences20.bdd.DAOBase;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by BRICE CESAR on 29/05/2017.
@@ -59,5 +65,102 @@ public class CoursDAO extends DAOBase {
 
 
 
+    }
+
+    public long getIdCoursInstant (){
+        long idFinal=-1;
+
+        openDBRead();
+
+        Cursor cursor = mDb.rawQuery("select " +KEY+","+JOUR+","+MOIS+","+ANNEE+","+HEURE_DEBUT+","+HEURE_FIN+ " from " + TABLE_NAME, null);
+
+        if(cursor.moveToNext()){
+
+            int indexId = cursor.getColumnIndex(KEY);
+            int indexJour = cursor.getColumnIndex(JOUR);
+            int indexMois = cursor.getColumnIndex(MOIS);
+            int indexAnnee = cursor.getColumnIndex(ANNEE);
+            int indexHeureDebut = cursor.getColumnIndex(HEURE_DEBUT);
+            int indexHeureFin = cursor.getColumnIndex(HEURE_FIN);
+            do {
+
+                String jour = cursor.getString(indexJour);
+                String mois = cursor.getString(indexMois);
+                String annee = cursor.getString(indexAnnee);
+                String heureDebut = cursor.getString(indexHeureDebut);
+                String heureFin = cursor.getString(indexHeureFin);
+                String dateDebut = chaineDate(heureDebut,jour,mois,annee);
+                Log.i("dateDebut",dateDebut);
+                String dateFin = chaineDate(heureFin,jour,mois,annee);
+                Log.i("dateFin",dateFin);
+                if (isHour(dateDebut,dateFin)){
+                    idFinal=cursor.getInt(indexId);
+                   // Log.i("id", String.valueOf(idFinal));
+                    cursor.moveToLast();
+                }
+
+
+            } while (cursor.moveToNext());
+        }
+          close();
+        return idFinal;
+    }
+
+    public String getLibelleGroupeInstant(long idCoursInstant){
+
+        String groupe = null;
+        openDBRead();
+
+        Cursor cursor = mDb.rawQuery("select " +KEY+","+GROUPE+ " from " + TABLE_NAME, null);
+
+        if (cursor.moveToNext()){
+            int indexId = cursor.getColumnIndex(KEY);
+            int indexGroupe = cursor.getColumnIndex(GROUPE);
+
+            do{
+
+                long id = cursor.getInt(indexId);
+                if (id==idCoursInstant){
+                    groupe = cursor.getString(indexGroupe);
+                    cursor.moveToLast();
+                }
+
+
+            }while (cursor.moveToNext());
+        }
+          close();
+        return groupe;
+    }
+
+    private Boolean isHour (String debut, String fin){
+        Boolean result = false;
+
+        String pattern = "dd-MM-yyyy HH:mm:ss";
+        SimpleDateFormat dt = new SimpleDateFormat(pattern);
+        //  SimpleDateFormat minute = new SimpleDateFormat("mm");
+
+        Calendar c = Calendar.getInstance();
+        //Date dateInstant= c.getTime();
+
+        try {
+            Date dateInstant =dt.parse("18-05-2017 11:10:10");
+            Date dateDebut = dt.parse(debut);
+            Date dateFin  = dt.parse(fin);
+
+            if((dateInstant.compareTo(dateDebut)>0)&&(dateInstant.compareTo(dateFin)<0))
+                result=true;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        return result;
+    }
+
+    private String chaineDate (String heure, String mDay,String mMonth,String mYear){
+        String chaine =null;
+        chaine =mDay+"-"+mMonth+"-"+mYear+" "+heure;
+
+        return chaine;
     }
 }

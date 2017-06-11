@@ -1,2 +1,2 @@
-include ':app', ':lib', ':library'
+include ':app', ':lib', ':library', ':circlerefresh', ':titanic'
 project(':library').projectDir = new File('app/library')

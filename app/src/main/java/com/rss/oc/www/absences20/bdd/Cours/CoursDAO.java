@@ -132,6 +132,37 @@ public class CoursDAO extends DAOBase {
         return groupe;
     }
 
+    public String getInfoCours(long idCoursInstant){
+
+        String infosCours = null;
+        openDBRead();
+
+        Cursor cursor = mDb.rawQuery("select " +KEY+","+GROUPE+","+HEURE_DEBUT+","+HEURE_FIN+","+LIB_CLASSE+","+SALLE_NOM+","+GROUPE+ " from " + TABLE_NAME, null);
+
+        if (cursor.moveToNext()){
+            int indexId = cursor.getColumnIndex(KEY);
+            int indexGroupe = cursor.getColumnIndex(GROUPE);
+            int indexHeureDebut = cursor.getColumnIndex(HEURE_DEBUT);
+            int indexHeureFin = cursor.getColumnIndex(HEURE_FIN);
+            int indexSalleNom = cursor.getColumnIndex(SALLE_NOM);
+            int indexLibClasse = cursor.getColumnIndex(LIB_CLASSE);
+
+            do{
+
+                long id = cursor.getInt(indexId);
+                if (id==idCoursInstant){
+                    infosCours = cursor.getString(indexGroupe)+";"+cursor.getString(indexHeureDebut)+";"+cursor.getString(indexHeureFin)
+                            +";"+cursor.getString(indexSalleNom)+";"+cursor.getString(indexLibClasse);
+                    cursor.moveToLast();
+                }
+
+
+            }while (cursor.moveToNext());
+        }
+        close();
+        return infosCours;
+    }
+
     private Boolean isHour (String debut, String fin){
         Boolean result = false;
 

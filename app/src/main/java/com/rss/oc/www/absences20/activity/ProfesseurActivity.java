@@ -2,6 +2,7 @@ package com.rss.oc.www.absences20.activity;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.DataSetObserver;
 import android.support.annotation.DrawableRes;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +37,7 @@ import com.rss.oc.www.absences20.library.WrapperListAdapterImpl;
 import com.tjerkw.slideexpandable.library.ActionSlideExpandableListView;
 
 import com.tjerkw.slideexpandable.library.SlideExpandableListAdapter;
+import com.tuesda.walker.circlerefresh.CircleRefreshLayout;
 import com.yalantis.guillotine.animation.GuillotineAnimation;
 
 import java.sql.Time;
@@ -71,6 +73,7 @@ public class ProfesseurActivity extends AppCompatActivity {
     Button button_absence;
     ImageButton button_presence_epf;
     Button button_retard;
+    private CircleRefreshLayout mRefreshLayout;
     private String[] prenoms = new String[]{"Benoit", "Brice", "Yann", "Jocelyn", "Arthur", "Glwadys", "Olivier", "Pierre", "Jean"};
     private String [] listIndividus = new String[75];
     private ArrayList<String> obj = new ArrayList<String>();
@@ -83,12 +86,14 @@ public class ProfesseurActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_professeur);
         ButterKnife.bind(this);
         View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine_prof, null);
        // listAbsenceView= LayoutInflater.from(this).inflate(R.layout.list_absence_view, null);
+        mRefreshLayout = (CircleRefreshLayout) findViewById(R.id.refresh_layout);
+
 
         LayoutInflater inflater =
                 (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -141,16 +146,16 @@ public class ProfesseurActivity extends AppCompatActivity {
 
                 View row = getLayoutInflater().inflate(R.layout.list_absence_view,viewGroup,false);
 
-                   long l = listIndicateur.get(position);
-                   if(l==0){
-                       indicateurPresence = (ImageView) row.findViewById(R.id.imageViewIndicateurStatut);
-                       indicateurPresence.setImageResource(R.drawable.ic_3d_rotation_black_24dp);
-                   }
-                   if(l==2){
+                long l = listIndicateur.get(position);
+                if(l==0){
+                    indicateurPresence = (ImageView) row.findViewById(R.id.imageViewIndicateurStatut);
+                    indicateurPresence.setImageResource(R.drawable.ic_3d_rotation_black_24dp);
+                }
+                if(l==2){
 
-                       indicateurPresence = (ImageView) row.findViewById(R.id.imageViewIndicateurStatut);
-                       indicateurPresence.setImageResource(R.drawable.ic_accessible_black_24dp);
-                   }
+                    indicateurPresence = (ImageView) row.findViewById(R.id.imageViewIndicateurStatut);
+                    indicateurPresence.setImageResource(R.drawable.ic_accessible_black_24dp);
+                }
 
                 return wrapped.getView(position,row,viewGroup);
 
@@ -183,6 +188,20 @@ public class ProfesseurActivity extends AppCompatActivity {
             }
         }, R.id.button_absence_epf, R.id.boutton_retard, R.id.button_presence_epf);
 
+       /* mRefreshLayout.setOnRefreshListener(
+                new CircleRefreshLayout.OnCircleRefreshListener() {
+                    @Override
+                    public void refreshing() {
+
+                       onRestart();
+                    }
+
+                    @Override
+                    public void completeRefresh() {
+
+                        mRefreshLayout.finishRefreshing();
+                    }
+                });*/
 
     }
 

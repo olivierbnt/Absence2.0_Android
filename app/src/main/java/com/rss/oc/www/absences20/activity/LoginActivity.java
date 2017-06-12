@@ -16,6 +16,7 @@ import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -282,10 +283,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
                 long id_user= utilisateurDAO.getIdUser(mEmail);
                 IndividusDAO individusDAO = new IndividusDAO(context);
                 long id_individu =individusDAO.getIdIndividu(id_user);
+                Log.i("id_individu", String.valueOf(id_individu));
                 if (statut.equals("etudiant"))
-                    loadMainActivity(id_individu);
+                    loadMainActivity(id_individu,id_user,mEmail);
                 else
-                    loadProfesseurActivity(id_individu);
+                    loadProfesseurActivity(id_individu,id_user,mEmail);
 
                 finish();
             } else {
@@ -302,16 +304,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
     }
 
 
-    public void loadMainActivity (long id_individu) {
+    public void loadMainActivity (long id_individu, long id_user, String mLogin) {
         Intent myintent = new Intent(this, MainActivity.class);
         myintent.putExtra("id_individu",id_individu);
+        myintent.putExtra("id_user",id_user);
+        myintent.putExtra("Login",mLogin);
         startActivity(myintent);
 
     }
 
-    public void loadProfesseurActivity (long id_individu) {
+    public void loadProfesseurActivity (long id_individu,long id_user, String mLogin) {
         Intent myintent = new Intent(this, ProfesseurActivity.class);
         myintent.putExtra("id_individu",id_individu);
+        myintent.putExtra("id_user",id_user);
+        myintent.putExtra("Login",mLogin);
         startActivity(myintent);
     }
 

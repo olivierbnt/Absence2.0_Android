@@ -44,6 +44,8 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile project(path: ':library')
     compile project(path: ':circlerefresh')
+    compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
+
 }
 
 

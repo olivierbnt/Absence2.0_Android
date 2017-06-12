@@ -2,7 +2,6 @@ package com.rss.oc.www.absences20.annexe;
 
 import android.util.Log;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -12,7 +11,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -103,15 +101,12 @@ public class GetMyJson{
         }
         return jsonResponse;
     }
-    protected void sendBDD(){
+    public String getApi(URL url){
 
-        URL url=null;
+
         JSONObject jsonResponse = null;
-        try {
-            url = new URL("https://saliferous-automobi.000webhostapp.com/api/v1/presenceEtudiant?id_etudiant=10&id_cours=1");
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        String api =null;
+
         try {
 
             // instanciation de l'url pointant vers notre fichiers.
@@ -138,47 +133,15 @@ public class GetMyJson{
             // on peu fermer la connection car on en a plus besoin. il nous reste plus qu'a parser le fichier
             urlConnection.disconnect();
 
-            //On crée un objet JSON qui contiendra notre tableau JSON.
-            jsonResponse = new JSONObject(strJson);
-
-            Log.i("tttt",jsonResponse.toString());
-
-
-
-
-            //On défini que le noeud principale de notre JSON est 'repertoire' ( la première clé )
-              /* JSONArray jsonMainNode = jsonResponse.optJSONArray("repertoire");
-
-               // pour chaque noeud contenu dans le principal on boucle et on récupére les données.
-               for (int i = 0; i < jsonMainNode.length(); i++) {
-
-                   //on récupére le noeud fils de notre tableau JSON
-                   JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-
-                   //au premier tour de boucle on récupère donc un tableau json du type : [0] => [[id] => 1 [nom] => toto [numero] => 0654893453 ]
-
-                   // on récupère chacune des valeurs de notre noeud fils par sa clé
-                   int id = Integer.parseInt(jsonChildNode.optString("id").toString());
-                   String nom = jsonChildNode.optString("nom").toString();
-                   String numero = jsonChildNode.optString("numero").toString();
-
-
-                   String OutputData = "Node :  " + id + " | "+ nom + " | "+ numero + " ";
-
-                   // et on les affiche.
-                   Log.d("AAAAAAAAAAA", OutputData);
-
-
-               }*/
 
         }
-        catch(JSONException | IOException ex )
+        catch( IOException ex )
         {
             ex.printStackTrace();
 
         }
 
-
+        return api;
     }
 
     private String readStream(InputStream is) throws IOException {

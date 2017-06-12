@@ -145,7 +145,7 @@ public class IndividusDAO extends DAOBase {
     public void validerPresenceDebut(long id){
         ContentValues value = new ContentValues();
         value.put(IndividusDAO.VAL_DEBUT,1);
-        mDb.update(TABLE_NAME,value,"id="+id,null);
+        mDb.update(TABLE_NAME,value,KEY +" = ?", new String[]{"7"});
     }
     public void validerRetardDebut(long id){
 

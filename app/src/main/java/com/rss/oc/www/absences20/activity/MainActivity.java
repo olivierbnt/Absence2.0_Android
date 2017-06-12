@@ -6,7 +6,10 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+
 import android.os.AsyncTask;
+import android.icu.text.DateFormat;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,9 +21,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +38,10 @@ import com.yalantis.guillotine.animation.GuillotineAnimation;
 
 import org.apache.http.message.BasicNameValuePair;
 
+import com.rss.oc.www.absences20.bdd.Cours.CoursDAO;
+
+import java.util.Calendar;
+import java.util.Date;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -62,6 +71,16 @@ public class MainActivity extends AppCompatActivity   {
     ProgressBar progressBar;
     Fragment fragment_beacon;
     public BeaconArrayAdapter arrayAdapter;
+    ListView mListView;
+
+    private String[] mStrings = {
+            "AAAAAAAA", "BBBBBBBB", "CCCCCCCC", "DDDDDDDD", "EEEEEEEE",
+            "FFFFFFFF", "GGGGGGGG", "HHHHHHHH", "IIIIIIII", "JJJJJJJJ",
+            "KKKKKKKK", "LLLLLLLL", "MMMMMMMM", "NNNNNNNN", "OOOOOOOO",
+            "PPPPPPPP", "QQQQQQQQ", "RRRRRRRR", "SSSSSSSS", "TTTTTTTT",
+            "UUUUUUUU", "VVVVVVVV", "WWWWWWWW", "XXXXXXXX", "YYYYYYYY",
+            "ZZZZZZZZ"
+    };
 
     private Context context = this;
     private int progressBarStatus = 0;
@@ -106,6 +125,12 @@ public class MainActivity extends AppCompatActivity   {
         final ImageView dAbsent = (ImageView)findViewById(R.id.depart_absent);
         final TextView confirmation = (TextView) findViewById(R.id.confirmation);
         final TextView raprochez = (TextView) findViewById(R.id.raprochez);
+        mListView = (ListView) findViewById(R.id.liste_des_prochains_cours);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mStrings);
+        mListView.setAdapter(adapter);
+
+
 
         confirmation.setVisibility(View.INVISIBLE);
         aPresent.setVisibility(View.INVISIBLE);
@@ -119,6 +144,24 @@ public class MainActivity extends AppCompatActivity   {
             setSupportActionBar(toolbar);
             getSupportActionBar().setTitle(null);
         }
+
+        TextView datetxt = (TextView) findViewById(R.id.Date);
+        String ct = DateFormat.getDateInstance().format(new Date());
+        datetxt.setText(ct);
+
+
+
+        CoursDAO coursDAO = new CoursDAO(context);
+        long idCoursInstant=coursDAO.getIdCoursInstant();
+        String chaine = coursDAO.getInfoCours(idCoursInstant);
+        Log.i(TAG, "idCoursInstant" + idCoursInstant);
+
+
+
+        TextView actueltxt = (TextView) findViewById(R.id.CoursActuel);
+        StringBuffer Actu = new StringBuffer();
+        Actu.append(chaine);
+        actueltxt.setText(Actu);
 
 
         TextView toolbar = (TextView) findViewById(R.id.toolbar_title);
@@ -156,6 +199,7 @@ public class MainActivity extends AppCompatActivity   {
             arrayAdapter = fr.getMyList();
             Log.i(TAG, "ArrayAdapterUpdate");
 
+            //Nouveau thread pour la recuperation des beacons
             Thread t = new Thread() {
                 @Override
                 public void run() {

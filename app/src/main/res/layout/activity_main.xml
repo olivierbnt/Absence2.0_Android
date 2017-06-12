@@ -48,17 +48,17 @@
 
             <ImageView
                 android:id="@+id/arrivee_absent"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="130dp"
-                android:layout_toStartOf="@+id/arrivee_present"
-                app:srcCompat="@drawable/cross" />
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:srcCompat="@drawable/cross"
+                android:layout_marginBottom="48dp"
+                android:layout_above="@+id/textView2"
+                android:layout_alignStart="@+id/arrivee_present" />
 
             <ImageView
                 android:id="@+id/arrivee_present"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignTop="@+id/arrivee_absent"
                 android:layout_marginEnd="60dp"
@@ -69,46 +69,47 @@
                 android:id="@+id/arrivee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/arrivee_present"
-                android:layout_marginEnd="86dp"
-                android:layout_toStartOf="@+id/arrivee_present"
+                android:layout_alignBottom="@+id/arrivee_absent"
+                android:layout_alignStart="@+id/CoursActuel"
+                android:layout_marginBottom="17dp"
                 android:text="Arrivée"
-                android:textColor="@color/prof_background_list" />
+                android:textColor="@color/prof_background_list"
+                android:textSize="18sp" />
 
             <ImageView
                 android:id="@+id/depart_absent"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:srcCompat="@drawable/cross"
                 android:layout_alignTop="@+id/depart_present"
-                android:layout_toStartOf="@+id/depart_present"
-                app:srcCompat="@drawable/cross" />
+                android:layout_alignStart="@+id/depart_present" />
 
             <ImageView
                 android:id="@+id/depart_present"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_below="@+id/arrivee_present"
-                android:layout_marginTop="29dp"
-                android:layout_toEndOf="@+id/arrivee_absent"
-                app:srcCompat="@drawable/tick" />
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:srcCompat="@drawable/tick"
+                android:layout_centerVertical="true"
+                android:layout_alignStart="@+id/arrivee_absent" />
 
             <TextView
                 android:id="@+id/depart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="autorisé à valider dans XXminutes"
-                android:textColor="@color/prof_background_list"
+                android:layout_alignStart="@+id/textView2"
                 android:layout_below="@+id/depart_absent"
-                android:layout_alignStart="@+id/textView2" />
+                android:text="autorisé à valider dans XXminutes"
+                android:textColor="@color/prof_background_list" />
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/depart_absent"
-                android:layout_alignStart="@+id/arrivee"
+                android:layout_alignEnd="@+id/arrivee"
+                android:layout_centerVertical="true"
                 android:text="Depart"
-                android:textColor="@color/prof_background_list" />
+                android:textColor="@color/prof_background_list"
+                android:textSize="18sp" />
 
             <ProgressBar
                 android:id="@+id/progressBarBeacon"
@@ -119,31 +120,43 @@
                 android:layout_alignParentTop="true" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/Date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/arrivee_present"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="13dp"
-                android:text="Meetttre la date" />
+                android:text="date"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/confirmation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Vous êtes détéctés dans la salle"
-                android:textColor="@color/prof_background_list"
                 android:layout_alignBottom="@+id/progressBarBeacon"
-                android:layout_alignEnd="@+id/raprochez" />
+                android:layout_alignEnd="@+id/raprochez"
+                android:text="Vous êtes détéctés dans la salle"
+                android:textColor="@color/prof_background_list" />
 
             <TextView
                 android:id="@+id/raprochez"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="placez votre téléphone en évidence"
-                android:textColor="@color/prof_background_list"
                 android:layout_alignBaseline="@+id/confirmation"
                 android:layout_alignBottom="@+id/confirmation"
+                android:layout_centerHorizontal="true"
+                android:text="placez votre téléphone en évidence"
+                android:textColor="@color/prof_background_list" />
+
+            <TextView
+                android:id="@+id/CoursActuel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:layout_above="@+id/Date"
                 android:layout_centerHorizontal="true" />
 
         </RelativeLayout>
@@ -158,4 +171,18 @@
 
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="182dp"
+        android:layout_gravity="bottom">
+
+        <ListView
+            android:id="@+id/liste_des_prochains_cours"
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+
 </FrameLayout>

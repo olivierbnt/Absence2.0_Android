@@ -18,9 +18,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,6 +62,16 @@ public class MainActivity extends AppCompatActivity   {
     ProgressBar progressBar;
     Fragment fragment_beacon;
     public BeaconArrayAdapter arrayAdapter;
+    ListView mListView;
+
+    private String[] mStrings = {
+            "AAAAAAAA", "BBBBBBBB", "CCCCCCCC", "DDDDDDDD", "EEEEEEEE",
+            "FFFFFFFF", "GGGGGGGG", "HHHHHHHH", "IIIIIIII", "JJJJJJJJ",
+            "KKKKKKKK", "LLLLLLLL", "MMMMMMMM", "NNNNNNNN", "OOOOOOOO",
+            "PPPPPPPP", "QQQQQQQQ", "RRRRRRRR", "SSSSSSSS", "TTTTTTTT",
+            "UUUUUUUU", "VVVVVVVV", "WWWWWWWW", "XXXXXXXX", "YYYYYYYY",
+            "ZZZZZZZZ"
+    };
 
     private Context context = this;
     private int progressBarStatus = 0;
@@ -102,6 +114,12 @@ public class MainActivity extends AppCompatActivity   {
         final ImageView dAbsent = (ImageView)findViewById(R.id.depart_absent);
         final TextView confirmation = (TextView) findViewById(R.id.confirmation);
         final TextView raprochez = (TextView) findViewById(R.id.raprochez);
+        mListView = (ListView) findViewById(R.id.liste_des_prochains_cours);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mStrings);
+        mListView.setAdapter(adapter);
+
+
 
         confirmation.setVisibility(View.INVISIBLE);
         aPresent.setVisibility(View.INVISIBLE);

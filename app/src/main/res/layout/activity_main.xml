@@ -46,12 +46,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </FrameLayout>
-
             <ImageView
                 android:id="@+id/arrivee_absent"
                 android:layout_width="60dp"
@@ -177,4 +171,18 @@
 
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="182dp"
+        android:layout_gravity="bottom">
+
+        <ListView
+            android:id="@+id/liste_des_prochains_cours"
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+
 </FrameLayout>

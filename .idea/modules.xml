@@ -3,10 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Absence.iml" filepath="$PROJECT_DIR$/Absence.iml" />
-<<<<<<< Updated upstream
-      <module fileurl="file://$PROJECT_DIR$/Absence2.0_Android.iml" filepath="$PROJECT_DIR$/Absence2.0_Android.iml" />
-=======
->>>>>>> Stashed changes
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/circlerefresh/circlerefresh.iml" filepath="$PROJECT_DIR$/circlerefresh/circlerefresh.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />

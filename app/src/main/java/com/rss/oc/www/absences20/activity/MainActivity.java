@@ -1,16 +1,20 @@
 package com.rss.oc.www.absences20.activity;
 
 
+import android.Manifest;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
 
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -24,6 +28,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rss.oc.www.absences20.R;
 import com.rss.oc.www.absences20.bdd.individu.IndividusDAO;
@@ -63,6 +68,7 @@ public class MainActivity extends AppCompatActivity   {
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,6 +131,21 @@ public class MainActivity extends AppCompatActivity   {
 
 
             // nouveau thread pour mettre a jour la progressBar afin de representer les beacons
+
+            // Demande des autorisations pour utiliser le Bluetooth
+            int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+            if (permissionCheck != PackageManager.PERMISSION_GRANTED){
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+                    Toast.makeText(this, "The permission to get BLE location data is required", Toast.LENGTH_SHORT).show();
+                }else{
+                    requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                }
+            }else{
+                Toast.makeText(this, "Location permissions already granted", Toast.LENGTH_SHORT).show();
+            }
+            Log.d(TAG, "Autorisations done (Bluetooth)");
+
+
             arrayAdapter = fr.getMyList();
             Log.i(TAG, "ArrayAdapterUpdate");
 
@@ -148,7 +169,7 @@ public class MainActivity extends AppCompatActivity   {
 
                                     if (nombreBeacons == 4 ){
                                         IndividusDAO individusDAO =new IndividusDAO(context);
-                                        individusDAO.validerPresenceDebut(7);
+                                       // individusDAO.validerPresenceDebut(7);
                                         aPresent.setVisibility(View.VISIBLE);
                                         aAbsent.setVisibility(View.INVISIBLE);
                                         confirmation.setVisibility(View.VISIBLE);

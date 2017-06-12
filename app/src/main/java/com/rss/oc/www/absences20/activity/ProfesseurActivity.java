@@ -149,7 +149,7 @@ public class ProfesseurActivity extends AppCompatActivity {
                 long l = listIndicateur.get(position);
                 if(l==0){
                     indicateurPresence = (ImageView) row.findViewById(R.id.imageViewIndicateurStatut);
-                    indicateurPresence.setImageResource(R.drawable.ic_3d_rotation_black_24dp);
+                    indicateurPresence.setImageResource(R.drawable.bouttongris);
                 }
                 if(l==2){
 

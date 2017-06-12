@@ -3,6 +3,7 @@ package com.rss.oc.www.absences20.activity;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Intent;
@@ -25,6 +26,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.rss.oc.www.absences20.R;
+import com.rss.oc.www.absences20.bdd.individu.IndividusDAO;
 import com.yalantis.guillotine.animation.GuillotineAnimation;
 
 import butterknife.BindView;
@@ -52,7 +54,7 @@ public class MainActivity extends AppCompatActivity   {
     Fragment fragment_beacon;
     public BeaconArrayAdapter arrayAdapter;
 
-
+    private Context context = this;
     private int progressBarStatus = 0;
     private Handler progressBarHandler = new Handler();
 
@@ -92,6 +94,7 @@ public class MainActivity extends AppCompatActivity   {
         final ImageView dAbsent = (ImageView)findViewById(R.id.depart_absent);
         final TextView confirmation = (TextView) findViewById(R.id.confirmation);
         final TextView raprochez = (TextView) findViewById(R.id.raprochez);
+
         confirmation.setVisibility(View.INVISIBLE);
         aPresent.setVisibility(View.INVISIBLE);
         dPresent.setVisibility(View.INVISIBLE);
@@ -144,6 +147,8 @@ public class MainActivity extends AppCompatActivity   {
                                     progressBar.setProgressDrawable(getResources().getDrawable(my_progress));
 
                                     if (nombreBeacons == 4 ){
+                                        IndividusDAO individusDAO =new IndividusDAO(context);
+                                        individusDAO.validerPresenceDebut(7);
                                         aPresent.setVisibility(View.VISIBLE);
                                         aAbsent.setVisibility(View.INVISIBLE);
                                         confirmation.setVisibility(View.VISIBLE);

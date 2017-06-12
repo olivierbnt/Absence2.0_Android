@@ -15,8 +15,9 @@
             android:id="@+id/imageViewIndicateurStatut"
             android:layout_width="20dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="17dp"
-            app:srcCompat="@android:drawable/presence_online" />
+            app:srcCompat="@drawable/bouttonvert"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true" />
 
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="match_parent"

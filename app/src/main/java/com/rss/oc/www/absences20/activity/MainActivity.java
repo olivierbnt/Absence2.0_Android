@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.icu.text.DateFormat;
 import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
@@ -31,8 +32,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rss.oc.www.absences20.R;
+import com.rss.oc.www.absences20.bdd.Cours.CoursDAO;
 import com.rss.oc.www.absences20.bdd.individu.IndividusDAO;
 import com.yalantis.guillotine.animation.GuillotineAnimation;
+
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -114,6 +120,24 @@ public class MainActivity extends AppCompatActivity   {
             getSupportActionBar().setTitle(null);
         }
 
+        TextView datetxt = (TextView) findViewById(R.id.Date);
+        String ct = DateFormat.getDateInstance().format(new Date());
+        datetxt.setText(ct);
+
+
+
+        CoursDAO coursDAO = new CoursDAO(context);
+        long idCoursInstant=coursDAO.getIdCoursInstant();
+        String chaine = coursDAO.getInfoCours(idCoursInstant);
+        Log.i(TAG, "idCoursInstant" + idCoursInstant);
+
+
+
+        TextView actueltxt = (TextView) findViewById(R.id.CoursActuel);
+        StringBuffer Actu = new StringBuffer();
+        Actu.append(chaine);
+        actueltxt.setText(Actu);
+
 
         TextView toolbar = (TextView) findViewById(R.id.toolbar_title);
         new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
@@ -149,6 +173,7 @@ public class MainActivity extends AppCompatActivity   {
             arrayAdapter = fr.getMyList();
             Log.i(TAG, "ArrayAdapterUpdate");
 
+            //Nouveau thread pour la recuperation des beacons
             Thread t = new Thread() {
                 @Override
                 public void run() {

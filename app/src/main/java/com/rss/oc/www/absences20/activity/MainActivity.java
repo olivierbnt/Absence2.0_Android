@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,8 +27,11 @@ import android.widget.Toast;
 
 import com.rss.oc.www.absences20.R;
 import com.rss.oc.www.absences20.annexe.GetMyJson;
+import com.rss.oc.www.absences20.annexe.postRequest;
 import com.rss.oc.www.absences20.bdd.individu.IndividusDAO;
 import com.yalantis.guillotine.animation.GuillotineAnimation;
+
+import org.apache.http.message.BasicNameValuePair;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -80,11 +84,13 @@ public class MainActivity extends AppCompatActivity   {
         fragment_beacon = new BeaconViewerFragment();
 
 
-
         View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null);
         root.addView(guillotineMenu);
         //View fragment_beacon =  LayoutInflater.from(this).inflate(R.layout.fragment_main, null);
 
+
+        Demand demand = new Demand();
+        demand.execute((Void)null);
 
         ItemAccueil = guillotineMenu.findViewById(R.id.accueil_group);
         ItemAbsence = guillotineMenu.findViewById(R.id.absence_group);
@@ -205,6 +211,26 @@ public class MainActivity extends AppCompatActivity   {
 
 
     }
+    public class Demand extends AsyncTask<Void, Void, Boolean> {
+
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+
+            String mLogin ="eleve1@epfedu.fr";
+            GetMyJson get = new GetMyJson();
+            try {
+                URL url =new URL("https://saliferous-automobi.000webhostapp.com/api/v1/key?login="+mLogin);
+                String api =  get.getApi(url);
+                validerPresence(7,1,api);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+    }
 
     private void onClickMenu(View mViewAc, View mViewAb, View mViewPa, View mViewPr, View mViewDe, final TextView toolbar, final long id_individu){
 
@@ -301,26 +327,20 @@ public class MainActivity extends AppCompatActivity   {
         final Context context = this;
     }
 
-    public void validerPresence (long id_user,long id_cours, String api){
+    public String validerPresence (long id_user,long id_cours, String api){
 
-        List<String> pairs = new ArrayList<String>() ;
-
+        String reponse=null;
+        List pairs = new ArrayList() ;
+        pairs.add(new BasicNameValuePair("id_etudiant",String.valueOf(id_user)));
+        pairs.add(new BasicNameValuePair("id_cours",String.valueOf(id_cours)));
+        pairs.add(new BasicNameValuePair("api_key",api));
+        String urlDuServeur = "https://saliferous-automobi.000webhostapp.com/api/v1/presenceEtudiant";
+        postRequest maRequete = new postRequest();
+        maRequete.sendRequest(urlDuServeur, pairs);
+        reponse = maRequete.getResultat();
+         return reponse;
         }
 
-    public String getApiiii(String mLogin){
-        String api = null;
-
-        URL url = null;
-        try {
-            url = new URL("https://saliferous-automobi.000webhostapp.com/api/v1/key?login="+mLogin);
-            GetMyJson get = new GetMyJson();
-            api =get.getApi(url);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
-        return api;
-    }
 
 }
 

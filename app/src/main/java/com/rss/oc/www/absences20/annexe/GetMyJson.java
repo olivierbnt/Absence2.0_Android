@@ -120,11 +120,11 @@ public class GetMyJson{
             // il faut voir que quand votre navigateur accède à une page web lui reçoit des trames réseaux
             // il les décode et vous affiche le contenu de la page lisible par un humain.
             // ici c'est la même chose sauf que l'on décompose le travail
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            InputStream in2 = new BufferedInputStream(urlConnection.getInputStream());
 
             // j'ai fait la mêthode readStream un peut plus bas pour simplifier la lecture de l'inputstream
             // et récuperer directement un string contenant l'intégralité du fichier que l'on vas lire.
-            String strJson = readStream(in);
+            String strJson = readStream(in2);
 
 
             //à ce niveau la chaine récupéré est tout simplement notre fichier json distant ( {"repertoire":[{"id":1,"nom":"toto","numero":"0654893453"},{"id":2,"nom":"tata","numero":"0649538453"},{"id":3,"nom":"roger","numero":"0693845543"},{"id":4,"nom":"test","numero":"0653845349"},{"id":5,"nom":"tutu","numero":"0693854453"}]}
@@ -143,6 +143,7 @@ public class GetMyJson{
 
         return api;
     }
+
 
     private String readStream(InputStream is) throws IOException {
 

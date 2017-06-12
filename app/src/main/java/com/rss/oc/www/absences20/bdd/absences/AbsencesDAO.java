@@ -2,9 +2,12 @@ package com.rss.oc.www.absences20.bdd.absences;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.util.Log;
 
 import com.rss.oc.www.absences20.bdd.DAOBase;
+
+import java.util.ArrayList;
 
 
 /**
@@ -40,4 +43,36 @@ public class AbsencesDAO extends DAOBase{
         close();
         Log.i("Table Absences","Ajoutée");
     }
+
+    public ArrayList<Long> getListIdCoursAbsences (long idIndividu){
+        ArrayList<Long> listFinal = new ArrayList<>();
+        int j=0;
+        Log.i("gzgggg","fgggq");
+        openDBRead();
+        Cursor cursor = mDb.rawQuery("select " +KEY+","+KEY_COURS+","+KEY_INDIVIDU+ " from " + TABLE_NAME, null);
+
+        if(cursor.moveToFirst()){
+
+            int indexIdIndividu = cursor.getColumnIndex(KEY_INDIVIDU);
+
+            int indexIdCours = cursor.getColumnIndex(KEY_COURS);
+            do {
+
+                Log.i("Key-ind",cursor.getString(indexIdIndividu));
+                if(idIndividu == cursor.getInt(indexIdIndividu)){
+
+                    listFinal.add(j,cursor.getLong(indexIdCours));
+                    j++;
+                }
+
+
+            } while (cursor.moveToNext());
+
+
+    }
+        close();
+        return listFinal;
+    }
 }
+
+

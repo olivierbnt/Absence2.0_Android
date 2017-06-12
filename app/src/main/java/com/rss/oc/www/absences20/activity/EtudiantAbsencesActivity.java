@@ -1,5 +1,6 @@
 package com.rss.oc.www.absences20.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,7 +13,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.rss.oc.www.absences20.R;
+import com.rss.oc.www.absences20.bdd.Cours.CoursDAO;
+import com.rss.oc.www.absences20.bdd.absences.AbsencesDAO;
 import com.yalantis.guillotine.animation.GuillotineAnimation;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,7 +38,9 @@ public class EtudiantAbsencesActivity extends AppCompatActivity {
     View ItemProfile;
     View ItemParametres;
     View ItemDeconnection;
-    private String[] list = {"Infracstructures","Protection de l'information","JAVA","Gouvernance des SI" };
+    private ArrayList<String> listAbsences = new ArrayList<String>();
+    private ArrayList<Long> listIdCours = new ArrayList<Long>();
+    private Context context =this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +76,24 @@ public class EtudiantAbsencesActivity extends AppCompatActivity {
         TextView textAb = (TextView) findViewById(R.id.absence_group_text);
         textAb.setTextColor(getResources().getColor(R.color.selected_item_color));
 
+
+        AbsencesDAO absencesDAO = new AbsencesDAO(context);
+        Intent intent = getIntent();
+        long id_individu = intent.getLongExtra("id_individu",-1);
+
+        if(id_individu!=-1){
+            listIdCours = absencesDAO.getListIdCoursAbsences(id_individu);
+            CoursDAO coursDAO = new CoursDAO(context);
+            listAbsences = coursDAO.getListInfoCours(listIdCours);
+        }
+
+
         onClickMenu(ItemAccueil,ItemAbsence,ItemParametres,ItemProfile,ItemDeconnection,toolbar);
 
         ListView listView = (ListView) findViewById(R.id.list_absences_etudiant);
 
         listView.setAdapter(new ArrayAdapter<String>(EtudiantAbsencesActivity.this, R.layout.list_item_absence_etudiant,
-                R.id.text_absence_etudiant,list));
+                R.id.text_absence_etudiant,listAbsences));
 
 
 

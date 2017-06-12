@@ -9,6 +9,7 @@ import com.rss.oc.www.absences20.bdd.DAOBase;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -193,5 +194,48 @@ public class CoursDAO extends DAOBase {
         chaine =mDay+"-"+mMonth+"-"+mYear+" "+heure;
 
         return chaine;
+    }
+
+    public ArrayList<String> getListInfoCours(ArrayList<Long> listIdCours){
+
+        ArrayList<String> infosCours = new ArrayList<String>();
+        int j =0;
+        openDBRead();
+
+        Cursor cursor = mDb.rawQuery("select " +KEY+","+LIB_CLASSE+","+HEURE_DEBUT+","+HEURE_FIN+","+JOUR+","+MOIS+","+ANNEE+ " from " + TABLE_NAME, null);
+
+        if (cursor.moveToNext()){
+            int indexId = cursor.getColumnIndex(KEY);
+            int indexMois = cursor.getColumnIndex(MOIS);
+            int indexHeureDebut = cursor.getColumnIndex(HEURE_DEBUT);
+            int indexHeureFin = cursor.getColumnIndex(HEURE_FIN);
+            int indexJour = cursor.getColumnIndex(JOUR);
+            int indexLibClasse = cursor.getColumnIndex(LIB_CLASSE);
+            int indexAnnee = cursor.getColumnIndex(ANNEE);
+
+            do{
+                long id = cursor.getInt(indexId);
+                String libClass = cursor.getString(indexLibClasse);
+                String jour =cursor.getString(indexJour);
+                String mois =cursor.getString(indexMois);
+                String annee =cursor.getString(indexAnnee);
+                String heureDebut = cursor.getString(indexHeureDebut);
+                String heureFin = cursor.getString(indexHeureFin);
+
+
+                for (Long l : listIdCours){
+                    if (l==id){
+                        String chaine = "Cours:       "+libClass+"\n"+
+                                        "Date:         "+jour+"/"+mois+"/"+annee+"\n"+
+                                        "Horaires:   "+heureDebut+" - "+heureFin;
+                        infosCours.add(j,chaine);
+                    }
+                }
+
+
+            }while (cursor.moveToNext());
+        }
+        close();
+        return infosCours;
     }
 }

@@ -27,7 +27,7 @@
     <string name="action_settings">PARAMETRES</string>
     <string name="action_accueil">ACCUEIL</string>
     <string name="action_profile">PROFIL</string>
-    <string name="action_absences">ABSENCES</string>
+    <string name="action_absences">LISTE DES ABSENCES</string>
     <string name="action_deconnecter">SE DECONNECTER</string>
     <string name="title_activity_page_prof">PageProf</string>
     <string name="title_activity_login">Connexion</string>

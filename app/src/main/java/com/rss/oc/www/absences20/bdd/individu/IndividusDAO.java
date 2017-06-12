@@ -117,6 +117,31 @@ public class IndividusDAO extends DAOBase {
         return listFinal;
     }
 
+    public Long getIdIndividu(Long idUser){
+        long idIndividu=-1;
+
+        openDBRead();
+        Cursor cursor = mDb.rawQuery("select " +KEY_USER+","+KEY+ " from "+TABLE_NAME, null);
+
+        if (cursor.moveToNext()){
+            int indexIdIndividu = cursor.getColumnIndex(KEY);
+            int indexIdUsers = cursor.getColumnIndex(KEY_USER);
+
+            do{
+
+         if(idUser==cursor.getLong(indexIdUsers)){
+             idIndividu=cursor.getLong(indexIdIndividu);
+             cursor.moveToLast();
+         }
+
+            }while (cursor.moveToNext());
+        }
+        close();
+
+
+        return idIndividu;
+    }
+
     public void validerPresenceDebut(long id){
         ContentValues value = new ContentValues();
         value.put(IndividusDAO.VAL_DEBUT,1);

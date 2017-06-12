@@ -26,6 +26,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.rss.oc.www.absences20.R;
+import com.rss.oc.www.absences20.bdd.individu.IndividusDAO;
 import com.rss.oc.www.absences20.bdd.utilisateurs.UtilisateurDAO;
 
 import java.util.ArrayList;
@@ -278,11 +279,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
 
                 UtilisateurDAO utilisateurDAO = new UtilisateurDAO(context);
                 String statut = utilisateurDAO.get_statut(mEmail);
-
+                long id_user= utilisateurDAO.getIdUser(mEmail);
+                IndividusDAO individusDAO = new IndividusDAO(context);
+                long id_individu =individusDAO.getIdIndividu(id_user);
                 if (statut.equals("etudiant"))
-                    loadMainActivity();
+                    loadMainActivity(id_individu);
                 else
-                    loadProfesseurActivity();
+                    loadProfesseurActivity(id_individu);
 
                 finish();
             } else {
@@ -299,14 +302,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
     }
 
 
-    public void loadMainActivity () {
+    public void loadMainActivity (long id_individu) {
         Intent myintent = new Intent(this, MainActivity.class);
+        myintent.putExtra("id_individu",id_individu);
         startActivity(myintent);
 
     }
 
-    public void loadProfesseurActivity () {
+    public void loadProfesseurActivity (long id_individu) {
         Intent myintent = new Intent(this, ProfesseurActivity.class);
+        myintent.putExtra("id_individu",id_individu);
         startActivity(myintent);
     }
 

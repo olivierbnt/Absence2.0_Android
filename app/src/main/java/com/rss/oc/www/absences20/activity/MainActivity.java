@@ -67,7 +67,8 @@ public class MainActivity extends AppCompatActivity   {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         addListenerOnButton();
-
+        Intent intent = getIntent();
+        long id_individu =intent.getLongExtra("id_individu",-1);
         fragment_beacon = new BeaconViewerFragment();
 
 
@@ -112,7 +113,7 @@ public class MainActivity extends AppCompatActivity   {
                 .setClosedOnStart(true)
                 .build();
 
-        onClickMenu(ItemAccueil,ItemAbsence,ItemParametres,ItemProfile,ItemDeconnection,toolbar);
+        onClickMenu(ItemAccueil,ItemAbsence,ItemParametres,ItemProfile,ItemDeconnection,toolbar,id_individu);
 
 
 
@@ -177,7 +178,7 @@ public class MainActivity extends AppCompatActivity   {
 
     }
 
-    private void onClickMenu(View mViewAc,View mViewAb, View mViewPa, View mViewPr, View mViewDe, final TextView toolbar){
+    private void onClickMenu(View mViewAc, View mViewAb, View mViewPa, View mViewPr, View mViewDe, final TextView toolbar, final long id_individu){
 
         mViewAb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,7 +194,7 @@ public class MainActivity extends AppCompatActivity   {
                 textPr.setTextColor(getResources().getColor(R.color.white));
                 textDe.setTextColor(getResources().getColor(R.color.white));
                 textAb.setTextColor(getResources().getColor(R.color.selected_item_color));
-                loadEtudiantAbsencesActivity();
+                loadEtudiantAbsencesActivity(id_individu);
 
             }
         });
@@ -212,7 +213,7 @@ public class MainActivity extends AppCompatActivity   {
                 textPr.setTextColor(getResources().getColor(R.color.selected_item_color));
                 textDe.setTextColor(getResources().getColor(R.color.white));
                 textAb.setTextColor(getResources().getColor(R.color.white));
-                loadEtudiantProfileActivity();
+                loadEtudiantProfileActivity(id_individu);
 
             }
         });
@@ -231,35 +232,38 @@ public class MainActivity extends AppCompatActivity   {
                 textPr.setTextColor(getResources().getColor(R.color.white));
                 textDe.setTextColor(getResources().getColor(R.color.white));
                 textAb.setTextColor(getResources().getColor(R.color.white));
-                loadEtudiantSettingsActivity();
+                loadEtudiantSettingsActivity(id_individu);
             }
         });
         mViewDe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadLoginActivity();
+                loadLoginActivity(id_individu);
             }
         });
     }
-    public void loadEtudiantAbsencesActivity(){
+    public void loadEtudiantAbsencesActivity(long id_individu){
         Intent myintent = new Intent(this, EtudiantAbsencesActivity.class);
+        myintent.putExtra("id_individu",id_individu);
         startActivity(myintent);
         finish();
     }
 
-    public void loadEtudiantProfileActivity(){
+    public void loadEtudiantProfileActivity(long id_individu){
         Intent myintent = new Intent(this, EtudiantProfileActivity.class);
+        myintent.putExtra("id_individu",id_individu);
         startActivity(myintent);
         finish();
     }
-    public void loadEtudiantSettingsActivity(){
+    public void loadEtudiantSettingsActivity(long id_individu){
         Intent myintent = new Intent(this, EtudiantSettingsActivity.class);
-        startActivity(myintent);
+        myintent.putExtra("id_individu",id_individu);
         finish();
     }
 
-    public void loadLoginActivity(){
+    public void loadLoginActivity(long id_individu){
         Intent myintent = new Intent(this, LoginActivity.class);
+        myintent.putExtra("id_individu",id_individu);
         startActivity(myintent);
         finish();
     }

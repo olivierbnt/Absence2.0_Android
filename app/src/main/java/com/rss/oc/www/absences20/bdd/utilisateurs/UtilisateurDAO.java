@@ -124,6 +124,36 @@ public class UtilisateurDAO extends DAOBase {
         return statut;
     }
 
+    public Long getIdUser(String mLogin){
+        long id = -1;
+        String login;
+        openDBRead();
+
+        Cursor cursor = mDb.rawQuery("select " +LOGIN+","+KEY+ " from " + TABLE_NAME, null);
+
+        if(cursor.moveToFirst()){
+            int indexLogin = cursor.getColumnIndex(LOGIN);
+            int indexId = cursor.getColumnIndex(KEY);
+            do {
+
+                login = cursor.getString(indexLogin);
+                if(mLogin.equals(login))
+                    id = cursor.getLong(indexId);
+
+            } while (cursor.moveToNext());
+
+        }else{
+
+            Log.i(" pas trouvé","rzggzrgzg");
+
+        }
+
+        close();
+
+        return id;
+    }
+
+
 
     public void supprimer(long id) {
 

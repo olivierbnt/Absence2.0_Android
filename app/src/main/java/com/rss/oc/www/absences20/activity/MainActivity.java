@@ -3,29 +3,23 @@ package com.rss.oc.www.absences20.activity;
 
 import android.Manifest;
 import android.app.Fragment;
-import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.icu.text.DateFormat;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
-
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
-
-import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -35,10 +29,12 @@ import com.rss.oc.www.absences20.R;
 import com.rss.oc.www.absences20.bdd.Cours.CoursDAO;
 import com.rss.oc.www.absences20.bdd.individu.IndividusDAO;
 import com.yalantis.guillotine.animation.GuillotineAnimation;
-
 import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
+import com.rss.oc.www.absences20.annexe.GetMyJson;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -82,7 +78,7 @@ public class MainActivity extends AppCompatActivity   {
         ButterKnife.bind(this);
         addListenerOnButton();
         Intent intent = getIntent();
-        long id_individu =intent.getLongExtra("id_individu",-1);
+        final long id_individu =intent.getLongExtra("id_individu",-1);
         fragment_beacon = new BeaconViewerFragment();
 
 
@@ -148,7 +144,8 @@ public class MainActivity extends AppCompatActivity   {
 
         onClickMenu(ItemAccueil,ItemAbsence,ItemParametres,ItemProfile,ItemDeconnection,toolbar,id_individu);
 
-
+       // IndividusDAO individusDAO =new IndividusDAO(context);
+       // individusDAO.validerPresenceDebut(7);
 
         final BeaconViewerFragment fr = (BeaconViewerFragment) getFragmentManager().findFragmentById(R.id.fragment_beacon);
         if(fr != null) {
@@ -193,8 +190,9 @@ public class MainActivity extends AppCompatActivity   {
                                     progressBar.setProgressDrawable(getResources().getDrawable(my_progress));
 
                                     if (nombreBeacons == 4 ){
-                                        IndividusDAO individusDAO =new IndividusDAO(context);
+                       IndividusDAO individusDAO =new IndividusDAO(context);
                                        // individusDAO.validerPresenceDebut(7);
+
                                         aPresent.setVisibility(View.VISIBLE);
                                         aAbsent.setVisibility(View.INVISIBLE);
                                         confirmation.setVisibility(View.VISIBLE);
@@ -322,6 +320,27 @@ public class MainActivity extends AppCompatActivity   {
     public void addListenerOnButton() {
 
         final Context context = this;
+    }
+
+    public void validerPresence (long id_user,long id_cours, String api){
+
+        List<String> pairs = new ArrayList<String>() ;
+
+        }
+
+    public String getApiiii(String mLogin){
+        String api = null;
+
+        URL url = null;
+        try {
+            url = new URL("https://saliferous-automobi.000webhostapp.com/api/v1/key?login="+mLogin);
+            GetMyJson get = new GetMyJson();
+            api =get.getApi(url);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return api;
     }
 
 }

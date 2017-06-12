@@ -74,6 +74,7 @@ public class UtilisateurDAO extends DAOBase {
 
                 if(mLogin.equals(login)){
                     password = cursor.getString(indexPassword);
+
                     if(mPassword.equals(password)){
                         test = true;
                         Log.i("trouvé","trouvé");

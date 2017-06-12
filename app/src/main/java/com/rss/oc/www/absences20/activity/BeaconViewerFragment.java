@@ -115,7 +115,7 @@ public class BeaconViewerFragment extends Fragment {
                 int rssi = result.getRssi();
 
                 // Selectin des beacons de la salle
-                if (rssi > -60) {
+                if (rssi > -70) {
                     if (deviceAddress.contentEquals("F3:C6:86:1D:E0:4C") || deviceAddress.contentEquals("D4:8D:80:53:EE:AC") || deviceAddress.contentEquals("CD:BC:4F:E5:3E:78") || deviceAddress.contentEquals("DD:4B:87:4F:83:DA")) {
                         Log.i(TAG, "DeviceAddress: " + deviceAddress);
                         Beacon beacon;

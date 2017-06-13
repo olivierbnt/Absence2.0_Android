@@ -1,46 +1,38 @@
 package com.rss.oc.www.absences20.activity;
 
 
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
-import android.database.DataSetObserver;
-import android.support.annotation.DrawableRes;
-import android.support.v7.app.AppCompatActivity;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rss.oc.www.absences20.R;
 import com.rss.oc.www.absences20.bdd.Cours.CoursDAO;
 import com.rss.oc.www.absences20.bdd.groupe_individu.Groupe_individusDAO;
-import com.rss.oc.www.absences20.bdd.groupes.Groupes;
 import com.rss.oc.www.absences20.bdd.groupes.GroupesDAO;
 import com.rss.oc.www.absences20.bdd.individu.IndividusDAO;
 import com.rss.oc.www.absences20.library.WrapperListAdapterImpl;
 import com.tjerkw.slideexpandable.library.ActionSlideExpandableListView;
-
 import com.tjerkw.slideexpandable.library.SlideExpandableListAdapter;
 import com.tuesda.walker.circlerefresh.CircleRefreshLayout;
 import com.yalantis.guillotine.animation.GuillotineAnimation;
 
-import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -50,8 +42,6 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static java.security.AccessController.getContext;
 
 public class ProfesseurActivity extends AppCompatActivity {
 
@@ -77,8 +67,8 @@ public class ProfesseurActivity extends AppCompatActivity {
     private String[] prenoms = new String[]{"Benoit", "Brice", "Yann", "Jocelyn", "Arthur", "Glwadys", "Olivier", "Pierre", "Jean"};
     private String [] listIndividus = new String[75];
     private ArrayList<String> obj = new ArrayList<String>();
-    private ArrayList<Long> listIdIndividus = new ArrayList<Long>();
-    private ArrayList<Long> listIndicateur = new ArrayList<Long>();
+
+    private ArrayList<Long> listIndicateur ;
     private static final int DIALOG_PRESENT = 10;
     private static final int DIALOG_ABSENT = 20;
     private static final int DIALOG_RETARD = 30;
@@ -106,6 +96,7 @@ public class ProfesseurActivity extends AppCompatActivity {
         ItemProfile = guillotineMenu.findViewById(R.id.profile_group);
         ItemParametres = guillotineMenu.findViewById(R.id.settins_group);
         ItemDeconnection = guillotineMenu.findViewById(R.id.deconnection_group);
+        listIndicateur = new ArrayList<Long>();
 
 
         if (toolbar != null) {

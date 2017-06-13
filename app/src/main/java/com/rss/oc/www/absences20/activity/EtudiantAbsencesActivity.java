@@ -39,8 +39,8 @@ public class EtudiantAbsencesActivity extends AppCompatActivity {
     View ItemProfile;
     View ItemParametres;
     View ItemDeconnection;
-    private ArrayList<String> listAbsences = new ArrayList<String>();
-    private ArrayList<Long> listIdCours = new ArrayList<Long>();
+    private ArrayList<String> listAbsences ;
+    private ArrayList<Long> listIdCours ;
     private Context context =this;
 
     @Override
@@ -58,6 +58,8 @@ public class EtudiantAbsencesActivity extends AppCompatActivity {
         ItemProfile = guillotineMenu.findViewById(R.id.profile_group);
         ItemParametres = guillotineMenu.findViewById(R.id.settins_group);
         ItemDeconnection = guillotineMenu.findViewById(R.id.deconnection_group);
+        listAbsences = new ArrayList<String>();
+        listIdCours = new ArrayList<Long>();
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);

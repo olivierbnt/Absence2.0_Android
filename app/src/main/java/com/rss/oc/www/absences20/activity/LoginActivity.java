@@ -281,6 +281,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
                 UtilisateurDAO utilisateurDAO = new UtilisateurDAO(context);
                 String statut = utilisateurDAO.get_statut(mEmail);
                 long id_user= utilisateurDAO.getIdUser(mEmail);
+                Log.i("id_user", String.valueOf(id_user));
                 IndividusDAO individusDAO = new IndividusDAO(context);
                 long id_individu =individusDAO.getIdIndividu(id_user);
                 Log.i("id_individu", String.valueOf(id_individu));

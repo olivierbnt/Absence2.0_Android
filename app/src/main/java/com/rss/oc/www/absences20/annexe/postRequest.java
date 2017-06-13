@@ -61,7 +61,10 @@ public class postRequest {
                     }
                     Log.i("Resultat : ", sb.toString());
                     Resultat = sb.toString();
-                    jsonResponse = new JSONObject(Resultat);
+                    if (Resultat.length()>100){
+                       jsonResponse = new JSONObject(Resultat);
+
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (Exception e) {

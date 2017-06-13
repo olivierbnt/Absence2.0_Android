@@ -105,8 +105,8 @@ public class MainActivity extends AppCompatActivity   {
         //View fragment_beacon =  LayoutInflater.from(this).inflate(R.layout.fragment_main, null);
 
 
-        Demand demand = new Demand();
-        demand.execute((Void)null);
+       // Demand demand = new Demand();
+       // demand.execute((Void)null);
 
         ItemAccueil = guillotineMenu.findViewById(R.id.accueil_group);
         ItemAbsence = guillotineMenu.findViewById(R.id.absence_group);
@@ -396,6 +396,18 @@ public class MainActivity extends AppCompatActivity   {
         return reponse;
     }
 
+    private String getApi (){
+        String mApi = null;
+
+        List pairs = new ArrayList() ;
+        pairs.add(new BasicNameValuePair("login","gestion@admin.fr"));
+        //pairs.add(new BasicNameValuePair("password","admiNEPF2017"));
+        String urlDuServeur = "https://saliferous-automobi.000webhostapp.com/api/v1/key";
+        postRequest Requete = new postRequest();
+        Requete.sendRequest(urlDuServeur, pairs);
+        mApi = Requete.getResultat();
+        return mApi;
+    }
 
 }
 

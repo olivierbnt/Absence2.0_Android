@@ -12,6 +12,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,6 +27,7 @@ public class postRequest {
     private List pairs;
     private String Resultat = "";
     private String Header = "";
+    private JSONObject jsonResponse = null;
 
     public postRequest(){
     }
@@ -59,6 +61,7 @@ public class postRequest {
                     }
                     Log.i("Resultat : ", sb.toString());
                     Resultat = sb.toString();
+                    jsonResponse = new JSONObject(Resultat);
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (Exception e) {
@@ -83,5 +86,9 @@ public class postRequest {
 
     public String getHeader(){
         return this.Header;
+    }
+
+    public JSONObject getJsonResponse (){
+        return this.jsonResponse;
     }
 }

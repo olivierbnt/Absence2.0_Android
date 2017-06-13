@@ -2,14 +2,14 @@ package com.rss.oc.www.absences20.activity;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
 import com.rss.oc.www.absences20.R;
 import com.rss.oc.www.absences20.annexe.GetMyJson;
+import com.rss.oc.www.absences20.annexe.postRequest;
 import com.rss.oc.www.absences20.bdd.Cours.Cours;
 import com.rss.oc.www.absences20.bdd.Cours.CoursDAO;
 import com.rss.oc.www.absences20.bdd.absences.Absences;
@@ -23,12 +23,15 @@ import com.rss.oc.www.absences20.bdd.individu.IndividusDAO;
 import com.rss.oc.www.absences20.bdd.utilisateurs.UtilisateurDAO;
 import com.rss.oc.www.absences20.bdd.utilisateurs.Utilisateurs;
 
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChargementActivity extends AppCompatActivity {
 
@@ -57,7 +60,9 @@ public class ChargementActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            base();
+            //createUser("gestion@admin.fr","1234");
+            //getApi();
+            getBase("gestion@admin.fr","1234","7bc63343a1f564831eb9005ae025b20e");
             return null;
         }
 
@@ -181,6 +186,117 @@ public class ChargementActivity extends AppCompatActivity {
             //Log.i("Json",jsonResponse.toString());
 
         } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String getApi (){
+        String mApi = null;
+
+        List pairs = new ArrayList() ;
+        pairs.add(new BasicNameValuePair("login","gestion@admin.fr"));
+        //pairs.add(new BasicNameValuePair("password","admiNEPF2017"));
+        String urlDuServeur = "https://saliferous-automobi.000webhostapp.com/api/v1/key";
+        postRequest maRequete = new postRequest();
+        maRequete.sendRequest(urlDuServeur, pairs);
+        mApi = maRequete.getResultat();
+        return mApi;
+    }
+
+    private void createUser(String mLogin, String mPassword){
+        List pairs = new ArrayList() ;
+        pairs.add(new BasicNameValuePair("login",mLogin));
+        pairs.add(new BasicNameValuePair("password",mPassword));
+        String urlDuServeur = "https://saliferous-automobi.000webhostapp.com/api/v1/register";
+        postRequest maRequete = new postRequest();
+        maRequete.sendRequest(urlDuServeur, pairs);
+    }
+    private void getBase(String mLogin, String mPassword, String api){
+        String users;
+        String cours;
+        String individus;
+        String absences;
+        String groupeBase;
+        String groupe_individusBase;
+
+        List pairs = new ArrayList() ;
+        pairs.add(new BasicNameValuePair("login",mLogin));
+        pairs.add(new BasicNameValuePair("password",mPassword));
+        pairs.add(new BasicNameValuePair("api_key",api));
+        String urlDuServeur = "https://saliferous-automobi.000webhostapp.com/api/v1/all";
+        postRequest maRequete = new postRequest();
+        maRequete.sendRequest(urlDuServeur, pairs);
+        JSONObject jsonResponse = maRequete.getJsonResponse();
+
+
+        try {
+            users = jsonResponse.getString("users");
+            JSONArray jsonArrayUsers = new JSONArray(users);
+            for (int i =0;i<jsonArrayUsers.length();i++){
+                JSONObject jsonObject = jsonArrayUsers.getJSONObject(i);
+                long id=jsonObject.getInt("id");
+                String identifiant = jsonObject.getString("login");
+                String statut=jsonObject.getString("statut");
+                String password=jsonObject.getString("password");
+                Utilisateurs utilisateurs = new Utilisateurs(id,identifiant,statut,password);
+                UtilisateurDAO utilisateurDAO = new UtilisateurDAO(context);
+                utilisateurDAO.ajouter(utilisateurs);
+         }
+            individus = jsonResponse.getString("individus");
+            JSONArray jsonArrayIndividus = new JSONArray(individus);
+            for(int i=0;i<jsonArrayIndividus.length();i++){
+                JSONObject jsonObject =jsonArrayIndividus.getJSONObject(i);
+                long id = jsonObject.getInt("id");
+//                    long id_user=jsonObject.getInt("id_user");
+                String statut=jsonObject.getString("statut");
+                String nom = jsonObject.getString("nom");
+                String prenom=jsonObject.getString("prenom");
+                Individus individus_epf = new Individus(id,0,VAL_DEBUT,VAL_FIN,statut,nom,prenom);
+                IndividusDAO individusDAO = new IndividusDAO(context);
+                individusDAO.ajouterIndividu(individus_epf);
+            }
+
+            absences = jsonResponse.getString("absences");
+            JSONArray jsonArrayAbsences = new JSONArray(absences);
+            for (int i =0;i<jsonArrayAbsences.length();i++){
+                JSONObject jsonObject = jsonArrayAbsences.getJSONObject(i);
+                long id = jsonObject.getInt("id");
+                long id_individu = jsonObject.getInt("id_individu");
+                long id_cours = jsonObject.getInt("id_cours");
+                String type_individu = jsonObject.getString("type_individu");
+                String motif = jsonObject.getString("motif");
+                String valeur = jsonObject.getString("valeur");
+                Absences absences_epf= new Absences(id,id_individu,id_cours,type_individu,motif,valeur);
+                AbsencesDAO absencesDAO = new AbsencesDAO(context);
+                absencesDAO.ajouterAbsences(absences_epf);
+
+            }
+
+            groupeBase = jsonResponse.getString("groupes");
+            JSONArray jsonArrayGroupes = new JSONArray(groupeBase);
+            for (int i=0; i<jsonArrayGroupes.length(); i++ ){
+                JSONObject jsonObject = jsonArrayGroupes.getJSONObject(i);
+                long id = jsonObject.getInt("id");
+                String libelle = jsonObject.getString("libelle");
+                Groupes groupes_epf = new Groupes(id,libelle);
+                GroupesDAO groupesDAO = new GroupesDAO(context);
+                groupesDAO.ajouterGroupes(groupes_epf);
+
+            }
+
+            groupe_individusBase = jsonResponse.getString("groupe_individus");
+            JSONArray jsonArrayGroupe_individu = new JSONArray(groupe_individusBase);
+            for (int i=0; i<jsonArrayGroupe_individu.length(); i++ ){
+                JSONObject jsonObject = jsonArrayGroupe_individu.getJSONObject(i);
+                long individus_id = jsonObject.getInt("individus_id");
+                long groupe_id = jsonObject.getInt("groupe_id");
+                Groupe_individus groupe_individus_epf = new Groupe_individus(individus_id,groupe_id);
+                Groupe_individusDAO groupe_individusDAO = new Groupe_individusDAO(context);
+                groupe_individusDAO.ajouterGroupe_individus(groupe_individus_epf);
+
+            }
+
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }

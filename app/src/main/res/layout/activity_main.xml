@@ -134,6 +134,8 @@
                 android:id="@+id/confirmation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
                 android:layout_alignBottom="@+id/progressBarBeacon"
                 android:layout_alignEnd="@+id/raprochez"
                 android:text="Vous êtes détéctés dans la salle"
@@ -143,11 +145,12 @@
                 android:id="@+id/raprochez"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="placez votre téléphone en évidence"
+                android:textColor="@color/prof_background_list"
                 android:layout_alignBaseline="@+id/confirmation"
                 android:layout_alignBottom="@+id/confirmation"
-                android:layout_centerHorizontal="true"
-                android:text="placez votre téléphone en évidence"
-                android:textColor="@color/prof_background_list" />
+                android:layout_centerHorizontal="true" />
 
             <TextView
                 android:id="@+id/CoursActuel"
@@ -180,7 +183,8 @@
         <ListView
             android:id="@+id/liste_des_prochains_cours"
             android:layout_width="match_parent"
-
+            android:divider="#000"
+            android:dividerHeight="2dp"
             android:layout_height="match_parent" />
 
     </RelativeLayout>

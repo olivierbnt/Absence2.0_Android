@@ -6,10 +6,8 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-
-import android.os.AsyncTask;
 import android.icu.text.DateFormat;
-
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -33,18 +32,16 @@ import android.widget.Toast;
 import com.rss.oc.www.absences20.R;
 import com.rss.oc.www.absences20.annexe.GetMyJson;
 import com.rss.oc.www.absences20.annexe.postRequest;
+import com.rss.oc.www.absences20.bdd.Cours.CoursDAO;
 import com.rss.oc.www.absences20.bdd.individu.IndividusDAO;
 import com.yalantis.guillotine.animation.GuillotineAnimation;
 
 import org.apache.http.message.BasicNameValuePair;
 
-import com.rss.oc.www.absences20.bdd.Cours.CoursDAO;
-
-import java.util.Calendar;
-import java.util.Date;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -127,7 +124,7 @@ public class MainActivity extends AppCompatActivity   {
         final TextView raprochez = (TextView) findViewById(R.id.raprochez);
         mListView = (ListView) findViewById(R.id.liste_des_prochains_cours);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mStrings);
+        ListAdapter adapter = new ArrayAdapter<String>(this,R.layout.row_prochians_cours,R.id.prochain_cours, mStrings);
         mListView.setAdapter(adapter);
 
 
@@ -267,7 +264,7 @@ public class MainActivity extends AppCompatActivity   {
             try {
                 URL url =new URL("https://saliferous-automobi.000webhostapp.com/api/v1/key?login="+mLogin);
                 String api =  get.getApi(url);
-                validerPresence(7,1,api);
+                validerPresenceDebut(7,1,api);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -371,7 +368,7 @@ public class MainActivity extends AppCompatActivity   {
         final Context context = this;
     }
 
-    public String validerPresence (long id_user,long id_cours, String api){
+    public String validerPresenceDebut (long id_user,long id_cours, String api){
 
         String reponse=null;
         List pairs = new ArrayList() ;
@@ -384,6 +381,20 @@ public class MainActivity extends AppCompatActivity   {
         reponse = maRequete.getResultat();
          return reponse;
         }
+
+    public String validerPresenceFin (long id_user,long id_cours, String api){
+
+        String reponse=null;
+        List pairs = new ArrayList() ;
+        pairs.add(new BasicNameValuePair("id_etudiant",String.valueOf(id_user)));
+        pairs.add(new BasicNameValuePair("id_cours",String.valueOf(id_cours)));
+        pairs.add(new BasicNameValuePair("api_key",api));
+        String urlDuServeur = "https://saliferous-automobi.000webhostapp.com/api/v1/validerPresence";
+        postRequest maRequete = new postRequest();
+        maRequete.sendRequest(urlDuServeur, pairs);
+        reponse = maRequete.getResultat();
+        return reponse;
+    }
 
 
 }

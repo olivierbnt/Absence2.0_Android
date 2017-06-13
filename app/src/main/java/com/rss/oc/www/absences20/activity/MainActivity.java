@@ -71,12 +71,8 @@ public class MainActivity extends AppCompatActivity   {
     ListView mListView;
 
     private String[] mStrings = {
-            "AAAAAAAA", "BBBBBBBB", "CCCCCCCC", "DDDDDDDD", "EEEEEEEE",
-            "FFFFFFFF", "GGGGGGGG", "HHHHHHHH", "IIIIIIII", "JJJJJJJJ",
-            "KKKKKKKK", "LLLLLLLL", "MMMMMMMM", "NNNNNNNN", "OOOOOOOO",
-            "PPPPPPPP", "QQQQQQQQ", "RRRRRRRR", "SSSSSSSS", "TTTTTTTT",
-            "UUUUUUUU", "VVVVVVVV", "WWWWWWWW", "XXXXXXXX", "YYYYYYYY",
-            "ZZZZZZZZ"
+            "Informatique 15h-16h  3L", "Java 16h-17h 8P", "Système et reseau 16h-17h 2L","Système et reseau 16h-17h 2L",
+
     };
 
     private Context context = this;
@@ -155,10 +151,10 @@ public class MainActivity extends AppCompatActivity   {
 
 
 
-        TextView actueltxt = (TextView) findViewById(R.id.CoursActuel);
+       //TextView actueltxt = (TextView) findViewById(R.id.CoursActuel2);
         StringBuffer Actu = new StringBuffer();
         Actu.append(chaine);
-        actueltxt.setText(Actu);
+       // actueltxt.setText(Actu);
 
 
         TextView toolbar = (TextView) findViewById(R.id.toolbar_title);

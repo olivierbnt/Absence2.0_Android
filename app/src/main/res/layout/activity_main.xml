@@ -50,10 +50,10 @@
                 android:id="@+id/arrivee_absent"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                app:srcCompat="@drawable/cross"
-                android:layout_marginBottom="48dp"
                 android:layout_above="@+id/textView2"
-                android:layout_alignStart="@+id/arrivee_present" />
+                android:layout_alignStart="@+id/arrivee_present"
+                android:layout_marginBottom="48dp"
+                app:srcCompat="@drawable/cross" />
 
             <ImageView
                 android:id="@+id/arrivee_present"
@@ -69,9 +69,10 @@
                 android:id="@+id/arrivee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/arrivee_absent"
-                android:layout_alignStart="@+id/CoursActuel"
-                android:layout_marginBottom="17dp"
+                android:layout_alignStart="@+id/Date"
+                android:layout_below="@+id/Date"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="16dp"
                 android:text="Arrivée"
                 android:textColor="@color/prof_background_list"
                 android:textSize="18sp" />
@@ -80,17 +81,17 @@
                 android:id="@+id/depart_absent"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                app:srcCompat="@drawable/cross"
+                android:layout_alignStart="@+id/depart_present"
                 android:layout_alignTop="@+id/depart_present"
-                android:layout_alignStart="@+id/depart_present" />
+                app:srcCompat="@drawable/cross" />
 
             <ImageView
                 android:id="@+id/depart_present"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                app:srcCompat="@drawable/tick"
+                android:layout_alignStart="@+id/arrivee_absent"
                 android:layout_centerVertical="true"
-                android:layout_alignStart="@+id/arrivee_absent" />
+                app:srcCompat="@drawable/tick" />
 
             <TextView
                 android:id="@+id/depart"
@@ -98,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/textView2"
                 android:layout_below="@+id/depart_absent"
-                android:text="autorisé à valider dans XXminutes"
+                android:text="validez votre sortie dans 46 min"
                 android:textColor="@color/prof_background_list" />
 
             <TextView
@@ -107,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignEnd="@+id/arrivee"
                 android:layout_centerVertical="true"
-                android:text="Depart"
+                android:text="Départ"
                 android:textColor="@color/prof_background_list"
                 android:textSize="18sp" />
 
@@ -128,16 +129,16 @@
                 android:layout_marginBottom="13dp"
                 android:text="date"
                 android:textColor="@color/white"
-                android:textSize="30sp" />
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/confirmation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:gravity="center_vertical"
                 android:layout_alignBottom="@+id/progressBarBeacon"
                 android:layout_alignEnd="@+id/raprochez"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
                 android:text="Vous êtes détéctés dans la salle"
                 android:textColor="@color/prof_background_list" />
 
@@ -145,22 +146,33 @@
                 android:id="@+id/raprochez"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:text="placez votre téléphone en évidence"
-                android:textColor="@color/prof_background_list"
                 android:layout_alignBaseline="@+id/confirmation"
                 android:layout_alignBottom="@+id/confirmation"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:gravity="center_vertical"
+                android:text="placez votre téléphone en évidence"
+                android:textColor="@color/prof_background_list" />
 
             <TextView
                 android:id="@+id/CoursActuel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textColor="@color/white"
-                android:textSize="30sp"
                 android:layout_above="@+id/Date"
-                android:layout_centerHorizontal="true" />
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:text="Démarche d'Architecture des SI "
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/CoursActuel"
+                android:layout_centerHorizontal="true"
+                android:text="12h-13h"
+                android:textColor="@color/white" />
 
         </RelativeLayout>
 

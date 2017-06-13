@@ -2,9 +2,10 @@ package com.rss.oc.www.absences20.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -79,13 +80,15 @@ public class EtudiantAbsencesActivity extends AppCompatActivity {
 
         AbsencesDAO absencesDAO = new AbsencesDAO(context);
         Intent intent = getIntent();
-        long id_individu = intent.getLongExtra("id_individu",-1);
+        //long id_individu = intent.getLongExtra("id_individu",-1);
+       // Log.i("id_individu", String.valueOf(id_individu));
 
-        if(id_individu!=-1){
-            listIdCours = absencesDAO.getListIdCoursAbsences(id_individu);
+        //if(id_individu!=-1){
+            listIdCours = absencesDAO.getListIdCoursAbsences(66);
+        Log.i("listIdCours",listIdCours.toString());
             CoursDAO coursDAO = new CoursDAO(context);
             listAbsences = coursDAO.getListInfoCours(listIdCours);
-        }
+      //  }
 
 
         onClickMenu(ItemAccueil,ItemAbsence,ItemParametres,ItemProfile,ItemDeconnection,toolbar);

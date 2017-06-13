@@ -47,7 +47,7 @@ public class AbsencesDAO extends DAOBase{
     public ArrayList<Long> getListIdCoursAbsences (long idIndividu){
         ArrayList<Long> listFinal = new ArrayList<>();
         int j=0;
-        Log.i("gzgggg","fgggq");
+
         openDBRead();
         Cursor cursor = mDb.rawQuery("select " +KEY+","+KEY_COURS+","+KEY_INDIVIDU+ " from " + TABLE_NAME, null);
 
@@ -58,7 +58,9 @@ public class AbsencesDAO extends DAOBase{
             int indexIdCours = cursor.getColumnIndex(KEY_COURS);
             do {
 
-                Log.i("Key-ind",cursor.getString(indexIdIndividu));
+                //Log.i("Key-cours",cursor.getString(indexIdCours));
+               // Log.i("Key-int",cursor.getString(indexIdIndividu));
+
                 if(idIndividu == cursor.getInt(indexIdIndividu)){
 
                     listFinal.add(j,cursor.getLong(indexIdCours));

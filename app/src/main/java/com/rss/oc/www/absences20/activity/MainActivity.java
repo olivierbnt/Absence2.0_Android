@@ -50,7 +50,7 @@ import butterknife.ButterKnife;
 
 import static com.rss.oc.www.absences20.R.drawable.my_progress;
 
-public class MainActivity extends AppCompatActivity   {
+public class MainActivity extends AppCompatActivity {
     private static final long RIPPLE_DURATION = 250;
     private static final String TAG = "MainActivity";
 
@@ -70,19 +70,17 @@ public class MainActivity extends AppCompatActivity   {
     Fragment fragment_beacon;
     public BeaconArrayAdapter arrayAdapter;
     ListView mListView;
+    boolean profPresent;
+    boolean etudiantPresent;
 
     private String[] mStrings = {
-            "Informatique 15h-16h  3L", "Java 16h-17h 8P", "Système et reseau 16h-17h 2L","Système et reseau 16h-17h 2L",
+            "Informatique 15h-16h  3L", "Java 16h-17h 8P", "Système et reseau 16h-17h 2L", "Système et reseau 16h-17h 2L",
 
     };
 
     private Context context = this;
     private int progressBarStatus = 0;
     private Handler progressBarHandler = new Handler();
-
-
-
-
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -93,7 +91,7 @@ public class MainActivity extends AppCompatActivity   {
         ButterKnife.bind(this);
         addListenerOnButton();
         Intent intent = getIntent();
-        final long id_individu =intent.getLongExtra("id_individu",-1);
+        final long id_individu = intent.getLongExtra("id_individu", -1);
         fragment_beacon = new BeaconViewerFragment();
 
 
@@ -107,8 +105,8 @@ public class MainActivity extends AppCompatActivity   {
         //View fragment_beacon =  LayoutInflater.from(this).inflate(R.layout.fragment_main, null);
 
 
-       // Demand demand = new Demand();
-       // demand.execute((Void)null);
+        // Demand demand = new Demand();
+        // demand.execute((Void)null);
 
         ItemAccueil = guillotineMenu.findViewById(R.id.accueil_group);
         ItemAbsence = guillotineMenu.findViewById(R.id.absence_group);
@@ -117,26 +115,24 @@ public class MainActivity extends AppCompatActivity   {
         ItemDeconnection = guillotineMenu.findViewById(R.id.deconnection_group);
         TextView textAc = (TextView) findViewById(R.id.accueil_group_text);
         textAc.setTextColor(getResources().getColor(R.color.selected_item_color));
-        progressBar = (ProgressBar)findViewById(R.id.progressBarBeacon);
-        final ImageView aPresent = (ImageView)findViewById(R.id.arrivee_present);
-        final ImageView aAbsent = (ImageView)findViewById(R.id.arrivee_absent);
-        final ImageView dPresent = (ImageView)findViewById(R.id.depart_present);
-        final ImageView dAbsent = (ImageView)findViewById(R.id.depart_absent);
+        progressBar = (ProgressBar) findViewById(R.id.progressBarBeacon);
+        final ImageView aPresent = (ImageView) findViewById(R.id.arrivee_present);
+        final ImageView aAbsent = (ImageView) findViewById(R.id.arrivee_absent);
+        final ImageView dPresent = (ImageView) findViewById(R.id.depart_present);
+        final ImageView dAbsent = (ImageView) findViewById(R.id.depart_absent);
+        final ImageView cadenasImage = (ImageView) findViewById(R.id.cadenasImage);
         final TextView confirmation = (TextView) findViewById(R.id.confirmation);
         final TextView raprochez = (TextView) findViewById(R.id.raprochez);
+        final TextView cadenasTexte = (TextView) findViewById(R.id.cadenasText);
         mListView = (ListView) findViewById(R.id.liste_des_prochains_cours);
 
-        ListAdapter adapter = new ArrayAdapter<String>(this,R.layout.row_prochians_cours,R.id.prochain_cours, mStrings);
+        ListAdapter adapter = new ArrayAdapter<String>(this, R.layout.row_prochians_cours, R.id.prochain_cours, mStrings);
         mListView.setAdapter(adapter);
-
 
 
         confirmation.setVisibility(View.INVISIBLE);
         aPresent.setVisibility(View.INVISIBLE);
         dPresent.setVisibility(View.INVISIBLE);
-
-
-
 
 
         if (toolbar != null) {
@@ -149,18 +145,16 @@ public class MainActivity extends AppCompatActivity   {
         datetxt.setText(ct);
 
 
-
         CoursDAO coursDAO = new CoursDAO(context);
-        long idCoursInstant=coursDAO.getIdCoursInstant();
+        long idCoursInstant = coursDAO.getIdCoursInstant();
         String chaine = coursDAO.getInfoCours(idCoursInstant);
         Log.i(TAG, "idCoursInstant" + idCoursInstant);
 
 
-
-       //TextView actueltxt = (TextView) findViewById(R.id.CoursActuel2);
+        //TextView actueltxt = (TextView) findViewById(R.id.CoursActuel2);
         StringBuffer Actu = new StringBuffer();
         Actu.append(chaine);
-       // actueltxt.setText(Actu);
+        // actueltxt.setText(Actu);
 
 
         TextView toolbar = (TextView) findViewById(R.id.toolbar_title);
@@ -170,26 +164,26 @@ public class MainActivity extends AppCompatActivity   {
                 .setClosedOnStart(true)
                 .build();
 
-        onClickMenu(ItemAccueil,ItemAbsence,ItemParametres,ItemProfile,ItemDeconnection,toolbar,id_individu);
+        onClickMenu(ItemAccueil, ItemAbsence, ItemParametres, ItemProfile, ItemDeconnection, toolbar, id_individu);
 
-       // IndividusDAO individusDAO =new IndividusDAO(context);
-       // individusDAO.validerPresenceDebut(7);
+        // IndividusDAO individusDAO =new IndividusDAO(context);
+        // individusDAO.validerPresenceDebut(7);
 
         final BeaconViewerFragment fr = (BeaconViewerFragment) getFragmentManager().findFragmentById(R.id.fragment_beacon);
-        if(fr != null) {
+        if (fr != null) {
 
 
             // nouveau thread pour mettre a jour la progressBar afin de representer les beacons
 
             // Demande des autorisations pour utiliser le Bluetooth
             int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
-            if (permissionCheck != PackageManager.PERMISSION_GRANTED){
-                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
                     Toast.makeText(this, "The permission to get BLE location data is required", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
                 }
-            }else{
+            } else {
                 Toast.makeText(this, "Location permissions already granted", Toast.LENGTH_SHORT).show();
             }
             Log.d(TAG, "Autorisations done (Bluetooth)");
@@ -210,33 +204,37 @@ public class MainActivity extends AppCompatActivity   {
                                 public void run() {
 
                                     //prepare for a progress bar dialog
-                                    int nombreBeacons  = arrayAdapter.getCount();
+                                    int nombreBeacons = arrayAdapter.getCount();
                                     //for (int i = 0; i < arrayAdapter.getCount(); i++){
                                     // }
                                     progressBar.setMax(4);
                                     progressBar.setProgress(nombreBeacons);
                                     progressBar.setProgressDrawable(getResources().getDrawable(my_progress));
 
-                                    if (nombreBeacons == 4 ){
-                       IndividusDAO individusDAO =new IndividusDAO(context);
-                                       // individusDAO.validerPresenceDebut(7);
+                                    if (profPresent == true) {
+                                        cadenasTexte.setVisibility(View.INVISIBLE);
+                                        cadenasImage.setVisibility(View.INVISIBLE);
+                                        aAbsent.setVisibility(View.VISIBLE);
 
-                                        aPresent.setVisibility(View.VISIBLE);
+                                        if (nombreBeacons == 4) {
+                                            etudiantPresent = true;
+                                            IndividusDAO individusDAO = new IndividusDAO(context);
+                                            // individusDAO.validerPresenceDebut(7);
+
+                                            aPresent.setVisibility(View.VISIBLE);
+                                            aAbsent.setVisibility(View.INVISIBLE);
+                                            confirmation.setVisibility(View.VISIBLE);
+                                            raprochez.setVisibility(View.INVISIBLE);
+                                        } else {
+                                            confirmation.setVisibility(View.INVISIBLE);
+                                            raprochez.setVisibility(View.VISIBLE);
+                                        }
+                                    } else {
                                         aAbsent.setVisibility(View.INVISIBLE);
-                                        confirmation.setVisibility(View.VISIBLE);
-                                        raprochez.setVisibility(View.INVISIBLE);
-                                    }else{
-                                        confirmation.setVisibility(View.INVISIBLE);
-                                        raprochez.setVisibility(View.VISIBLE);
+                                        cadenasTexte.setVisibility(View.VISIBLE);
+                                        cadenasImage.setVisibility(View.VISIBLE);
 
                                     }
-
-                                    // Ajouter condition de départ temporelle
-                                    if (nombreBeacons == 4 ){
-                                       // aPresent.setVisibility(View.VISIBLE);
-                                       // aAbsent.setVisibility(View.INVISIBLE);
-                                    }
-
                                 }
                             });
                         }
@@ -251,9 +249,8 @@ public class MainActivity extends AppCompatActivity   {
         }
 
 
-
-
     }
+
     public class Demand extends AsyncTask<Void, Void, Boolean> {
 
 
@@ -261,12 +258,12 @@ public class MainActivity extends AppCompatActivity   {
         protected Boolean doInBackground(Void... params) {
 
 
-            String mLogin ="eleve1@epfedu.fr";
+            String mLogin = "eleve1@epfedu.fr";
             GetMyJson get = new GetMyJson();
             try {
-                URL url =new URL("https://saliferous-automobi.000webhostapp.com/api/v1/key?login="+mLogin);
-                String api =  get.getApi(url);
-                validerPresenceDebut(7,1,api);
+                URL url = new URL("https://saliferous-automobi.000webhostapp.com/api/v1/key?login=" + mLogin);
+                String api = get.getApi(url);
+                validerPresenceDebut(7, 1, api);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -275,7 +272,7 @@ public class MainActivity extends AppCompatActivity   {
         }
     }
 
-    private void onClickMenu(View mViewAc, View mViewAb, View mViewPa, View mViewPr, View mViewDe, final TextView toolbar, final long id_individu){
+    private void onClickMenu(View mViewAc, View mViewAb, View mViewPa, View mViewPr, View mViewDe, final TextView toolbar, final long id_individu) {
 
         mViewAb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -339,28 +336,30 @@ public class MainActivity extends AppCompatActivity   {
             }
         });
     }
-    public void loadEtudiantAbsencesActivity(long id_individu){
+
+    public void loadEtudiantAbsencesActivity(long id_individu) {
         Intent myintent = new Intent(this, EtudiantAbsencesActivity.class);
-        myintent.putExtra("id_individu",id_individu);
+        myintent.putExtra("id_individu", id_individu);
         startActivity(myintent);
         finish();
     }
 
-    public void loadEtudiantProfileActivity(long id_individu){
+    public void loadEtudiantProfileActivity(long id_individu) {
         Intent myintent = new Intent(this, EtudiantProfileActivity.class);
-        myintent.putExtra("id_individu",id_individu);
+        myintent.putExtra("id_individu", id_individu);
         startActivity(myintent);
         finish();
     }
-    public void loadEtudiantSettingsActivity(long id_individu){
+
+    public void loadEtudiantSettingsActivity(long id_individu) {
         Intent myintent = new Intent(this, EtudiantSettingsActivity.class);
-        myintent.putExtra("id_individu",id_individu);
+        myintent.putExtra("id_individu", id_individu);
         finish();
     }
 
-    public void loadLoginActivity(long id_individu){
+    public void loadLoginActivity(long id_individu) {
         Intent myintent = new Intent(this, LoginActivity.class);
-        myintent.putExtra("id_individu",id_individu);
+        myintent.putExtra("id_individu", id_individu);
         startActivity(myintent);
         finish();
     }
@@ -370,27 +369,27 @@ public class MainActivity extends AppCompatActivity   {
         final Context context = this;
     }
 
-    public String validerPresenceDebut (long id_user,long id_cours, String api){
+    public String validerPresenceDebut(long id_user, long id_cours, String api) {
 
-        String reponse=null;
-        List pairs = new ArrayList() ;
-        pairs.add(new BasicNameValuePair("id_etudiant",String.valueOf(id_user)));
-        pairs.add(new BasicNameValuePair("id_cours",String.valueOf(id_cours)));
-        pairs.add(new BasicNameValuePair("api_key",api));
+        String reponse = null;
+        List pairs = new ArrayList();
+        pairs.add(new BasicNameValuePair("id_etudiant", String.valueOf(id_user)));
+        pairs.add(new BasicNameValuePair("id_cours", String.valueOf(id_cours)));
+        pairs.add(new BasicNameValuePair("api_key", api));
         String urlDuServeur = "https://saliferous-automobi.000webhostapp.com/api/v1/presenceEtudiant";
         postRequest maRequete = new postRequest();
         maRequete.sendRequest(urlDuServeur, pairs);
         reponse = maRequete.getResultat();
-         return reponse;
-        }
+        return reponse;
+    }
 
-    public String validerPresenceFin (long id_user,long id_cours, String api){
+    public String validerPresenceFin(long id_user, long id_cours, String api) {
 
-        String reponse=null;
-        List pairs = new ArrayList() ;
-        pairs.add(new BasicNameValuePair("id_etudiant",String.valueOf(id_user)));
-        pairs.add(new BasicNameValuePair("id_cours",String.valueOf(id_cours)));
-        pairs.add(new BasicNameValuePair("api_key",api));
+        String reponse = null;
+        List pairs = new ArrayList();
+        pairs.add(new BasicNameValuePair("id_etudiant", String.valueOf(id_user)));
+        pairs.add(new BasicNameValuePair("id_cours", String.valueOf(id_cours)));
+        pairs.add(new BasicNameValuePair("api_key", api));
         String urlDuServeur = "https://saliferous-automobi.000webhostapp.com/api/v1/validerPresence";
         postRequest maRequete = new postRequest();
         maRequete.sendRequest(urlDuServeur, pairs);
@@ -398,11 +397,11 @@ public class MainActivity extends AppCompatActivity   {
         return reponse;
     }
 
-    private String getApi (){
+    private String getApi() {
         String mApi = null;
 
-        List pairs = new ArrayList() ;
-        pairs.add(new BasicNameValuePair("login","gestion@admin.fr"));
+        List pairs = new ArrayList();
+        pairs.add(new BasicNameValuePair("login", "gestion@admin.fr"));
         //pairs.add(new BasicNameValuePair("password","admiNEPF2017"));
         String urlDuServeur = "https://saliferous-automobi.000webhostapp.com/api/v1/key";
         postRequest Requete = new postRequest();

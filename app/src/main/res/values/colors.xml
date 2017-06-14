@@ -5,7 +5,8 @@
     <color name="colorAccent">#FF4081</color>
     <color name="guillotine_background">#444153</color>
     <color name="prof_background_list">#fffafa</color>
-    <color name="guillotine_background_dark">#383547</color>
+    <color name="guillotine_background_dark">#fff</color>
+    <color name="text">#000</color>
     <color name="selected_item_color">#30d1d5</color>
     <color name="white">#ffffff</color>
     <color name="progress_start">#009933</color>

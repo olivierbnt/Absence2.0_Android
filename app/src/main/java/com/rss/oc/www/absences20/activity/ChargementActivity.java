@@ -1,12 +1,16 @@
 package com.rss.oc.www.absences20.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 
 import com.rss.oc.www.absences20.R;
 import com.rss.oc.www.absences20.annexe.postRequest;
@@ -37,31 +41,31 @@ public class ChargementActivity extends AppCompatActivity {
     public final int VAL_DEBUT=0;
     public final int VAL_FIN=0;
     private String api;
+    private View mProgressView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chargement);
-        Button button = (Button)findViewById(R.id.button2);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               // Synchronisation synchronisation =new Synchronisation();
-               // synchronisation.execute((Void)null);
+        mProgressView = findViewById(R.id.progressBar2);
+
+
+        // Synchronisation synchronisation =new Synchronisation();
+                // synchronisation.execute((Void)null);
                 Base base =new Base();
                 base.execute((Void)null);
-            }
-        });
+
 
     }
 
 
 
-       public class Synchronisation extends AsyncTask<Void, Void, Boolean> {
+    public class Synchronisation extends AsyncTask<Void, Void, Boolean> {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-             api = getApi();
+            api = getApi();
 
             Log.i("api",api);
             //getBase("gestion@admin.fr","1234","1c8d10d42f72dafd2be3da81388ffe2c");
@@ -75,19 +79,45 @@ public class ChargementActivity extends AppCompatActivity {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void showProgress(final boolean show) {
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+
+
+        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+
+    }
+
     public class Base extends AsyncTask<Void, Void, Boolean> {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-             //createUser("gestion@admin.fr","1234");
-             //api = getApi();
+            //createUser("gestion@admin.fr","1234");
+            //api = getApi();
+            showProgress(true);
+
             getBase("gestion@admin.fr","1234","9a28948977f2d9097163cd6cb845d8f0");
-            return null;
+            return true;
         }
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
+
+            Intent myIntent = new Intent (context,LoginActivity.class);
+            startActivity(myIntent);
+
         }
     }
 
@@ -129,6 +159,7 @@ public class ChargementActivity extends AppCompatActivity {
         postRequest maRequete = new postRequest();
         maRequete.sendRequest(urlDuServeur, pairs);
         JSONObject jsonResponse = maRequete.getJsonResponse();
+        Log.i("zvzvvzevz",jsonResponse.toString());
 
 
         try {
@@ -143,17 +174,17 @@ public class ChargementActivity extends AppCompatActivity {
                 Utilisateurs utilisateurs = new Utilisateurs(id,identifiant,statut,password);
                 UtilisateurDAO utilisateurDAO = new UtilisateurDAO(context);
                 utilisateurDAO.ajouter(utilisateurs);
-         }
+            }
             individus = jsonResponse.getString("individus");
             JSONArray jsonArrayIndividus = new JSONArray(individus);
             for(int i=0;i<jsonArrayIndividus.length();i++){
                 JSONObject jsonObject =jsonArrayIndividus.getJSONObject(i);
                 long id = jsonObject.getInt("id");
-//                    long id_user=jsonObject.getInt("id_user");
+                long id_user=jsonObject.getInt("id_user");
                 String statut=jsonObject.getString("statut");
                 String nom = jsonObject.getString("nom");
                 String prenom=jsonObject.getString("prenom");
-                Individus individus_epf = new Individus(id,0,VAL_DEBUT,VAL_FIN,statut,nom,prenom);
+                Individus individus_epf = new Individus(id,id_user,VAL_DEBUT,VAL_FIN,statut,nom,prenom);
                 IndividusDAO individusDAO = new IndividusDAO(context);
                 individusDAO.ajouterIndividu(individus_epf);
             }

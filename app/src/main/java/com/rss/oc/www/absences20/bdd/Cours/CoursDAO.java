@@ -175,7 +175,7 @@ public class CoursDAO extends DAOBase {
         //Date dateInstant= c.getTime();
 
         try {
-            Date dateInstant =dt.parse("17-05-2017 15:30:00");
+            Date dateInstant =dt.parse("13-06-2017 11:30:00");
             Date dateDebut = dt.parse(debut);
             Date dateFin  = dt.parse(fin);
 

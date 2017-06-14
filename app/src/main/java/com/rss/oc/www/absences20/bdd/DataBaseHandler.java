@@ -149,10 +149,14 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public DataBaseHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
 
+
+
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
+
 
         db.execSQL(UTILISATEUR_TABLE_CREATE);
         db.execSQL(COURS_TABLE_CREATE);
@@ -169,4 +173,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         super.onDowngrade(db, oldVersion, newVersion);
 
     }
+
+
+
 }

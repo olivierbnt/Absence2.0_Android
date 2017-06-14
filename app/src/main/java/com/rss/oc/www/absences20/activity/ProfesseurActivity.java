@@ -118,6 +118,7 @@ public class ProfesseurActivity extends AppCompatActivity {
         obj = individusDAO.listIndividusInstant(listIdIndividusInstant);
         listIndicateur = individusDAO.listIndicateur(listIdIndividusInstant);
 
+
         TextView toolbar = (TextView) findViewById(R.id.toolbar_title);
         toolbar.setText(getString(R.string.action_liste_etudiants));
         new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
@@ -131,6 +132,7 @@ public class ProfesseurActivity extends AppCompatActivity {
                 R.layout.list_absence_view, R.id.text, obj);
 
 
+        Log.i("list indicateur",listIndicateur.toString());
         WrapperListAdapterImpl wrap = new WrapperListAdapterImpl(listAdapter) {
             @Override
             public View getView(int position, View view, ViewGroup viewGroup) {
@@ -140,12 +142,18 @@ public class ProfesseurActivity extends AppCompatActivity {
                 long l = listIndicateur.get(position);
                 if(l==0){
                     indicateurPresence = (ImageView) row.findViewById(R.id.imageViewIndicateurStatut);
-                    indicateurPresence.setImageResource(R.drawable.bouttongris);
+                    indicateurPresence.setImageResource(R.drawable.button_rouge);
                 }
+                if(l==1){
+
+                    indicateurPresence = (ImageView) row.findViewById(R.id.imageViewIndicateurStatut);
+                    indicateurPresence.setImageResource(R.drawable.bouttonvert);
+                }
+
                 if(l==2){
 
                     indicateurPresence = (ImageView) row.findViewById(R.id.imageViewIndicateurStatut);
-                    indicateurPresence.setImageResource(R.drawable.ic_accessible_black_24dp);
+                    indicateurPresence.setImageResource(R.drawable.bouttongris);
                 }
 
                 return wrapped.getView(position,row,viewGroup);

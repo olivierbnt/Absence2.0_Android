@@ -4,12 +4,12 @@
         "source": "/Users/famille/.android/build-cache/685c36e6b38bed7c77af21beda21cb8fb9de77a9/output/res/layout/abc_activity_chooser_view_list_item.xml"
     },
     {
-        "merged": "/Users/famille/Documents/GitHub/Absence/circlerefresh/build/intermediates/res/merged/release/layout/select_dialog_multichoice_material.xml",
-        "source": "/Users/famille/.android/build-cache/685c36e6b38bed7c77af21beda21cb8fb9de77a9/output/res/layout/select_dialog_multichoice_material.xml"
-    },
-    {
         "merged": "/Users/famille/Documents/GitHub/Absence/circlerefresh/build/intermediates/res/merged/release/layout/abc_screen_simple.xml",
         "source": "/Users/famille/.android/build-cache/685c36e6b38bed7c77af21beda21cb8fb9de77a9/output/res/layout/abc_screen_simple.xml"
+    },
+    {
+        "merged": "/Users/famille/Documents/GitHub/Absence/circlerefresh/build/intermediates/res/merged/release/layout/select_dialog_multichoice_material.xml",
+        "source": "/Users/famille/.android/build-cache/685c36e6b38bed7c77af21beda21cb8fb9de77a9/output/res/layout/select_dialog_multichoice_material.xml"
     },
     {
         "merged": "/Users/famille/Documents/GitHub/Absence/circlerefresh/build/intermediates/res/merged/release/layout/abc_screen_simple_overlay_action_mode.xml",
@@ -44,12 +44,12 @@
         "source": "/Users/olivierbonnet/.android/build-cache/370340a1eff06b2e678675ece73def9685d3684b/output/res/layout/abc_popup_menu_item_layout.xml"
     },
     {
-        "merged": "/Users/famille/Documents/GitHub/Absence/circlerefresh/build/intermediates/res/merged/release/layout/abc_expanded_menu_layout.xml",
-        "source": "/Users/famille/.android/build-cache/685c36e6b38bed7c77af21beda21cb8fb9de77a9/output/res/layout/abc_expanded_menu_layout.xml"
-    },
-    {
         "merged": "/Users/famille/Documents/GitHub/Absence/circlerefresh/build/intermediates/res/merged/release/layout/abc_search_dropdown_item_icons_2line.xml",
         "source": "/Users/famille/.android/build-cache/685c36e6b38bed7c77af21beda21cb8fb9de77a9/output/res/layout/abc_search_dropdown_item_icons_2line.xml"
+    },
+    {
+        "merged": "/Users/famille/Documents/GitHub/Absence/circlerefresh/build/intermediates/res/merged/release/layout/abc_expanded_menu_layout.xml",
+        "source": "/Users/famille/.android/build-cache/685c36e6b38bed7c77af21beda21cb8fb9de77a9/output/res/layout/abc_expanded_menu_layout.xml"
     },
     {
         "merged": "/Users/famille/Documents/GitHub/Absence/circlerefresh/build/intermediates/res/merged/release/layout/abc_dialog_title_material.xml",

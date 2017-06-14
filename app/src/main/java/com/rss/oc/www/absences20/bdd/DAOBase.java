@@ -10,14 +10,15 @@ import android.database.sqlite.SQLiteDatabase;
 public  abstract class DAOBase {
     // Nous sommes à la première version de la base
     // Si je décide de la mettre à jour, il faudra changer cet attribut
-    protected final static int VERSION = 1;
+    protected  int VERSION ;
     // Le nom du fichier qui représente ma base
-    protected final static String NOM = "Abs.db";
+    protected final static String NOM = "Affffff.db";
 
     protected SQLiteDatabase mDb = null;
     protected DataBaseHandler mHandler = null;
 
     public DAOBase(Context pContext) {
+        VERSION = 1;
         this.mHandler = new DataBaseHandler(pContext, NOM, null, VERSION);
     }
 
@@ -33,6 +34,7 @@ public  abstract class DAOBase {
 
         return mDb;
     }
+
 
 
     public void close() {

@@ -101,7 +101,7 @@ public class EtudiantAbsencesActivity extends AppCompatActivity {
                 R.id.text_absence_etudiant,listAbsences));
 
 
-
+      listIdCours.clear();
 
     }
 

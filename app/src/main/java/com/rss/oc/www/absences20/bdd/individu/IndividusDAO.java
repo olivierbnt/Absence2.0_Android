@@ -5,9 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
-import com.rss.oc.www.absences20.bdd.Cours.CoursDAO;
 import com.rss.oc.www.absences20.bdd.DAOBase;
-import com.rss.oc.www.absences20.bdd.DataBaseHandler;
 
 import java.util.ArrayList;
 
@@ -129,6 +127,8 @@ public class IndividusDAO extends DAOBase {
 
             do{
 
+                Log.i("id_id", String.valueOf(cursor.getLong(indexIdUsers)));
+
          if(idUser==cursor.getLong(indexIdUsers)){
              idIndividu=cursor.getLong(indexIdIndividu);
              cursor.moveToLast();
@@ -143,27 +143,34 @@ public class IndividusDAO extends DAOBase {
     }
 
     public void validerPresenceDebut(long id){
-        ContentValues value = new ContentValues();
-        value.put(IndividusDAO.VAL_DEBUT,1);
-        mDb.update(TABLE_NAME,value,KEY +" = ?", new String[]{"7"});
+
+        String query = "UPDATE "+TABLE_NAME+" SET "+VAL_DEBUT+" = 1 WHERE "+KEY+" = "+id;
+        openDBWrite();
+        mDb.execSQL(query);
+        close();
+
     }
     public void validerRetardDebut(long id){
 
-        ContentValues value = new ContentValues();
-        value.put(IndividusDAO.VAL_DEBUT,2);
-        mDb.update(TABLE_NAME,value,"id="+id,null);
+        String query = "UPDATE "+TABLE_NAME+" SET "+VAL_DEBUT+" = 2 WHERE "+KEY+" = "+id;
+        openDBWrite();
+        mDb.execSQL(query);
+        close();
+
     }
 
     public void validerPresenceFin(long id){
-        ContentValues value = new ContentValues();
-        value.put(IndividusDAO.VAL_FIN,1);
-        mDb.update(TABLE_NAME,value,"id="+id,null);
+        String query = "UPDATE "+TABLE_NAME+" SET "+VAL_FIN+" = 1 WHERE "+KEY+" = "+id;
+        openDBWrite();
+        mDb.execSQL(query);
+        close();
+
     }
 
     public void resetPresence(long id){
-        ContentValues value = new ContentValues();
-        value.put(IndividusDAO.VAL_DEBUT,0);
-        value.put(IndividusDAO.VAL_FIN,0);
-        mDb.update(TABLE_NAME,value,"id="+id,null);
+        String query = "UPDATE "+TABLE_NAME+" SET "+VAL_FIN+" = 0"+" , "+VAL_FIN+" = 0 WHERE "+KEY+" = "+id;
+        openDBWrite();
+        mDb.execSQL(query);
+        close();
     }
 }

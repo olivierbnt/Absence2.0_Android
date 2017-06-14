@@ -33,6 +33,7 @@ import com.rss.oc.www.absences20.R;
 import com.rss.oc.www.absences20.annexe.GetMyJson;
 import com.rss.oc.www.absences20.annexe.postRequest;
 import com.rss.oc.www.absences20.bdd.Cours.CoursDAO;
+import com.rss.oc.www.absences20.bdd.individu.Individus;
 import com.rss.oc.www.absences20.bdd.individu.IndividusDAO;
 import com.yalantis.guillotine.animation.GuillotineAnimation;
 
@@ -95,6 +96,11 @@ public class MainActivity extends AppCompatActivity   {
         final long id_individu =intent.getLongExtra("id_individu",-1);
         fragment_beacon = new BeaconViewerFragment();
 
+
+        IndividusDAO individusDAO = new IndividusDAO(context);
+        Log.i("harris", String.valueOf(id_individu));
+        individusDAO.validerPresenceDebut(id_individu);
+        //individusDAO.resetPresence(66);
 
         View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null);
         root.addView(guillotineMenu);

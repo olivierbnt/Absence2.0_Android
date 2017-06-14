@@ -307,6 +307,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
 
     public void loadMainActivity (long id_individu, long id_user, String mLogin) {
         Intent myintent = new Intent(this, MainActivity.class);
+        Log.i("info", String.valueOf(id_individu));
+        Log.i("info", String.valueOf(id_user));
         myintent.putExtra("id_individu",id_individu);
         myintent.putExtra("id_user",id_user);
         myintent.putExtra("Login",mLogin);

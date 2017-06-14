@@ -7,3 +7,6 @@
 /build
 /captures
 .externalNativeBuild
+*.json
+app/library/build/outputs/aar/library-release.aar
+app/library/build/intermediates/incremental/packageReleaseResources/compile-file-map.properties

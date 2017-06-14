@@ -17,6 +17,7 @@
     },
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
         "merged": "/Users/famille/Documents/GitHub/Absence/circlerefresh/build/intermediates/res/merged/debug/drawable/abc_textfield_search_material.xml",
         "source": "/Users/famille/.android/build-cache/685c36e6b38bed7c77af21beda21cb8fb9de77a9/output/res/drawable/abc_textfield_search_material.xml"
     },
@@ -81,6 +82,8 @@
         "source": "/Users/famille/.android/build-cache/685c36e6b38bed7c77af21beda21cb8fb9de77a9/output/res/drawable/abc_cab_background_internal_bg.xml"
     },
     {
+=======
+>>>>>>> 87fa81a5c7dbed17af6fccf990a0b179dc1e9aa9
 =======
 >>>>>>> 87fa81a5c7dbed17af6fccf990a0b179dc1e9aa9
         "merged": "/Users/olivierbonnet/Desktop/Projet Filiere/Absence/circlerefresh/build/intermediates/res/merged/debug/drawable/abc_textfield_search_material.xml",

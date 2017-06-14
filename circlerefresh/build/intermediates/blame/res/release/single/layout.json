@@ -1,6 +1,7 @@
 [
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
         "merged": "/Users/famille/Documents/GitHub/Absence/circlerefresh/build/intermediates/res/merged/release/layout/abc_activity_chooser_view_list_item.xml",
         "source": "/Users/famille/.android/build-cache/685c36e6b38bed7c77af21beda21cb8fb9de77a9/output/res/layout/abc_activity_chooser_view_list_item.xml"
     },
@@ -23,6 +24,13 @@
         "merged": "/Users/olivierbonnet/Desktop/Projet Filiere/Absence/circlerefresh/build/intermediates/res/merged/release/layout/abc_action_bar_up_container.xml",
         "source": "/Users/olivierbonnet/.android/build-cache/370340a1eff06b2e678675ece73def9685d3684b/output/res/layout/abc_action_bar_up_container.xml"
 >>>>>>> 87fa81a5c7dbed17af6fccf990a0b179dc1e9aa9
+=======
+        "merged": "/Users/olivierbonnet/Desktop/Projet Filiere/Absence/circlerefresh/build/intermediates/res/merged/release/layout/abc_alert_dialog_material.xml",
+        "source": "/Users/olivierbonnet/.android/build-cache/370340a1eff06b2e678675ece73def9685d3684b/output/res/layout/abc_alert_dialog_material.xml"
+    },
+    {
+        "merged": "/Users/olivierbonnet/Desktop/Projet Filiere/Absence/circlerefresh/build/intermediates/res/merged/release/layout/abc_action_bar_up_container.xml",
+        "source": "/Users/olivierbonnet/.android/build-cache/370340a1eff06b2e678675ece73def9685d3684b/output/res/layout/abc_action_bar_up_container.xml"
     },
     {
         "merged": "/Users/olivierbonnet/Desktop/Projet Filiere/Absence/circlerefresh/build/intermediates/res/merged/release/layout/select_dialog_item_material.xml",
@@ -31,12 +39,24 @@
     {
         "merged": "/Users/olivierbonnet/Desktop/Projet Filiere/Absence/circlerefresh/build/intermediates/res/merged/release/layout/abc_simple_dropdown_hint.xml",
         "source": "/Users/olivierbonnet/.android/build-cache/370340a1eff06b2e678675ece73def9685d3684b/output/res/layout/abc_simple_dropdown_hint.xml"
+>>>>>>> 87fa81a5c7dbed17af6fccf990a0b179dc1e9aa9
+    },
+    {
+        "merged": "/Users/olivierbonnet/Desktop/Projet Filiere/Absence/circlerefresh/build/intermediates/res/merged/release/layout/select_dialog_item_material.xml",
+        "source": "/Users/olivierbonnet/.android/build-cache/370340a1eff06b2e678675ece73def9685d3684b/output/res/layout/select_dialog_item_material.xml"
+    },
+    {
+<<<<<<< HEAD
+        "merged": "/Users/olivierbonnet/Desktop/Projet Filiere/Absence/circlerefresh/build/intermediates/res/merged/release/layout/abc_simple_dropdown_hint.xml",
+        "source": "/Users/olivierbonnet/.android/build-cache/370340a1eff06b2e678675ece73def9685d3684b/output/res/layout/abc_simple_dropdown_hint.xml"
     },
     {
         "merged": "/Users/olivierbonnet/Desktop/Projet Filiere/Absence/circlerefresh/build/intermediates/res/merged/release/layout/abc_screen_simple_overlay_action_mode.xml",
         "source": "/Users/olivierbonnet/.android/build-cache/370340a1eff06b2e678675ece73def9685d3684b/output/res/layout/abc_screen_simple_overlay_action_mode.xml"
     },
     {
+=======
+>>>>>>> 87fa81a5c7dbed17af6fccf990a0b179dc1e9aa9
         "merged": "/Users/olivierbonnet/Desktop/Projet Filiere/Absence/circlerefresh/build/intermediates/res/merged/release/layout/abc_action_bar_view_list_nav_layout.xml",
         "source": "/Users/olivierbonnet/.android/build-cache/370340a1eff06b2e678675ece73def9685d3684b/output/res/layout/abc_action_bar_view_list_nav_layout.xml"
     },
@@ -53,6 +73,7 @@
         "source": "/Users/olivierbonnet/.android/build-cache/370340a1eff06b2e678675ece73def9685d3684b/output/res/layout/abc_popup_menu_item_layout.xml"
     },
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
         "merged": "/Users/famille/Documents/GitHub/Absence/circlerefresh/build/intermediates/res/merged/release/layout/abc_search_dropdown_item_icons_2line.xml",
         "source": "/Users/famille/.android/build-cache/685c36e6b38bed7c77af21beda21cb8fb9de77a9/output/res/layout/abc_search_dropdown_item_icons_2line.xml"
@@ -154,6 +175,8 @@
         "source": "/Users/olivierbonnet/.android/build-cache/370340a1eff06b2e678675ece73def9685d3684b/output/res/layout/abc_activity_chooser_view.xml"
     },
     {
+=======
+>>>>>>> 87fa81a5c7dbed17af6fccf990a0b179dc1e9aa9
 =======
 >>>>>>> 87fa81a5c7dbed17af6fccf990a0b179dc1e9aa9
         "merged": "/Users/olivierbonnet/Desktop/Projet Filiere/Absence/circlerefresh/build/intermediates/res/merged/release/layout/abc_list_menu_item_icon.xml",

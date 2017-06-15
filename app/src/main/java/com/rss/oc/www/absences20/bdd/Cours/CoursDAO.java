@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by BRICE CESAR on 29/05/2017.
@@ -240,43 +241,58 @@ public class CoursDAO extends DAOBase {
         String heure = null;
         String heureDebut =null;
         String heureFin= null;
+        long dureeMilli=0L;
+        long duree=0;
+        long heureI=0;
+        long minuteI=0;
         openDBRead();
 
-        Cursor cursor = mDb.rawQuery("select " +KEY+","+HEURE_DEBUT+","+HEURE_FIN+ " from " + TABLE_NAME, null);
+        Cursor cursor = mDb.rawQuery("select " +KEY+","+HEURE_DEBUT+","+HEURE_FIN+","+ANNEE+","+MOIS+","+JOUR+ " from " + TABLE_NAME, null);
 
         if (cursor.moveToNext()){
             int indexId = cursor.getColumnIndex(KEY);
             int indexHeureDebut = cursor.getColumnIndex(HEURE_DEBUT);
             int indexHeureFin = cursor.getColumnIndex(HEURE_FIN);
+            int indexAnneFin = cursor.getColumnIndex(ANNEE);
+            int indexMoisFin = cursor.getColumnIndex(MOIS);
+            int indexJourFin = cursor.getColumnIndex(JOUR);
 
             do{
 
                 long id = cursor.getInt(indexId);
+                String anneeFin=cursor.getString(indexAnneFin);
+                String moisFin=cursor.getString(indexMoisFin);
+                String joursFin=cursor.getString(indexJourFin);
 
                 if (id==idCoursInstant){
 
                     heureDebut = cursor.getString(indexHeureDebut);
                     heureFin  = cursor.getString(indexHeureFin);
-                    Calendar c = Calendar.getInstance();
+
+                    Calendar c = Calendar.getInstance(Locale.FRANCE);
+                    Date timeInstant = c.getTime();
+
+                    Log.i("dateTime",timeInstant.toString());
+                        String heureIChaine = String.valueOf(timeInstant);
+                         heureI= Long.parseLong(heureIChaine.substring(11,13))*60;
+                        Log.i("heureI", String.valueOf(heureI));
+
+                         minuteI= Long.parseLong(heureIChaine.substring(14,16));
+                        Log.i("minuteI", String.valueOf(minuteI));
 
 
-                    float heureInst1000 = c.getTimeInMillis()/*(long)6*//(long)(31536*1000000);
-                    float heureInst = heureInst1000/*(long)100*/;
-                    Log.i("calendar", String.valueOf(heureInst));
-                    long h = Long.parseLong(heureFin.substring(0,2))*60;
-                    Log.i("h", String.valueOf(h));
-                    long m = Long.parseLong(heureFin.substring(3,5));
-                    Log.i("mmmmmmmmm", String.valueOf(m));
-                    long heureF = h+m-5;
+                    Log.i("calendar", String.valueOf(timeInstant));
+
+                    Long heureF = Long.parseLong(heureFin.substring(0,2))*60;
                     Log.i("heureF", String.valueOf(heureF));
-                    long duree = (long) (heureF - heureInst);
+                    Long minuteF = Long.parseLong(heureFin.substring(3,5));
+                    Log.i("minuteF", String.valueOf(minuteF));
+
+                     duree= heureF+minuteF-(heureI+minuteI);
 
                     Log.i("durée", String.valueOf(duree));
-                    Log.i("long", String.valueOf(h));
-                    Log.i("long", String.valueOf(m));
 
-
-                        heure = "Validez votre sortie dans "+String.valueOf(duree)+" min" ;
+                        heure = "Validez votre sortie dans "+duree+" min" ;
 
 
 
@@ -287,7 +303,7 @@ public class CoursDAO extends DAOBase {
 
             }while (cursor.moveToNext());
         }
-
+        close();
         return heure;
     }
 

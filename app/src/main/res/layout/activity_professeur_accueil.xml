@@ -55,87 +55,14 @@ android:orientation="vertical">
 
         </android.support.v7.widget.Toolbar>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="41dp" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/cadenasText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/arrivee"
-                android:layout_alignParentStart="true"
-                android:layout_marginBottom="18dp"
-                android:text="Debut du cours:"
-                android:textAlignment="textEnd"
-                android:textColor="@android:color/holo_red_dark" />
-
-            <ImageView
-                android:id="@+id/arrivee_absent"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_above="@+id/textView2"
-                android:layout_alignStart="@+id/arrivee_present"
-                android:layout_marginBottom="48dp"
-                app:srcCompat="@drawable/cross" />
-
-            <ImageView
-                android:id="@+id/arrivee_present"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignTop="@+id/arrivee_absent"
-                android:layout_marginStart="27dp"
-                android:layout_toEndOf="@+id/arrivee"
-                app:srcCompat="@drawable/tick" />
-
-
-            <TextView
-                android:id="@+id/arrivee"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/Date"
-                android:layout_below="@+id/Date"
-                android:layout_marginStart="14dp"
-                android:layout_marginTop="16dp"
-                android:text="Arrivée"
-                android:textColor="@color/text"
-                android:textSize="18sp" />
-
-            <ImageView
-                android:id="@+id/depart_absent"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignStart="@+id/depart_present"
-                android:layout_alignTop="@+id/depart_present"
-                app:srcCompat="@drawable/cross" />
-
-            <ImageView
-                android:id="@+id/depart_present"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignStart="@+id/arrivee_absent"
-                android:layout_centerVertical="true"
-                app:srcCompat="@drawable/tick" />
-
-            <TextView
-                android:id="@+id/depart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/textView2"
-                android:layout_below="@+id/depart_absent"
-                android:text="validez votre sortie dans 46 min"
-                android:textColor="@color/text" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/depart_absent"
-                android:layout_marginEnd="14dp"
-                android:layout_toStartOf="@+id/raprochez"
-                android:text="Départ"
-                android:textColor="@color/text"
-                android:textSize="18sp" />
 
             <ProgressBar
                 android:id="@+id/progressBarBeacon"
@@ -144,17 +71,6 @@ android:orientation="vertical">
                 android:layout_height="34dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true" />
-
-            <TextView
-                android:id="@+id/Date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/arrivee_present"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="13dp"
-                android:text="date"
-                android:textColor="@color/text"
-                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/confirmation"
@@ -178,26 +94,54 @@ android:orientation="vertical">
                 android:text="placez votre téléphone en évidence"
                 android:textColor="@color/text" />
 
-            <TextView
-                android:id="@+id/CoursActuel2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/Date"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp"
-                android:text="Démarche d'Architecture des SI "
-                android:textAlignment="center"
-                android:textColor="@color/text"
-                android:textSize="30sp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true">
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/CoursActuel2"
-                android:layout_centerHorizontal="true"
-                android:text="12h-13h"
-                android:textColor="@color/text" />
+                <TextView
+                    android:id="@+id/CoursActuel2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:text="Démarche d'Architecture des SI "
+                    android:textAlignment="center"
+                    android:textColor="@color/text"
+                    android:textSize="30sp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="33dp" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12h-13h"
+                    android:textColor="@color/text"
+                    android:layout_above="@+id/CoursActuel2"
+                    android:layout_centerHorizontal="true" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/CoursActuel2"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="17dp"
+                    android:text="Une fois les étudiant installés" />
+
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView5"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="14dp"
+                    android:elevation="0dp"
+                    android:text="Début du cours" />
+
+            </RelativeLayout>
 
         </RelativeLayout>
 

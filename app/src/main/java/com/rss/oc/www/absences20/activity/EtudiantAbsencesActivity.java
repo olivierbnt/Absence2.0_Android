@@ -52,6 +52,8 @@ public class EtudiantAbsencesActivity extends AppCompatActivity {
 
         View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null);
         root.addView(guillotineMenu);
+        Intent intent = getIntent();
+        final long id_individu = intent.getLongExtra("id_individu", -1);
 
         ItemAccueil = guillotineMenu.findViewById(R.id.accueil_group);
         ItemAbsence = guillotineMenu.findViewById(R.id.absence_group);
@@ -81,16 +83,13 @@ public class EtudiantAbsencesActivity extends AppCompatActivity {
 
 
         AbsencesDAO absencesDAO = new AbsencesDAO(context);
-        Intent intent = getIntent();
-        //long id_individu = intent.getLongExtra("id_individu",-1);
-       // Log.i("id_individu", String.valueOf(id_individu));
 
-        //if(id_individu!=-1){
-            listIdCours = absencesDAO.getListIdCoursAbsences(66);
+        if(id_individu!=-1){
+            listIdCours = absencesDAO.getListIdCoursAbsences(id_individu);
         Log.i("listIdCours",listIdCours.toString());
             CoursDAO coursDAO = new CoursDAO(context);
             listAbsences = coursDAO.getListInfoCours(listIdCours);
-      //  }
+        }
 
 
         onClickMenu(ItemAccueil,ItemAbsence,ItemParametres,ItemProfile,ItemDeconnection,toolbar);

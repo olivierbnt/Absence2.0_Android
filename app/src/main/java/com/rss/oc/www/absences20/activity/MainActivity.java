@@ -33,6 +33,8 @@ import com.rss.oc.www.absences20.R;
 import com.rss.oc.www.absences20.annexe.GetMyJson;
 import com.rss.oc.www.absences20.annexe.postRequest;
 import com.rss.oc.www.absences20.bdd.Cours.CoursDAO;
+import com.rss.oc.www.absences20.bdd.groupe_individu.Groupe_individusDAO;
+import com.rss.oc.www.absences20.bdd.groupes.GroupesDAO;
 import com.rss.oc.www.absences20.bdd.individu.Individus;
 import com.rss.oc.www.absences20.bdd.individu.IndividusDAO;
 import com.yalantis.guillotine.animation.GuillotineAnimation;
@@ -72,11 +74,10 @@ public class MainActivity extends AppCompatActivity {
     ListView mListView;
     boolean profPresent;
     boolean etudiantPresent;
+    ArrayList<String> listCoursJournee;
+    private String nomGroupe;
+    private ListAdapter adapter;
 
-    private String[] mStrings = {
-            "Informatique 15h-16h  3L", "Java 16h-17h 8P", "Système et reseau 16h-17h 2L", "Système et reseau 16h-17h 2L",
-
-    };
 
     private Context context = this;
     private int progressBarStatus = 0;
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
         IndividusDAO individusDAO = new IndividusDAO(context);
         Log.i("harris", String.valueOf(id_individu));
-        individusDAO.validerPresenceDebut(id_individu);
+        //individusDAO.validerPresenceDebut(id_individu);
         //individusDAO.resetPresence(66);
 
         View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null);
@@ -126,8 +127,7 @@ public class MainActivity extends AppCompatActivity {
         final TextView cadenasTexte = (TextView) findViewById(R.id.cadenasText);
         mListView = (ListView) findViewById(R.id.liste_des_prochains_cours);
 
-        ListAdapter adapter = new ArrayAdapter<String>(this, R.layout.row_prochians_cours, R.id.prochain_cours, mStrings);
-        mListView.setAdapter(adapter);
+
 
 
         confirmation.setVisibility(View.INVISIBLE);
@@ -145,16 +145,11 @@ public class MainActivity extends AppCompatActivity {
         datetxt.setText(ct);
 
 
-        CoursDAO coursDAO = new CoursDAO(context);
-        long idCoursInstant = coursDAO.getIdCoursInstant();
-        String chaine = coursDAO.getInfoCours(idCoursInstant);
-        Log.i(TAG, "idCoursInstant" + idCoursInstant);
+        Groupe_individusDAO groupe_individusDAO = new Groupe_individusDAO(context);
+        GroupesDAO groupesDAO = new GroupesDAO(context);
+        nomGroupe = groupesDAO.getNomGroupe(groupe_individusDAO.getIdGroupeIndividu(id_individu));
+        Log.i("Groupe",nomGroupe);
 
-
-        //TextView actueltxt = (TextView) findViewById(R.id.CoursActuel2);
-        StringBuffer Actu = new StringBuffer();
-        Actu.append(chaine);
-        // actueltxt.setText(Actu);
 
 
         TextView toolbar = (TextView) findViewById(R.id.toolbar_title);
@@ -247,6 +242,48 @@ public class MainActivity extends AppCompatActivity {
 
             // ... do some fun stuff
         }
+
+
+        Thread t2 = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(1000);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                CoursDAO coursDAO = new CoursDAO(context);
+                                long idCoursInstant = coursDAO.getIdCoursInstant(nomGroupe);
+                                String chaine = coursDAO.getLibelleCoursInstant(idCoursInstant);
+                                String heureCours = coursDAO.getHeureCoursInstant(idCoursInstant);
+                                String chaineDepart = coursDAO.getTempsRestant(idCoursInstant);
+                                listCoursJournee = coursDAO.getListCoursAvenir(idCoursInstant,nomGroupe);
+                                Log.i(TAG, "idCoursInstant" + idCoursInstant);
+                                Log.i("cours",chaine);
+
+
+                                TextView actuelCours = (TextView) findViewById(R.id.CoursActuel2);
+                                TextView actuelheureCours = (TextView) findViewById(R.id.textView);
+                                TextView depart = (TextView) findViewById(R.id.depart);
+                                actuelheureCours.setText(heureCours);
+                                actuelCours.setText(chaine);
+                                depart.setText(chaineDepart);
+
+                                adapter = new ArrayAdapter<String>(context, R.layout.row_prochians_cours, R.id.prochain_cours, listCoursJournee);
+                                mListView.setAdapter(adapter);
+
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+
+        t2.start();
+
 
 
     }

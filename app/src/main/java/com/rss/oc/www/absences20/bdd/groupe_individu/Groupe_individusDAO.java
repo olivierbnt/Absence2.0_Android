@@ -64,4 +64,33 @@ public class Groupe_individusDAO extends DAOBase {
         return listFinal;
     }
 
+    public ArrayList<Long> getIdGroupeIndividu (long idIndividu){
+        ArrayList<Long> list= new ArrayList<>();
+        int j=0;
+
+        openDBRead();
+
+        Cursor cursor = mDb.rawQuery("select " +INDIVIDUS_KEY+","+GROUPE_ID+ " from " + TABLE_NAME, null);
+
+        if (cursor.moveToNext()){
+            int indexIndividusId = cursor.getColumnIndex(INDIVIDUS_KEY);
+            int indexGroupeId = cursor.getColumnIndex(GROUPE_ID);
+
+            do{
+
+                long individusId = cursor.getInt(indexIndividusId);
+                long groupeId = cursor.getInt(indexGroupeId);
+                if (idIndividu==individusId){
+
+                   list.add(j,groupeId);
+                    j++;
+                }
+
+
+            }while (cursor.moveToNext());
+        }
+        close();
+        return list;
+    }
+
 }

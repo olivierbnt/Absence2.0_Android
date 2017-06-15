@@ -68,12 +68,12 @@ public class CoursDAO extends DAOBase {
 
     }
 
-    public long getIdCoursInstant (){
+    public long getIdCoursInstant (String nomGroupe){
         long idFinal=-1;
 
         openDBRead();
 
-        Cursor cursor = mDb.rawQuery("select " +KEY+","+JOUR+","+MOIS+","+ANNEE+","+HEURE_DEBUT+","+HEURE_FIN+ " from " + TABLE_NAME, null);
+        Cursor cursor = mDb.rawQuery("select " +KEY+","+JOUR+","+MOIS+","+ANNEE+","+HEURE_DEBUT+","+HEURE_FIN+","+GROUPE+ " from " + TABLE_NAME, null);
 
         if(cursor.moveToNext()){
 
@@ -83,6 +83,7 @@ public class CoursDAO extends DAOBase {
             int indexAnnee = cursor.getColumnIndex(ANNEE);
             int indexHeureDebut = cursor.getColumnIndex(HEURE_DEBUT);
             int indexHeureFin = cursor.getColumnIndex(HEURE_FIN);
+            int indexGroupe = cursor.getColumnIndex(GROUPE);
             do {
 
                 String jour = cursor.getString(indexJour);
@@ -90,11 +91,13 @@ public class CoursDAO extends DAOBase {
                 String annee = cursor.getString(indexAnnee);
                 String heureDebut = cursor.getString(indexHeureDebut);
                 String heureFin = cursor.getString(indexHeureFin);
+                String groupe = cursor.getString(indexGroupe);
                 String dateDebut = chaineDate(heureDebut,jour,mois,annee);
                 Log.i("dateDebut",dateDebut);
                 String dateFin = chaineDate(heureFin,jour,mois,annee);
                 Log.i("dateFin",dateFin);
-                if (isHour(dateDebut,dateFin)){
+               // Log.i("test", String.valueOf(nomGroupe.indexOf(groupe)));
+                if (isHour(dateDebut,dateFin)&&(nomGroupe.indexOf(groupe)!=-1)){
                     idFinal=cursor.getInt(indexId);
                    // Log.i("id", String.valueOf(idFinal));
                     cursor.moveToLast();
@@ -133,6 +136,73 @@ public class CoursDAO extends DAOBase {
         return groupe;
     }
 
+    public String getLibelleCoursInstant(long idCoursInstant){
+
+        String cours = null;
+        openDBRead();
+
+        Cursor cursor = mDb.rawQuery("select " +KEY+","+LIB_CLASSE+ " from " + TABLE_NAME, null);
+
+        if (cursor.moveToNext()){
+            int indexId = cursor.getColumnIndex(KEY);
+            int indexlib = cursor.getColumnIndex(LIB_CLASSE);
+
+            do{
+
+                long id = cursor.getInt(indexId);
+                if (id==idCoursInstant){
+                    cours = cursor.getString(indexlib);
+                    cursor.moveToLast();
+                }
+
+
+            }while (cursor.moveToNext());
+        }
+        close();
+        return cours;
+    }
+
+    public String getHeureCoursInstant(long idCoursInstant){
+
+        String heure = null;
+        String heureDebut =null;
+        String heureFin= null;
+        String heureDebut1 = null;
+        String heureFin1 = null;
+        openDBRead();
+
+        Cursor cursor = mDb.rawQuery("select " +KEY+","+HEURE_DEBUT+","+HEURE_FIN+ " from " + TABLE_NAME, null);
+
+        if (cursor.moveToNext()){
+            int indexId = cursor.getColumnIndex(KEY);
+            int indexHeureDebut = cursor.getColumnIndex(HEURE_DEBUT);
+            int indexHeureFin = cursor.getColumnIndex(HEURE_FIN);
+
+            do{
+
+                long id = cursor.getInt(indexId);
+
+                if (id==idCoursInstant){
+                   heureDebut = cursor.getString(indexHeureDebut);
+                    heureDebut1 = heureDebut.substring(0,5);
+                    heureFin  = cursor.getString(indexHeureFin);
+                    heureFin1 = heureFin.substring(0,5);
+                    cursor.moveToLast();
+                }
+
+
+            }while (cursor.moveToNext());
+        }
+
+
+
+        heure = heureDebut1+" - "+heureFin1;
+        close();
+        return heure;
+    }
+
+
+
     public String getInfoCours(long idCoursInstant){
 
         String infosCours = null;
@@ -164,6 +234,66 @@ public class CoursDAO extends DAOBase {
         return infosCours;
     }
 
+
+    public String getTempsRestant(long idCoursInstant){
+
+        String heure = null;
+        String heureDebut =null;
+        String heureFin= null;
+        openDBRead();
+
+        Cursor cursor = mDb.rawQuery("select " +KEY+","+HEURE_DEBUT+","+HEURE_FIN+ " from " + TABLE_NAME, null);
+
+        if (cursor.moveToNext()){
+            int indexId = cursor.getColumnIndex(KEY);
+            int indexHeureDebut = cursor.getColumnIndex(HEURE_DEBUT);
+            int indexHeureFin = cursor.getColumnIndex(HEURE_FIN);
+
+            do{
+
+                long id = cursor.getInt(indexId);
+
+                if (id==idCoursInstant){
+
+                    heureDebut = cursor.getString(indexHeureDebut);
+                    heureFin  = cursor.getString(indexHeureFin);
+                    Calendar c = Calendar.getInstance();
+
+                    long heureInst1000 = c.getTimeInMillis() /(long)1000;
+                    long heureInst= heureInst1000/(long)60;
+
+                    Log.i("calendar", c.getTime().toString());
+                    long h = Long.parseLong(heureFin.substring(0,2))*60;
+                    long m = Long.parseLong(heureFin.substring(3,5));
+                    long heureF = h+m-5;
+
+                    long duree = heureF - heureInst;
+
+                    Log.i("durée", String.valueOf(duree));
+                    Log.i("long", String.valueOf(h));
+                    Log.i("long", String.valueOf(m));
+
+
+                        heure = "Validez votre sortie dans "+String.valueOf(duree)+" min" ;
+
+
+
+
+                    cursor.moveToLast();
+                }
+
+
+            }while (cursor.moveToNext());
+        }
+
+        return heure;
+    }
+
+
+
+
+
+
     private Boolean isHour (String debut, String fin){
         Boolean result = false;
 
@@ -179,6 +309,7 @@ public class CoursDAO extends DAOBase {
             Date dateDebut = dt.parse(debut);
             Date dateFin  = dt.parse(fin);
 
+
             if((dateInstant.compareTo(dateDebut)>0)&&(dateInstant.compareTo(dateFin)<0))
                 result=true;
         } catch (ParseException e) {
@@ -187,6 +318,272 @@ public class CoursDAO extends DAOBase {
 
 
         return result;
+    }
+
+    public ArrayList<String> getListCoursAvenir (long idCoursInstant,String libelleGroupe){
+        ArrayList<String> list = new ArrayList<String>();
+
+        Calendar c = Calendar.getInstance();
+        String mJour=null;
+        String mMois=null;
+        String mAnnee=null;
+        String resultat=null;
+        int j=0;
+
+        openDBRead();
+
+        Cursor cursor = mDb.rawQuery("select " +KEY+","+HEURE_DEBUT+","+HEURE_FIN+","+LIB_CLASSE+","+SALLE_NOM+","+JOUR+","+MOIS+","+ANNEE+","+GROUPE+ " from " + TABLE_NAME, null);
+
+        if (cursor.moveToNext()){
+            int indexId = cursor.getColumnIndex(KEY);
+            int indexJour = cursor.getColumnIndex(JOUR);
+            int indexMois = cursor.getColumnIndex(MOIS);
+            int indexAnnee = cursor.getColumnIndex(ANNEE);
+
+            do{
+
+                String jour = cursor.getString(indexJour);
+                String mois = cursor.getString(indexMois);
+                String annee = cursor.getString(indexAnnee);
+
+                long id = cursor.getInt(indexId);
+
+                if (id==idCoursInstant){
+
+                    mJour=jour;
+                    mMois=mois;
+                    mAnnee=annee;
+
+                    cursor.moveToLast();
+                }
+
+            }while (cursor.moveToNext());
+        }
+
+        cursor.moveToFirst();
+        if (cursor.moveToNext()){
+            int indexId = cursor.getColumnIndex(KEY);
+            int indexGroupe = cursor.getColumnIndex(GROUPE);
+            int indexHeureDebut = cursor.getColumnIndex(HEURE_DEBUT);
+            int indexHeureFin = cursor.getColumnIndex(HEURE_FIN);
+            int indexSalleNom = cursor.getColumnIndex(SALLE_NOM);
+            int indexLibClasse = cursor.getColumnIndex(LIB_CLASSE);
+            int indexJour = cursor.getColumnIndex(JOUR);
+            int indexMois = cursor.getColumnIndex(MOIS);
+            int indexAnnee = cursor.getColumnIndex(ANNEE);
+
+            do{
+
+                String jourbis = cursor.getString(indexJour);
+                String groupe = cursor.getString(indexGroupe);
+                String moisbis = cursor.getString(indexMois);
+                String anneebis = cursor.getString(indexAnnee);
+                String heureDebut = cursor.getString(indexHeureDebut);
+                String heureFin = cursor.getString(indexHeureFin);
+                String dateDebut = chaineDate(heureDebut,jourbis,moisbis,anneebis);
+                String dateFin = chaineDate(heureFin,jourbis,moisbis,anneebis);
+                String lib = cursor.getString(indexLibClasse);
+                String salle = cursor.getString(indexSalleNom);
+                long id = cursor.getInt(indexId);
+
+
+
+
+                if ((mJour.equals(jourbis)) && (mMois.equals(moisbis)) && (mAnnee.equals(anneebis)) && (libelleGroupe.indexOf(groupe)!=-1)){
+
+                    Log.i("DATE_DATE",jourbis+" "+moisbis+" "+anneebis+" "+groupe+" "+libelleGroupe+" "+libelleGroupe.indexOf(groupe)+" "+mJour+" "+mMois+" "+mAnnee);
+
+
+                     String pattern = "dd-MM-yyyy HH:mm:ss";
+                     SimpleDateFormat dt = new SimpleDateFormat(pattern);
+                    try {
+                        Date debut = dt.parse(dateDebut);
+                        //Date instant = c.getTime();
+                        Date instant=dt.parse("13-06-2017 11:30:00");
+                        Boolean valeur = isHour(dateDebut,dateFin);
+
+                        if(valeur==true){
+
+                            resultat = lib+" "+heureDebut.substring(0,5)+
+                                    "-"+heureFin.substring(0,5)+" "+
+                                    salle+"          En cours";
+                            list.add(j,resultat);
+                            j++;
+                        }
+                        else{
+                            if(instant.compareTo(debut)>0){
+                                resultat = lib+" "+heureDebut.substring(0,5)+
+                                            "-"+heureFin.substring(0,5)+" "+
+                                            salle+"          Terminé";
+                                list.add(j,resultat);
+                                j++;
+                            }
+                            else{
+
+                                resultat = lib+" "+heureDebut.substring(0,5)+
+                                        "-"+heureFin.substring(0,5)+" "+
+                                        salle+"          A venir";
+                                list.add(j,resultat);
+                                j++;
+                            }
+                        }
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+
+
+                }
+
+            }while (cursor.moveToNext());
+        }
+
+
+        return list;
+    }
+
+    private Boolean A_LHEURE (long idCoursInstant){
+        Boolean valeur = false;
+        Calendar cProf = Calendar.getInstance();
+        String heure = null;
+        String heureDebut =null;
+        String heureFin= null;
+        openDBRead();
+
+        Cursor cursor = mDb.rawQuery("select " +KEY+","+HEURE_DEBUT+","+HEURE_FIN+ " from " + TABLE_NAME, null);
+
+        if (cursor.moveToNext()){
+            int indexId = cursor.getColumnIndex(KEY);
+            int indexHeureDebut = cursor.getColumnIndex(HEURE_DEBUT);
+            int indexHeureFin = cursor.getColumnIndex(HEURE_FIN);
+
+            do{
+
+                long id = cursor.getInt(indexId);
+
+                if (id==idCoursInstant){
+
+                    heureDebut = cursor.getString(indexHeureDebut);
+                    heureFin  = cursor.getString(indexHeureFin);
+                    Calendar c = Calendar.getInstance();
+                    long heureInst = c.getTimeInMillis()/1000/60/60;
+                    long h = Long.parseLong(heureDebut.substring(0,2))*60;
+                    long m = Long.parseLong(heureDebut.substring(3,5));
+
+                    long heureD = cProf.getTimeInMillis()/1000/60/60;
+
+                    long heureRetard = cProf.getTimeInMillis()/1000/60/60 + 5;
+
+
+                    if(heureInst<heureRetard&&heureInst>heureD)
+                        valeur = true;
+
+                    cursor.moveToLast();
+                }
+
+
+            }while (cursor.moveToNext());
+        }
+
+
+        return valeur;
+    }
+
+    private Boolean EN_RETARD (long idCoursInstant){
+        Boolean valeur = false;
+        Calendar cProf= Calendar.getInstance();
+        String heureDebut =null;
+        String heureFin= null;
+        openDBRead();
+
+        Cursor cursor = mDb.rawQuery("select " +KEY+","+HEURE_DEBUT+","+HEURE_FIN+ " from " + TABLE_NAME, null);
+
+        if (cursor.moveToNext()){
+            int indexId = cursor.getColumnIndex(KEY);
+            int indexHeureDebut = cursor.getColumnIndex(HEURE_DEBUT);
+            int indexHeureFin = cursor.getColumnIndex(HEURE_FIN);
+
+            do{
+
+                long id = cursor.getInt(indexId);
+
+                if(id==idCoursInstant){
+                    heureDebut = cursor.getString(indexHeureDebut);
+                    heureFin  = cursor.getString(indexHeureFin);
+                    Calendar c = Calendar.getInstance();
+                    long heureInst = c.getTimeInMillis()/1000/60/60;
+                    long h = Long.parseLong(heureDebut.substring(0,2))*60;
+                    long m = Long.parseLong(heureDebut.substring(3,5));
+
+                    long heureD = cProf.getTimeInMillis()/1000/60/60;
+
+                    long heureRetard = cProf.getTimeInMillis()/1000/60/60 + 5;
+
+                    long heureAbsence = cProf.getTimeInMillis()/1000/60/60 + 15;
+
+
+                    if(heureInst<heureAbsence&&heureInst>heureRetard)
+                        valeur = true;
+
+
+                    cursor.moveToLast();
+
+                }
+
+
+            }while (cursor.moveToNext());
+        }
+
+
+        return valeur;
+    }
+
+    private Boolean A_LA_FIN (long idCoursInstant){
+        Boolean valeur = false;
+
+        String heureDebut =null;
+        String heureFin= null;
+        openDBRead();
+
+        Cursor cursor = mDb.rawQuery("select " +KEY+","+HEURE_DEBUT+","+HEURE_FIN+ " from " + TABLE_NAME, null);
+
+        if (cursor.moveToNext()){
+            int indexId = cursor.getColumnIndex(KEY);
+            int indexHeureDebut = cursor.getColumnIndex(HEURE_DEBUT);
+            int indexHeureFin = cursor.getColumnIndex(HEURE_FIN);
+
+            do{
+
+                long id = cursor.getInt(indexId);
+
+                if(id==idCoursInstant){
+
+                    heureDebut = cursor.getString(indexHeureDebut);
+                    heureFin  = cursor.getString(indexHeureFin);
+                    Calendar c = Calendar.getInstance();
+                    long heureInst = c.getTimeInMillis()/1000/60/60;
+                    long h = Long.parseLong(heureFin.substring(0,2))*60;
+                    long m = Long.parseLong(heureFin.substring(3,5));
+
+                    long heureF = h+m;
+
+
+
+                    if(heureInst<heureF+5&&heureInst>heureF-5)
+                        valeur = true;
+
+
+                    cursor.moveToLast();
+                }
+
+
+
+            }while (cursor.moveToNext());
+        }
+
+
+        return valeur;
     }
 
     private String chaineDate (String heure, String mDay,String mMonth,String mYear){

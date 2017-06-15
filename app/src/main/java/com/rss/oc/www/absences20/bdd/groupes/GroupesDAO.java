@@ -7,6 +7,8 @@ import android.util.Log;
 
 import com.rss.oc.www.absences20.bdd.DAOBase;
 
+import java.util.ArrayList;
+
 /**
  * Created by famille on 09/06/2017.
  */
@@ -54,6 +56,35 @@ public class GroupesDAO extends DAOBase {
         }
         close();
         return idFinal;
+    }
+    public String getNomGroupe(ArrayList<Long> idGroupe){
+        String groupeFinal="";
+        openDBRead();
+
+        Cursor cursor = mDb.rawQuery("select " +KEY+","+LIBELLE+ " from " + TABLE_NAME, null);
+
+        if (cursor.moveToNext()){
+            int indexGroupe = cursor.getColumnIndex(LIBELLE);
+            int indexId = cursor.getColumnIndex(KEY);
+
+            do{
+
+                String groupe = cursor.getString(indexGroupe);
+                long id = cursor.getInt(indexId);
+                for (long l :idGroupe){
+
+                    if (id==l){
+                        groupeFinal = groupeFinal+groupe;
+
+                    }
+                }
+
+
+
+            }while (cursor.moveToNext());
+        }
+        close();
+        return groupeFinal;
     }
 
 

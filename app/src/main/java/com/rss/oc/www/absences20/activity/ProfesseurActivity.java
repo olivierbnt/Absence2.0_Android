@@ -105,18 +105,18 @@ public class ProfesseurActivity extends AppCompatActivity {
         }
 
         CoursDAO coursDAO = new CoursDAO(context);
-        long idCoursInstant=coursDAO.getIdCoursInstant();
-        Log.i("id_cours", String.valueOf(coursDAO.getIdCoursInstant()));
-        String libelleCours = coursDAO.getLibelleGroupeInstant(idCoursInstant);
-        Log.i("libelleCours",libelleCours);
+        //long idCoursInstant=coursDAO.getIdCoursInstant();
+       // Log.i("id_cours", String.valueOf(coursDAO.getIdCoursInstant()));
+      //  String libelleCours = coursDAO.getLibelleGroupeInstant(idCoursInstant);
+       // Log.i("libelleCours",libelleCours);
         GroupesDAO groupesDAO = new GroupesDAO(context);
-        long idGroupe = groupesDAO.getIdGroupe(libelleCours);
+       // long idGroupe = groupesDAO.getIdGroupe(libelleCours);
         Groupe_individusDAO groupe_individusDAO = new Groupe_individusDAO(context);
-        ArrayList<Long> listIdIndividusInstant = groupe_individusDAO.listIdIndividusInstant(idGroupe);
+      //  ArrayList<Long> listIdIndividusInstant = groupe_individusDAO.listIdIndividusInstant(idGroupe);
 
         IndividusDAO individusDAO = new IndividusDAO(context);
-        obj = individusDAO.listIndividusInstant(listIdIndividusInstant);
-        listIndicateur = individusDAO.listIndicateur(listIdIndividusInstant);
+       // obj = individusDAO.listIndividusInstant(listIdIndividusInstant);
+      //  listIndicateur = individusDAO.listIndicateur(listIdIndividusInstant);
 
 
         TextView toolbar = (TextView) findViewById(R.id.toolbar_title);

@@ -5,12 +5,12 @@
     android:background="@color/prof_background_list">
 
 
-
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/prochain_cours"
+        style="@style/TextView.List_prof"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
-        style="@style/TextView.List_prof" />
+        android:textSize="14sp" />
 
 </LinearLayout>

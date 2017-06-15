@@ -139,7 +139,7 @@ android:orientation="vertical">
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="14dp"
                     android:elevation="0dp"
-                    android:text="Début du cours" />
+                    android:text="Lancer le début du cours" />
 
             </RelativeLayout>
 

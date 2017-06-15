@@ -107,7 +107,7 @@ public class ChargementActivity extends AppCompatActivity {
             //api = getApi();
             showProgress(true);
 
-            getBase("gestion@admin.fr","1234","9a28948977f2d9097163cd6cb845d8f0");
+            getBase("gestion@admin.fr","1234","42d7f52eac21ecf37d7091efcc711d97");
             return true;
         }
 
@@ -117,6 +117,7 @@ public class ChargementActivity extends AppCompatActivity {
 
             Intent myIntent = new Intent (context,LoginActivity.class);
             startActivity(myIntent);
+            finish();
 
         }
     }
@@ -184,7 +185,13 @@ public class ChargementActivity extends AppCompatActivity {
                 String statut=jsonObject.getString("statut");
                 String nom = jsonObject.getString("nom");
                 String prenom=jsonObject.getString("prenom");
-                Individus individus_epf = new Individus(id,id_user,VAL_DEBUT,VAL_FIN,statut,nom,prenom);
+                long rue=jsonObject.getInt("numero_rue");
+                long code_postal=jsonObject.getInt("code_postal");
+                String adresse=jsonObject.getString("adresse");
+                String ville=jsonObject.getString("ville");
+                String pays=jsonObject.getString("pays");
+                String email=jsonObject.getString("email");
+                Individus individus_epf = new Individus(id,id_user,VAL_DEBUT,VAL_FIN,statut,nom,prenom,email,rue,adresse,code_postal,ville,pays);
                 IndividusDAO individusDAO = new IndividusDAO(context);
                 individusDAO.ajouterIndividu(individus_epf);
             }

@@ -12,7 +12,7 @@ public  abstract class DAOBase {
     // Si je décide de la mettre à jour, il faudra changer cet attribut
     protected  int VERSION ;
     // Le nom du fichier qui représente ma base
-    protected final static String NOM = "Affffff.db";
+    protected final static String NOM = "zezffffezdsff.db";
 
     protected SQLiteDatabase mDb = null;
     protected DataBaseHandler mHandler = null;

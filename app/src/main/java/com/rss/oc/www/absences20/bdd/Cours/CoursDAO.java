@@ -259,15 +259,17 @@ public class CoursDAO extends DAOBase {
                     heureFin  = cursor.getString(indexHeureFin);
                     Calendar c = Calendar.getInstance();
 
-                    long heureInst1000 = c.getTimeInMillis() /(long)1000;
-                    long heureInst= heureInst1000/(long)60;
 
-                    Log.i("calendar", c.getTime().toString());
+                    float heureInst1000 = c.getTimeInMillis()/*(long)6*//(long)(31536*1000000);
+                    float heureInst = heureInst1000/*(long)100*/;
+                    Log.i("calendar", String.valueOf(heureInst));
                     long h = Long.parseLong(heureFin.substring(0,2))*60;
+                    Log.i("h", String.valueOf(h));
                     long m = Long.parseLong(heureFin.substring(3,5));
+                    Log.i("mmmmmmmmm", String.valueOf(m));
                     long heureF = h+m-5;
-
-                    long duree = heureF - heureInst;
+                    Log.i("heureF", String.valueOf(heureF));
+                    long duree = (long) (heureF - heureInst);
 
                     Log.i("durée", String.valueOf(duree));
                     Log.i("long", String.valueOf(h));
@@ -302,10 +304,10 @@ public class CoursDAO extends DAOBase {
         //  SimpleDateFormat minute = new SimpleDateFormat("mm");
 
         Calendar c = Calendar.getInstance();
-        //Date dateInstant= c.getTime();
+        Date dateInstant= c.getTime();
 
         try {
-            Date dateInstant =dt.parse("13-06-2017 11:30:00");
+            //Date dateInstant =dt.parse("13-06-2017 11:30:00");
             Date dateDebut = dt.parse(debut);
             Date dateFin  = dt.parse(fin);
 
@@ -387,19 +389,19 @@ public class CoursDAO extends DAOBase {
                 long id = cursor.getInt(indexId);
 
 
+                Log.i("DATE_DATE",jourbis+" "+moisbis+" "+anneebis+" "+groupe+" "+libelleGroupe+" "+libelleGroupe.indexOf(groupe)+" "+mJour+" "+mMois+" "+mAnnee);
 
 
                 if ((mJour.equals(jourbis)) && (mMois.equals(moisbis)) && (mAnnee.equals(anneebis)) && (libelleGroupe.indexOf(groupe)!=-1)){
 
-                    Log.i("DATE_DATE",jourbis+" "+moisbis+" "+anneebis+" "+groupe+" "+libelleGroupe+" "+libelleGroupe.indexOf(groupe)+" "+mJour+" "+mMois+" "+mAnnee);
 
 
                      String pattern = "dd-MM-yyyy HH:mm:ss";
                      SimpleDateFormat dt = new SimpleDateFormat(pattern);
                     try {
                         Date debut = dt.parse(dateDebut);
-                        //Date instant = c.getTime();
-                        Date instant=dt.parse("13-06-2017 11:30:00");
+                        Date instant = c.getTime();
+                        //Date instant=dt.parse("13-06-2017 11:30:00");
                         Boolean valeur = isHour(dateDebut,dateFin);
 
                         if(valeur==true){

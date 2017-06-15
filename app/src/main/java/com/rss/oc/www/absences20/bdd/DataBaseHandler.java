@@ -36,6 +36,12 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public static final String INDIVIDU_PRENOM = "prenom";
     public static final String INDIVIDU_KEY_USER = "id_user";
     public static final String INDIVIDU_STATUT = "statut";
+    public static final String INDIVIDU_EMAIL = "email";
+    public static final String INDIVIDU_RUE = "numero_rue";
+    public static final String INDIVIDU_ADRESSE = "adresse";
+    public static final String INDIVIDU_CODE_POSTAL = "code_postal";
+    public static final String INDIVIDU_VILLE = "ville";
+    public static final String INDIVIDU_PAYS = "pays";
     public static final String INDIVIDU_VAL_DEBUT = "val_debut";
     public static final String INDIVIDU_VAL_FIN = "val_fin";
 
@@ -96,6 +102,12 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                     INDIVIDU_PRENOM          + " TEXT, " +
                     INDIVIDU_VAL_DEBUT       + " INTEGER, " +
                     INDIVIDU_VAL_FIN         + " INTEGER, " +
+                    INDIVIDU_EMAIL           + " TEXT, " +
+                    INDIVIDU_RUE             + " INTEGER, " +
+                    INDIVIDU_ADRESSE         + " TEXT, " +
+                    INDIVIDU_CODE_POSTAL     + " INTEGER, " +
+                    INDIVIDU_VILLE           + " TEXT, " +
+                    INDIVIDU_PAYS            + " TEXT, " +
                     INDIVIDU_STATUT          + " TEXT); ";
 
     public static final String INDIVIDU_TABLE_DROP = "DROP TABLE IF EXISTS " + INDIVIDU_TABLE_NAME + ";";

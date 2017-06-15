@@ -1,5 +1,6 @@
 package com.rss.oc.www.absences20.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.rss.oc.www.absences20.R;
+import com.rss.oc.www.absences20.bdd.individu.IndividusDAO;
 import com.yalantis.guillotine.animation.GuillotineAnimation;
 
 import butterknife.BindView;
@@ -31,6 +33,7 @@ public class EtudiantProfileActivity extends AppCompatActivity {
     View ItemProfile;
     View ItemParametres;
     View ItemDeconnection;
+    private Context context =this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +50,23 @@ public class EtudiantProfileActivity extends AppCompatActivity {
         ItemProfile = guillotineMenu.findViewById(R.id.profile_group);
         ItemParametres = guillotineMenu.findViewById(R.id.settins_group);
         ItemDeconnection = guillotineMenu.findViewById(R.id.deconnection_group);
+        TextView textAdresse = (TextView) findViewById(R.id.adresse);
+        TextView textNom = (TextView) findViewById(R.id.text_profile_nom);
+        TextView textPreNom = (TextView) findViewById(R.id.text_profile_prenom);
+        TextView textEmail = (TextView) findViewById(R.id.profile_text_email);
+        TextView textStatut = (TextView) findViewById(R.id.text_profile_statut);
         TextView textPr = (TextView) findViewById(R.id.profile_group_text);
         textPr.setTextColor(getResources().getColor(R.color.selected_item_color));
+        Intent intent = getIntent();
+        final long id_individu = intent.getLongExtra("id_individu", -1);
+
+        IndividusDAO individusDAO = new IndividusDAO(context);
+        textAdresse.setText(individusDAO.getAdresseIndividu(id_individu));
+        textNom.setText(individusDAO.getNomIndividu(id_individu));
+        textPreNom.setText(individusDAO.getPrenomIndividu(id_individu));
+        textEmail.setText(individusDAO.getEmailIndividu(id_individu));
+        textStatut.setText(individusDAO.getStatutIndividu(id_individu));
+
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -64,12 +82,12 @@ public class EtudiantProfileActivity extends AppCompatActivity {
                 .setClosedOnStart(true)
                 .build();
 
-        onClickMenu(ItemAccueil,ItemAbsence,ItemParametres,ItemProfile,ItemDeconnection,toolbar);
+        onClickMenu(ItemAccueil,ItemAbsence,ItemParametres,ItemProfile,ItemDeconnection,toolbar,id_individu);
 
 
     }
 
-    private void onClickMenu(View mViewAc,View mViewAb, View mViewPa, View mViewPr, View mViewDe, final TextView toolbar){
+    private void onClickMenu(View mViewAc, View mViewAb, View mViewPa, View mViewPr, View mViewDe, final TextView toolbar, final long id_individu){
 
         mViewAb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +103,7 @@ public class EtudiantProfileActivity extends AppCompatActivity {
                 textPr.setTextColor(getResources().getColor(R.color.white));
                 textDe.setTextColor(getResources().getColor(R.color.white));
                 textAb.setTextColor(getResources().getColor(R.color.selected_item_color));
-                loadEtudiantAbsencesActivity();
+                loadEtudiantAbsencesActivity(id_individu);
 
             }
         });
@@ -104,7 +122,7 @@ public class EtudiantProfileActivity extends AppCompatActivity {
                 textPr.setTextColor(getResources().getColor(R.color.white));
                 textDe.setTextColor(getResources().getColor(R.color.white));
                 textAb.setTextColor(getResources().getColor(R.color.white));
-                loadMainActivity();
+                loadMainActivity(id_individu);
 
             }
         });
@@ -123,36 +141,40 @@ public class EtudiantProfileActivity extends AppCompatActivity {
                 textPr.setTextColor(getResources().getColor(R.color.white));
                 textDe.setTextColor(getResources().getColor(R.color.white));
                 textAb.setTextColor(getResources().getColor(R.color.white));
-                loadEtudiantSettingsActivity();
+                loadEtudiantSettingsActivity(id_individu);
             }
         });
         mViewDe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadLoginActivity();
+                loadLoginActivity(id_individu);
             }
         });
     }
 
-    public void loadEtudiantAbsencesActivity(){
+    public void loadEtudiantAbsencesActivity(long id_individu){
         Intent myintent = new Intent(this, EtudiantAbsencesActivity.class);
+        myintent.putExtra("id_individu", id_individu);
         startActivity(myintent);
         finish();
     }
 
-    public void loadMainActivity(){
+    public void loadMainActivity(long id_individu){
         Intent myintent = new Intent(this, MainActivity.class);
+        myintent.putExtra("id_individu", id_individu);
         startActivity(myintent);
         finish();
     }
-    public void loadEtudiantSettingsActivity(){
+    public void loadEtudiantSettingsActivity(long id_individu){
         Intent myintent = new Intent(this, EtudiantSettingsActivity.class);
+        myintent.putExtra("id_individu", id_individu);
         startActivity(myintent);
         finish();
     }
 
-    public void loadLoginActivity(){
+    public void loadLoginActivity(long id_individu){
         Intent myintent = new Intent(this, LoginActivity.class);
+        myintent.putExtra("id_individu", id_individu);
         startActivity(myintent);
         finish();
     }

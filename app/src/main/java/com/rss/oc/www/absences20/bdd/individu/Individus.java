@@ -15,8 +15,14 @@ public class Individus {
     private String statut;
     private String nom;
     private String prenom;
+    private String email;
+    private long rue;
+    private String adresse;
+    private long codePostal;
+    private String ville;
+    private String pays;
 
-    public Individus(long id, long id_user,long val_debut,long val_fin,String statut,String nom,String prenom) {
+    public Individus(long id, long id_user,long val_debut,long val_fin,String statut,String nom,String prenom,String email, long rue, String adresse,long codePostal,String ville,String pays) {
         super();
         this.id = id;
         this.id_user = id_user;
@@ -25,6 +31,12 @@ public class Individus {
         this.statut = statut;
         this.nom = nom;
         this.prenom =prenom;
+        this.email=email;
+        this.rue=rue;
+        this.adresse=adresse;
+        this.codePostal=codePostal;
+        this.ville = ville;
+        this.pays=pays;
 
     }
 
@@ -38,6 +50,30 @@ public class Individus {
 
     long getVal_debut() {
         return val_debut;
+    }
+
+    String getEmail() {
+        return email;
+    }
+
+    long getRue() {
+        return rue;
+    }
+
+    String getAdresse() {
+        return adresse;
+    }
+
+    long getCodePostal() {
+        return codePostal;
+    }
+
+    String getVille() {
+        return ville;
+    }
+
+    String getPays() {
+        return pays;
     }
 
     void setVal_debut(long val_debut) {

@@ -28,7 +28,7 @@ public class IndividusDAO extends DAOBase {
     public static final String ADRESSE = "adresse";
     public static final String CODE_POSTAL = "code_postal";
     public static final String VILLE = "ville";
-    public static final String PAYS = "email";
+    public static final String PAYS = "pays";
 
 
 
@@ -293,21 +293,23 @@ public class IndividusDAO extends DAOBase {
         return listFinal;
     }
 
-    public Long getIdIndividu(Long idUser){
+    public Long getIdIndividu(long id_user){
         long idIndividu=-1;
 
+
         openDBRead();
-        Cursor cursor = mDb.rawQuery("select " +KEY_USER+","+KEY+ " from "+TABLE_NAME, null);
+        Cursor cursor = mDb.rawQuery("select " +KEY+","+KEY_USER+ " from "+TABLE_NAME, null);
 
         if (cursor.moveToNext()){
             int indexIdIndividu = cursor.getColumnIndex(KEY);
-            int indexIdUsers = cursor.getColumnIndex(KEY_USER);
+            int indexUser = cursor.getColumnIndex(KEY_USER);
 
             do{
 
-                Log.i("id_id", String.valueOf(cursor.getLong(indexIdUsers)));
 
-         if(idUser==cursor.getLong(indexIdUsers)){
+                  Log.i("cherche", String.valueOf(cursor.getLong(indexUser)));
+         if(id_user==cursor.getLong(indexUser)){
+
              idIndividu=cursor.getLong(indexIdIndividu);
              cursor.moveToLast();
          }

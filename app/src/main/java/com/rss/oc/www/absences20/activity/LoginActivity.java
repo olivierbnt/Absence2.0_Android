@@ -288,7 +288,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
                 if (statut.equals("etudiant"))
                     loadMainActivity(id_individu,id_user,mEmail);
                 else
-                    loadProfesseurActivity(id_individu,id_user,mEmail);
+                    loadProfesseurActivity(71,id_user,mEmail);
 
                 finish();
             } else {
@@ -318,6 +318,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
 
     public void loadProfesseurActivity (long id_individu,long id_user, String mLogin) {
         Intent myintent = new Intent(this, ProfesseurAccueilActivity.class);
+        Log.i("idMain", String.valueOf(id_individu));
         myintent.putExtra("id_individu",id_individu);
         myintent.putExtra("id_user",id_user);
         myintent.putExtra("Login",mLogin);

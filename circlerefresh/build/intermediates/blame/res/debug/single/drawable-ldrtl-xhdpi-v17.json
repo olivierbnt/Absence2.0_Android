@@ -4,8 +4,24 @@
         "source": "/Users/olivierbonnet/.android/build-cache/370340a1eff06b2e678675ece73def9685d3684b/output/res/drawable-ldrtl-xhdpi-v17/abc_ic_menu_cut_mtrl_alpha.png"
     },
     {
+        "merged": "/Users/famille/Documents/GitHub/Absence/circlerefresh/build/intermediates/res/merged/debug/drawable-ldrtl-xhdpi-v17/abc_ic_ab_back_mtrl_am_alpha.png",
+        "source": "/Users/famille/.android/build-cache/685c36e6b38bed7c77af21beda21cb8fb9de77a9/output/res/drawable-ldrtl-xhdpi-v17/abc_ic_ab_back_mtrl_am_alpha.png"
+    },
+    {
+        "merged": "/Users/famille/Documents/GitHub/Absence/circlerefresh/build/intermediates/res/merged/debug/drawable-ldrtl-xhdpi-v17/abc_ic_menu_cut_mtrl_alpha.png",
+        "source": "/Users/famille/.android/build-cache/685c36e6b38bed7c77af21beda21cb8fb9de77a9/output/res/drawable-ldrtl-xhdpi-v17/abc_ic_menu_cut_mtrl_alpha.png"
+    },
+    {
+        "merged": "/Users/famille/Documents/GitHub/Absence/circlerefresh/build/intermediates/res/merged/debug/drawable-ldrtl-xhdpi-v17/abc_ic_menu_copy_mtrl_am_alpha.png",
+        "source": "/Users/famille/.android/build-cache/685c36e6b38bed7c77af21beda21cb8fb9de77a9/output/res/drawable-ldrtl-xhdpi-v17/abc_ic_menu_copy_mtrl_am_alpha.png"
+    },
+    {
         "merged": "/Users/olivierbonnet/Desktop/Projet Filiere/Absence/circlerefresh/build/intermediates/res/merged/debug/drawable-ldrtl-xhdpi-v17/abc_ic_ab_back_mtrl_am_alpha.png",
         "source": "/Users/olivierbonnet/.android/build-cache/370340a1eff06b2e678675ece73def9685d3684b/output/res/drawable-ldrtl-xhdpi-v17/abc_ic_ab_back_mtrl_am_alpha.png"
+    },
+    {
+        "merged": "/Users/famille/Documents/GitHub/Absence/circlerefresh/build/intermediates/res/merged/debug/drawable-ldrtl-xhdpi-v17/abc_spinner_mtrl_am_alpha.9.png",
+        "source": "/Users/famille/.android/build-cache/685c36e6b38bed7c77af21beda21cb8fb9de77a9/output/res/drawable-ldrtl-xhdpi-v17/abc_spinner_mtrl_am_alpha.9.png"
     },
     {
         "merged": "/Users/olivierbonnet/Desktop/Projet Filiere/Absence/circlerefresh/build/intermediates/res/merged/debug/drawable-ldrtl-xhdpi-v17/abc_spinner_mtrl_am_alpha.9.png",

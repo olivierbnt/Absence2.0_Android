@@ -65,9 +65,9 @@ public class ChargementActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            api = getApi();
+            //api = getApi();
 
-            Log.i("api",api);
+            //Log.i("api",api);
             //getBase("gestion@admin.fr","1234","1c8d10d42f72dafd2be3da81388ffe2c");
             return true;
         }
@@ -104,7 +104,7 @@ public class ChargementActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... params) {
             //createUser("mathilda.thomas@epfedu.fr","12345");
-           // api = getApi();
+            //api = getApi();
             showProgress(true);
 
             getBase("gestion@admin.fr","1234","3c95d648d40790b382b8e6b06abb5739");
@@ -127,7 +127,7 @@ public class ChargementActivity extends AppCompatActivity {
         String mApi = null;
 
         List pairs = new ArrayList() ;
-        pairs.add(new BasicNameValuePair("login","gestion@admin.fr"));
+        //pairs.add(new BasicNameValuePair("login","gestion@admin.fr"));
         //pairs.add(new BasicNameValuePair("password","admiNEPF2017"));
         String urlDuServeur = "https://saliferous-automobi.000webhostapp.com/api/v1/key";
         postRequest Requete = new postRequest();
@@ -155,7 +155,7 @@ public class ChargementActivity extends AppCompatActivity {
         List pairs = new ArrayList() ;
         pairs.add(new BasicNameValuePair("login",mLogin));
         pairs.add(new BasicNameValuePair("password",mPassword));
-        pairs.add(new BasicNameValuePair("api_key",api));
+       // pairs.add(new BasicNameValuePair("api_key",api));
         String urlDuServeur = "https://saliferous-automobi.000webhostapp.com/api/v1/all";
         postRequest maRequete = new postRequest();
         maRequete.sendRequest(urlDuServeur, pairs);

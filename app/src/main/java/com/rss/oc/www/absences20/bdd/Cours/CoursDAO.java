@@ -34,6 +34,7 @@ public class CoursDAO extends DAOBase {
     public static final String LIB_CLASSE = "lib_class";
     public static final String SALLE_NOM = "salle_nom";
     public static final String REM_COURS = "rem_cours";
+    private Locale locale= Locale.FRANCE;
 
 
 
@@ -108,6 +109,48 @@ public class CoursDAO extends DAOBase {
             } while (cursor.moveToNext());
         }
           close();
+        return idFinal;
+    }
+
+    public long getIdCoursInstantProf (long idProf){
+        long idFinal=-1;
+
+        openDBRead();
+
+        Cursor cursor = mDb.rawQuery("select " +KEY+","+JOUR+","+MOIS+","+ANNEE+","+HEURE_DEBUT+","+HEURE_FIN+","+KEYPROF+ " from " + TABLE_NAME, null);
+
+        if(cursor.moveToNext()){
+
+            int indexId = cursor.getColumnIndex(KEY);
+            int indexJour = cursor.getColumnIndex(JOUR);
+            int indexMois = cursor.getColumnIndex(MOIS);
+            int indexAnnee = cursor.getColumnIndex(ANNEE);
+            int indexHeureDebut = cursor.getColumnIndex(HEURE_DEBUT);
+            int indexHeureFin = cursor.getColumnIndex(HEURE_FIN);
+            int indexKeyProf = cursor.getColumnIndex(KEYPROF);
+            do {
+
+                String jour = cursor.getString(indexJour);
+                String mois = cursor.getString(indexMois);
+                String annee = cursor.getString(indexAnnee);
+                String heureDebut = cursor.getString(indexHeureDebut);
+                String heureFin = cursor.getString(indexHeureFin);
+                long keyProf = cursor.getLong(indexKeyProf);
+                String dateDebut = chaineDate(heureDebut,jour,mois,annee);
+                Log.i("dateDebut",dateDebut);
+                String dateFin = chaineDate(heureFin,jour,mois,annee);
+                Log.i("dateFin",dateFin);
+                // Log.i("test", String.valueOf(nomGroupe.indexOf(groupe)));
+                if (isHour(dateDebut,dateFin)&&(keyProf==idProf)){
+                    idFinal=cursor.getInt(indexId);
+                    // Log.i("id", String.valueOf(idFinal));
+                    cursor.moveToLast();
+                }
+
+
+            } while (cursor.moveToNext());
+        }
+        close();
         return idFinal;
     }
 
@@ -269,7 +312,7 @@ public class CoursDAO extends DAOBase {
                     heureDebut = cursor.getString(indexHeureDebut);
                     heureFin  = cursor.getString(indexHeureFin);
 
-                    Calendar c = Calendar.getInstance(Locale.FRANCE);
+                    Calendar c = Calendar.getInstance(locale);
                     Date timeInstant = c.getTime();
 
                     Log.i("dateTime",timeInstant.toString());

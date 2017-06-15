@@ -25,7 +25,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.ProgressBar;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,7 +68,7 @@ public class ProfesseurAccueilActivity extends AppCompatActivity {
     View ItemProfile;
     View ItemParametres;
     View ItemDeconnection;
-    ProgressBar progressBar;
+
     Fragment fragment_beacon;
     public BeaconArrayAdapter arrayAdapter;
     ListView mListView;
@@ -80,21 +80,17 @@ public class ProfesseurAccueilActivity extends AppCompatActivity {
 
 
     private Context context = this;
-    private int progressBarStatus = 0;
-    private Handler progressBarHandler = new Handler();
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_professeur_accueil);
         ButterKnife.bind(this);
         addListenerOnButton();
         Intent intent = getIntent();
         final long id_individu = intent.getLongExtra("id_individu", -1);
-        fragment_beacon = new BeaconViewerFragment();
-
 
         IndividusDAO individusDAO = new IndividusDAO(context);
         Log.i("harris", String.valueOf(id_individu));
@@ -116,23 +112,13 @@ public class ProfesseurAccueilActivity extends AppCompatActivity {
         ItemDeconnection = guillotineMenu.findViewById(R.id.deconnection_group);
         TextView textAc = (TextView) findViewById(R.id.accueil_group_text);
         textAc.setTextColor(getResources().getColor(R.color.selected_item_color));
-        progressBar = (ProgressBar) findViewById(R.id.progressBarBeacon);
-        final ImageView aPresent = (ImageView) findViewById(R.id.arrivee_present);
-        final ImageView aAbsent = (ImageView) findViewById(R.id.arrivee_absent);
-        final ImageView dPresent = (ImageView) findViewById(R.id.depart_present);
-        final ImageView dAbsent = (ImageView) findViewById(R.id.depart_absent);
-        final ImageView cadenasImage = (ImageView) findViewById(R.id.cadenasImage);
-        final TextView confirmation = (TextView) findViewById(R.id.confirmation);
-        final TextView raprochez = (TextView) findViewById(R.id.raprochez);
-        final TextView cadenasTexte = (TextView) findViewById(R.id.cadenasText);
         mListView = (ListView) findViewById(R.id.liste_des_prochains_cours);
 
 
 
 
-        confirmation.setVisibility(View.INVISIBLE);
-        aPresent.setVisibility(View.INVISIBLE);
-        dPresent.setVisibility(View.INVISIBLE);
+
+
 
 
         if (toolbar != null) {
@@ -164,84 +150,6 @@ public class ProfesseurAccueilActivity extends AppCompatActivity {
         // IndividusDAO individusDAO =new IndividusDAO(context);
         // individusDAO.validerPresenceDebut(7);
 
-        final BeaconViewerFragment fr = (BeaconViewerFragment) getFragmentManager().findFragmentById(R.id.fragment_beacon);
-        if (fr != null) {
-
-
-            // nouveau thread pour mettre a jour la progressBar afin de representer les beacons
-
-            // Demande des autorisations pour utiliser le Bluetooth
-            int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
-            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                    Toast.makeText(this, "The permission to get BLE location data is required", Toast.LENGTH_SHORT).show();
-                } else {
-                    requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-                }
-            } else {
-                Toast.makeText(this, "Location permissions already granted", Toast.LENGTH_SHORT).show();
-            }
-            Log.d(TAG, "Autorisations done (Bluetooth)");
-
-
-            arrayAdapter = fr.getMyList();
-            Log.i(TAG, "ArrayAdapterUpdate");
-
-            //Nouveau thread pour la recuperation des beacons
-            Thread t = new Thread() {
-                @Override
-                public void run() {
-                    try {
-                        while (!isInterrupted()) {
-                            Thread.sleep(500);
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-
-                                    //prepare for a progress bar dialog
-                                    int nombreBeacons = arrayAdapter.getCount();
-                                    //for (int i = 0; i < arrayAdapter.getCount(); i++){
-                                    // }
-                                    progressBar.setMax(4);
-                                    progressBar.setProgress(nombreBeacons);
-                                    progressBar.setProgressDrawable(getResources().getDrawable(my_progress));
-
-                                    if (profPresent == true) {
-                                        cadenasTexte.setVisibility(View.INVISIBLE);
-                                        cadenasImage.setVisibility(View.INVISIBLE);
-                                        aAbsent.setVisibility(View.VISIBLE);
-
-                                        if (nombreBeacons == 4) {
-                                            etudiantPresent = true;
-                                            IndividusDAO individusDAO = new IndividusDAO(context);
-                                            // individusDAO.validerPresenceDebut(7);
-
-                                            aPresent.setVisibility(View.VISIBLE);
-                                            aAbsent.setVisibility(View.INVISIBLE);
-                                            confirmation.setVisibility(View.VISIBLE);
-                                            raprochez.setVisibility(View.INVISIBLE);
-                                        } else {
-                                            confirmation.setVisibility(View.INVISIBLE);
-                                            raprochez.setVisibility(View.VISIBLE);
-                                        }
-                                    } else {
-                                        aAbsent.setVisibility(View.INVISIBLE);
-                                        cadenasTexte.setVisibility(View.VISIBLE);
-                                        cadenasImage.setVisibility(View.VISIBLE);
-
-                                    }
-                                }
-                            });
-                        }
-                    } catch (InterruptedException e) {
-                    }
-                }
-            };
-
-            t.start();
-
-            // ... do some fun stuff
-        }
 
 
         Thread t2 = new Thread() {
@@ -259,19 +167,25 @@ public class ProfesseurAccueilActivity extends AppCompatActivity {
                                 String chaine = coursDAO.getLibelleCoursInstant(idCoursInstant);
                                 String heureCours = coursDAO.getHeureCoursInstant(idCoursInstant);
                                 String chaineDepart = coursDAO.getTempsRestant(idCoursInstant);
-                                listCoursJournee = coursDAO.getListCoursAvenir(idCoursInstant,nomGroupe);
-                                Log.i(TAG, "idCoursInstant" + idCoursInstant);
-                                Log.i("cours",chaine);
+
+                                String[] values = new String[] { "Systeme et reseau CM - Amphi B 8h15-10h15", "Systeme et reseau TD - 3L 10h30-12h30", "Systeme et reseau TD - 3L 14h00-16h00",};
 
 
                                 TextView actuelCours = (TextView) findViewById(R.id.CoursActuel2);
-                                TextView actuelheureCours = (TextView) findViewById(R.id.textView);
-                                TextView depart = (TextView) findViewById(R.id.depart);
+                                TextView actuelheureCours = (TextView) findViewById(R.id.Date);
                                 actuelheureCours.setText(heureCours);
                                 actuelCours.setText(chaine);
-                                depart.setText(chaineDepart);
+                                Button bouttonDebutCours = (Button) findViewById(R.id.debutcours);
+                                bouttonDebutCours.setOnClickListener( new View.OnClickListener() {
 
-                                adapter = new ArrayAdapter<String>(context, R.layout.row_prochians_cours, R.id.prochain_cours, listCoursJournee);
+                                    @Override
+                                    public void onClick(View v) {
+                                        // TODO faire un truc magique avec le serveur pour enlever le cadenas des etudiants :D
+
+                                    }
+                                });
+
+                                adapter = new ArrayAdapter<String>(context, R.layout.row_prochians_cours, R.id.prochain_cours, values);
                                 mListView.setAdapter(adapter);
 
                             }

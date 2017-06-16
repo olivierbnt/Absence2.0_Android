@@ -160,7 +160,6 @@ public class ChargementActivity extends AppCompatActivity {
         postRequest maRequete = new postRequest();
         maRequete.sendRequest(urlDuServeur, pairs);
         JSONObject jsonResponse = maRequete.getJsonResponse();
-        Log.i("zvzvvzevz",jsonResponse.toString());
 
 
         try {

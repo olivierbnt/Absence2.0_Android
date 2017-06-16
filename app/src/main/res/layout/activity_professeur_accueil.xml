@@ -85,15 +85,16 @@ android:orientation="vertical">
                     android:id="@+id/CoursActuel2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/Date"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="18dp"
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"
-                    android:text="Démarche d'Architecture des SI "
+                    android:text="Pas de cours pour l'instant"
                     android:textAlignment="center"
                     android:textColor="@color/text"
-                    android:textSize="30sp"
-                    android:layout_marginTop="14dp"
-                    android:layout_below="@+id/Date"
-                    android:layout_alignParentStart="true" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/texteinfo"

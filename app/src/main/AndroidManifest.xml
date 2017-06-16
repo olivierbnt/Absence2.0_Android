@@ -21,10 +21,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.MainActivity"
+            android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait">
 
-        <activity android:name=".activity.LoginActivity">
+        </activity>
+        <activity android:name=".activity.ChargementActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,16 +37,22 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".activity.ChargementActivity">
-
-
-        </activity>
-        <activity android:name=".activity.ProfesseurActivity"></activity>
-        <activity android:name=".activity.EtudiantAbsencesActivity"></activity>
-        <activity android:name=".activity.EtudiantProfileActivity"></activity>
-        <activity android:name=".activity.BeaconViewerActivity" />
-        <activity android:name=".activity.EtudiantSettingsActivity" />
-        <activity android:name=".activity.ProfesseurAccueilActivity"></activity>
+        <activity android:name=".activity.ProfesseurActivity"
+            android:screenOrientation="portrait"> </activity>
+        <activity android:name=".activity.EtudiantAbsencesActivity"
+            android:screenOrientation="portrait"> </activity>
+        <activity android:name=".activity.EtudiantProfileActivity"
+            android:screenOrientation="portrait"> </activity>
+        <activity android:name=".activity.BeaconViewerActivity"
+            android:screenOrientation="portrait"> </activity>
+        <activity android:name=".activity.EtudiantSettingsActivity"
+            android:screenOrientation="portrait"> </activity>
+        <activity android:name=".activity.ProfesseurAccueilActivity"
+            android:screenOrientation="portrait"> </activity>
+        <activity android:name=".activity.ProfesseurProfilActivity"
+            android:screenOrientation="portrait"> </activity>
+        <activity android:name=".activity.ProfesseurSettingsActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

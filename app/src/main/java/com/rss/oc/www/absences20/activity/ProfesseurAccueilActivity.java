@@ -79,7 +79,7 @@ public class ProfesseurAccueilActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         addListenerOnButton();
         Intent intent = getIntent();
-        id_individu = intent.getLongExtra("id_individu", -1);
+        id_individu = 71;//intent.getLongExtra("id_individu", -1);
         login=intent.getStringExtra("login");
 
         IndividusDAO individusDAO = new IndividusDAO(context);
@@ -128,30 +128,36 @@ public class ProfesseurAccueilActivity extends AppCompatActivity {
         CoursDAO coursDAO = new CoursDAO(context);
         idCoursInstant = coursDAO.getIdCoursInstantProf(id_individu);
         Log.i("idCours", String.valueOf(idCoursInstant));
-        String chaine = coursDAO.getLibelleCoursInstant(idCoursInstant);
-        String heureCours = coursDAO.getHeureCoursInstant(idCoursInstant);
-        //String chaineDepart = coursDAO.getTempsRestant(idCoursInstant);
+        if(idCoursInstant!=-1){
 
-        String[] values = new String[] { "Systeme et reseau CM - Amphi B 8h15-10h15", "Systeme et reseau TD - 3L 10h30-12h30", "Systeme et reseau TD - 3L 14h00-16h00",};
+            String chaine = coursDAO.getLibelleCoursInstant(idCoursInstant);
+            String heureCours = coursDAO.getHeureCoursInstant(idCoursInstant);
+            //String chaineDepart = coursDAO.getTempsRestant(idCoursInstant);
+
+            String[] values = new String[] { "Systeme et reseau CM - Amphi B 8h15-10h15", "Systeme et reseau TD - 3L 10h30-12h30", "Systeme et reseau TD - 3L 14h00-16h00",};
 
 
-        TextView actuelCours = (TextView) findViewById(R.id.CoursActuel2);
-        TextView actuelheureCours = (TextView) findViewById(R.id.Date);
-        actuelheureCours.setText(heureCours);
-        Log.i("chaine",chaine);
-        actuelCours.setText(chaine);
-        Button bouttonDebutCours = (Button) findViewById(R.id.debutcours);
-        bouttonDebutCours.setOnClickListener( new View.OnClickListener() {
+            TextView actuelCours = (TextView) findViewById(R.id.CoursActuel2);
+            TextView actuelheureCours = (TextView) findViewById(R.id.Date);
+            actuelheureCours.setText(heureCours);
+            Log.i("chaine",chaine);
+            actuelCours.setText(chaine);
+            Button bouttonDebutCours = (Button) findViewById(R.id.debutcours);
+            bouttonDebutCours.setOnClickListener( new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                // TODO faire un truc magique avec le serveur pour enlever le cadenas des etudiants :D
+                @Override
+                public void onClick(View v) {
+                    //Demand demand = new Demand();
+                   // demand.execute((Void) null);
 
-            }
-        });
+                }
+            });
 
-        adapter = new ArrayAdapter<String>(context, R.layout.row_prochians_cours, R.id.prochain_cours, values);
-        mListView.setAdapter(adapter);
+            adapter = new ArrayAdapter<String>(context, R.layout.row_prochians_cours, R.id.prochain_cours, values);
+            mListView.setAdapter(adapter);
+
+
+        }
 
 
 
@@ -236,16 +242,26 @@ public class ProfesseurAccueilActivity extends AppCompatActivity {
             String resultat = maRequete.getResultat();
 
             if (resultat.equals(true))
-                Toast.makeText(getApplicationContext(), "Le cours peut commencer !",
-                        Toast.LENGTH_LONG).show();
+                toast2();
             else
-                Toast.makeText(getApplicationContext(), "Echec de connexion",
-                        Toast.LENGTH_LONG).show();
+                toast1();
 
 
             return null;
         }
     }
+
+
+    private void toast1(){
+        Toast.makeText(context, "Echec de connexion",
+                Toast.LENGTH_LONG).show();
+    }
+
+    private void toast2(){
+        Toast.makeText(context, "Le cours peut commencer !",
+                Toast.LENGTH_LONG).show();
+    }
+
 
     private void onClickMenu(View mViewAc, View mViewAb, View mViewPa, View mViewPr, View mViewDe, final TextView toolbar, final long id_individu) {
 
@@ -313,21 +329,21 @@ public class ProfesseurAccueilActivity extends AppCompatActivity {
     }
 
     public void loadEtudiantAbsencesActivity(long id_individu) {
-        Intent myintent = new Intent(this, EtudiantAbsencesActivity.class);
+        Intent myintent = new Intent(this, ProfesseurActivity.class);
         myintent.putExtra("id_individu", id_individu);
         startActivity(myintent);
         finish();
     }
 
     public void loadEtudiantProfileActivity(long id_individu) {
-        Intent myintent = new Intent(this, EtudiantProfileActivity.class);
+        Intent myintent = new Intent(this, ProfesseurProfilActivity.class);
         myintent.putExtra("id_individu", id_individu);
         startActivity(myintent);
         finish();
     }
 
     public void loadEtudiantSettingsActivity(long id_individu) {
-        Intent myintent = new Intent(this, EtudiantSettingsActivity.class);
+        Intent myintent = new Intent(this, ProfesseurSettingsActivity.class);
         myintent.putExtra("id_individu", id_individu);
         finish();
     }

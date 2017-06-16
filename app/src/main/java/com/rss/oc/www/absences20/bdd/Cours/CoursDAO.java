@@ -465,25 +465,25 @@ public class CoursDAO extends DAOBase {
 
                         if(valeur==true){
 
-                            resultat = lib+" "+heureDebut.substring(0,5)+
-                                    "-"+heureFin.substring(0,5)+" "+
-                                    salle+"          En cours";
+                            resultat = lib+"\n"+heureDebut.substring(0,5)+
+                                    "-"+heureFin.substring(0,5)+"\n"+
+                                    salle+"   En cours";
                             list.add(j,resultat);
                             j++;
                         }
                         else{
                             if(instant.compareTo(debut)>0){
-                                resultat = lib+" "+heureDebut.substring(0,5)+
-                                            "-"+heureFin.substring(0,5)+" "+
-                                            salle+"          Terminé";
+                                resultat = lib+"\n"+heureDebut.substring(0,5)+
+                                            "-"+heureFin.substring(0,5)+"\n"+
+                                            salle+"  Terminé";
                                 list.add(j,resultat);
                                 j++;
                             }
                             else{
 
-                                resultat = lib+" "+heureDebut.substring(0,5)+
-                                        "-"+heureFin.substring(0,5)+" "+
-                                        salle+"          A venir";
+                                resultat = lib+"\n"+heureDebut.substring(0,5)+
+                                        "-"+heureFin.substring(0,5)+"\n"+
+                                        salle+"     A venir";
                                 list.add(j,resultat);
                                 j++;
                             }

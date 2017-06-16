@@ -6,6 +6,7 @@ import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -72,6 +73,8 @@ public class ProfesseurActivity extends AppCompatActivity {
     private static final int DIALOG_PRESENT = 10;
     private static final int DIALOG_ABSENT = 20;
     private static final int DIALOG_RETARD = 30;
+    private static final int DIALOG_EXCLU = 40;
+    private static final int DIALOG_DEPART = 50;
     private Context context=this;
 
 
@@ -82,7 +85,7 @@ public class ProfesseurActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine_prof, null);
        // listAbsenceView= LayoutInflater.from(this).inflate(R.layout.list_absence_view, null);
-        mRefreshLayout = (CircleRefreshLayout) findViewById(R.id.refresh_layout);
+        //mRefreshLayout = (CircleRefreshLayout) findViewById(R.id.refresh_layout);
 
 
         LayoutInflater inflater =
@@ -105,87 +108,80 @@ public class ProfesseurActivity extends AppCompatActivity {
         }
 
         CoursDAO coursDAO = new CoursDAO(context);
-        //long idCoursInstant=coursDAO.getIdCoursInstant();
-       // Log.i("id_cours", String.valueOf(coursDAO.getIdCoursInstant()));
-      //  String libelleCours = coursDAO.getLibelleGroupeInstant(idCoursInstant);
-       // Log.i("libelleCours",libelleCours);
-        GroupesDAO groupesDAO = new GroupesDAO(context);
-       // long idGroupe = groupesDAO.getIdGroupe(libelleCours);
-        Groupe_individusDAO groupe_individusDAO = new Groupe_individusDAO(context);
-      //  ArrayList<Long> listIdIndividusInstant = groupe_individusDAO.listIdIndividusInstant(idGroupe);
+         long idCoursInstant=coursDAO.getIdCoursInstantProf(71);
+        if(idCoursInstant!=-1){
 
-        IndividusDAO individusDAO = new IndividusDAO(context);
-       // obj = individusDAO.listIndividusInstant(listIdIndividusInstant);
-      //  listIndicateur = individusDAO.listIndicateur(listIdIndividusInstant);
+            // Log.i("id_cours", String.valueOf(coursDAO.getIdCoursInstant()));
+            String libelleCours = coursDAO.getLibelleGroupeInstant(idCoursInstant);
+            // Log.i("libelleCours",libelleCours);
+            GroupesDAO groupesDAO = new GroupesDAO(context);
+            long idGroupe = groupesDAO.getIdGroupe(libelleCours);
+            Groupe_individusDAO groupe_individusDAO = new Groupe_individusDAO(context);
+            ArrayList<Long> listIdIndividusInstant = groupe_individusDAO.listIdIndividusInstant(idGroupe);
 
+            IndividusDAO individusDAO = new IndividusDAO(context);
+            obj = individusDAO.listIndividusInstant(listIdIndividusInstant);
+            listIndicateur = individusDAO.listIndicateur(listIdIndividusInstant);
+            ListAdapter listAdapter = new ArrayAdapter<String>(ProfesseurActivity.this,
+                    R.layout.list_absence_view, R.id.text, obj);
 
-        TextView toolbar = (TextView) findViewById(R.id.toolbar_title);
-        toolbar.setText(getString(R.string.action_liste_etudiants));
-        new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
-                .setStartDelay(RIPPLE_DURATION)
-                .setActionBarViewForAnimation(toolbar)
-                .setClosedOnStart(true)
-                .build();
+            Log.i("list indicateur",listIndicateur.toString());
+            WrapperListAdapterImpl wrap = new WrapperListAdapterImpl(listAdapter) {
+                @Override
+                public View getView(int position, View view, ViewGroup viewGroup) {
 
+                    View row = getLayoutInflater().inflate(R.layout.list_absence_view,viewGroup,false);
 
-        ListAdapter listAdapter = new ArrayAdapter<String>(ProfesseurActivity.this,
-                R.layout.list_absence_view, R.id.text, obj);
+                    long l = listIndicateur.get(position);
+                    if(l==0){
+                        indicateurPresence = (ImageView) row.findViewById(R.id.imageViewIndicateurStatut);
+                        indicateurPresence.setImageResource(R.drawable.button_rouge);
+                    }
+                    if(l==1){
 
+                        indicateurPresence = (ImageView) row.findViewById(R.id.imageViewIndicateurStatut);
+                        indicateurPresence.setImageResource(R.drawable.bouttonvert);
+                    }
 
-        Log.i("list indicateur",listIndicateur.toString());
-        WrapperListAdapterImpl wrap = new WrapperListAdapterImpl(listAdapter) {
-            @Override
-            public View getView(int position, View view, ViewGroup viewGroup) {
+                    if(l==2){
 
-                View row = getLayoutInflater().inflate(R.layout.list_absence_view,viewGroup,false);
+                        indicateurPresence = (ImageView) row.findViewById(R.id.imageViewIndicateurStatut);
+                        indicateurPresence.setImageResource(R.drawable.bouttongris);
+                    }
 
-                long l = listIndicateur.get(position);
-                if(l==0){
-                    indicateurPresence = (ImageView) row.findViewById(R.id.imageViewIndicateurStatut);
-                    indicateurPresence.setImageResource(R.drawable.button_rouge);
+                    return wrapped.getView(position,row,viewGroup);
+
                 }
-                if(l==1){
+            };
 
-                    indicateurPresence = (ImageView) row.findViewById(R.id.imageViewIndicateurStatut);
-                    indicateurPresence.setImageResource(R.drawable.bouttonvert);
+
+            SlideExpandableListAdapter slideExpandableListAdapter = new SlideExpandableListAdapter(
+                    wrap,
+                    R.id.expandable_toggle_button,
+                    R.id.expandable
+            );
+
+
+            ActionSlideExpandableListView listView = (ActionSlideExpandableListView) findViewById(R.id.list_absences);
+            listView.setAdapter(slideExpandableListAdapter);
+
+
+            listView.setItemActionListener(new ActionSlideExpandableListView.OnActionClickListener() {
+
+                @Override
+                public void onClick(View listView, View buttonView, int position) {
+                    if (buttonView.getId() == R.id.button_presence_epf)
+                        showDialog(DIALOG_PRESENT);
+                    if (buttonView.getId() == R.id.button_absence_epf)
+                        showDialog(DIALOG_ABSENT);
+                    if (buttonView.getId() == R.id.boutton_retard)
+                        showDialog(DIALOG_RETARD);
+                    if (buttonView.getId() == R.id.button_exclusion_epf)
+                        showDialog(DIALOG_EXCLU);
+                    if (buttonView.getId() == R.id.button_depart_epf)
+                        showDialog(DIALOG_DEPART);
                 }
-
-                if(l==2){
-
-                    indicateurPresence = (ImageView) row.findViewById(R.id.imageViewIndicateurStatut);
-                    indicateurPresence.setImageResource(R.drawable.bouttongris);
-                }
-
-                return wrapped.getView(position,row,viewGroup);
-
-            }
-        };
-
-
-
-        SlideExpandableListAdapter slideExpandableListAdapter = new SlideExpandableListAdapter(
-                wrap,
-                R.id.expandable_toggle_button,
-                R.id.expandable
-        );
-
-
-        ActionSlideExpandableListView listView = (ActionSlideExpandableListView) findViewById(R.id.list_absences);
-        listView.setAdapter(slideExpandableListAdapter);
-
-
-        listView.setItemActionListener(new ActionSlideExpandableListView.OnActionClickListener() {
-
-            @Override
-            public void onClick(View listView, View buttonView, int position) {
-                if (buttonView.getId() == R.id.button_presence_epf)
-                    showDialog(DIALOG_PRESENT);
-                if (buttonView.getId() == R.id.button_absence_epf)
-                    showDialog(DIALOG_ABSENT);
-                if (buttonView.getId() == R.id.boutton_retard)
-                    showDialog(DIALOG_RETARD);
-            }
-        }, R.id.button_absence_epf, R.id.boutton_retard, R.id.button_presence_epf);
+            }, R.id.button_absence_epf, R.id.boutton_retard, R.id.button_presence_epf,R.id.button_exclusion_epf,R.id.button_depart_epf);
 
        /* mRefreshLayout.setOnRefreshListener(
                 new CircleRefreshLayout.OnCircleRefreshListener() {
@@ -201,6 +197,26 @@ public class ProfesseurActivity extends AppCompatActivity {
                         mRefreshLayout.finishRefreshing();
                     }
                 });*/
+
+
+        }
+
+
+        TextView toolbar = (TextView) findViewById(R.id.toolbar_title);
+        toolbar.setText(getString(R.string.action_liste_etudiants));
+        new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
+                .setStartDelay(RIPPLE_DURATION)
+                .setActionBarViewForAnimation(toolbar)
+                .setClosedOnStart(true)
+                .build();
+
+
+
+        onClickMenu(ItemAccueil,ItemAbsence,ItemParametres,ItemProfile,ItemDeconnection,toolbar,71);
+
+
+
+
 
     }
 
@@ -234,6 +250,24 @@ public class ProfesseurActivity extends AppCompatActivity {
                 builder_retard.setNegativeButton("Non", new CancelOnClickListener());
                 AlertDialog dialog_retard = builder_retard.create();
                 dialog_retard.show();
+                break;
+            case DIALOG_EXCLU:
+                Builder builder_exclu = new AlertDialog.Builder(this);
+                builder_exclu.setMessage("Etes-vous sûr(e) de vouloir considérer cet étudiant comme exclu ?");
+                builder_exclu.setCancelable(true);
+                builder_exclu.setPositiveButton("Oui", new OkOnClickListener());
+                builder_exclu.setNegativeButton("Non", new CancelOnClickListener());
+                AlertDialog dialog_exclu = builder_exclu.create();
+                dialog_exclu.show();
+                break;
+            case DIALOG_DEPART:
+                Builder builder_depart = new AlertDialog.Builder(this);
+                builder_depart.setMessage("Confirmez vous le départ anticipé de cet étudiant ?");
+                builder_depart.setCancelable(true);
+                builder_depart.setPositiveButton("Oui", new OkOnClickListener());
+                builder_depart.setNegativeButton("Non", new CancelOnClickListener());
+                AlertDialog dialog_depart = builder_depart.create();
+                dialog_depart.show();
         }
         return super.onCreateDialog(id);
     }
@@ -306,5 +340,102 @@ public class ProfesseurActivity extends AppCompatActivity {
         return chaine;
     }
 
+    private void onClickMenu(View mViewAc, View mViewAb, View mViewPa, View mViewPr, View mViewDe, final TextView toolbar, final long id_individu){
+
+        mViewAc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView textAc = (TextView) findViewById(R.id.accueil_group_text);
+                TextView textAb = (TextView) findViewById(R.id.absence_group_text);
+                TextView textPa = (TextView) findViewById(R.id.settins_group_text);
+                TextView textPr = (TextView) findViewById(R.id.profile_group_text);
+                TextView textDe = (TextView) findViewById(R.id.deconnection_group_text);
+                toolbar.setText(getText(R.string.action_absences));
+                textAc.setTextColor(getResources().getColor(R.color.selected_item_color));
+                textPa.setTextColor(getResources().getColor(R.color.white));
+                textPr.setTextColor(getResources().getColor(R.color.white));
+                textDe.setTextColor(getResources().getColor(R.color.white));
+                textAb.setTextColor(getResources().getColor(R.color.white));
+                loadMainActivity(id_individu);
+
+            }
+        });
+        mViewPa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                TextView textAc = (TextView) findViewById(R.id.accueil_group_text);
+                TextView textAb = (TextView) findViewById(R.id.absence_group_text);
+                TextView textPa = (TextView) findViewById(R.id.settins_group_text);
+                TextView textPr = (TextView) findViewById(R.id.profile_group_text);
+                TextView textDe = (TextView) findViewById(R.id.deconnection_group_text);
+                toolbar.setText(getText(R.string.action_profile));
+                textAc.setTextColor(getResources().getColor(R.color.white));
+                textPa.setTextColor(getResources().getColor(R.color.selected_item_color));
+                textPr.setTextColor(getResources().getColor(R.color.white));
+                textDe.setTextColor(getResources().getColor(R.color.white));
+                textAb.setTextColor(getResources().getColor(R.color.white));
+                loadEtudiantSettingsActivity(id_individu);
+
+            }
+        });
+        mViewPr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                TextView textAc = (TextView) findViewById(R.id.accueil_group_text);
+                TextView textAb = (TextView) findViewById(R.id.absence_group_text);
+                TextView textPa = (TextView) findViewById(R.id.settins_group_text);
+                TextView textPr = (TextView) findViewById(R.id.profile_group_text);
+                TextView textDe = (TextView) findViewById(R.id.deconnection_group_text);
+                toolbar.setText(getText(R.string.action_profile));
+                textAc.setTextColor(getResources().getColor(R.color.white));
+                textPa.setTextColor(getResources().getColor(R.color.white));
+                textPr.setTextColor(getResources().getColor(R.color.selected_item_color));
+                textDe.setTextColor(getResources().getColor(R.color.white));
+                textAb.setTextColor(getResources().getColor(R.color.white));
+                loadEtudiantProfileActivity(id_individu);
+
+            }
+        });
+        mViewDe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadLoginActivity(id_individu);
+            }
+        });
+    }
+
+    public void loadEtudiantSettingsActivity(long id_individu ){
+        Intent myintent = new Intent(this, ProfesseurSettingsActivity.class);
+        myintent.putExtra("id_individu", id_individu);
+        startActivity(myintent);
+        finish();
+    }
+
+    public void loadMainActivity(long id_individu){
+        Intent myintent = new Intent(this, ProfesseurAccueilActivity.class);
+        myintent.putExtra("id_individu", id_individu);
+        startActivity(myintent);
+        finish();
+    }
+
+
+    public void loadLoginActivity(long id_individu){
+        Intent myintent = new Intent(this, LoginActivity.class);
+        myintent.putExtra("id_individu", id_individu);
+        startActivity(myintent);
+        finish();
+    }
+
+    public void loadEtudiantProfileActivity(long id_individu){
+        Intent myintent = new Intent(this, ProfesseurProfilActivity.class);
+        myintent.putExtra("id_individu", id_individu);
+        startActivity(myintent);
+        finish();
+    }
+
 
 }
+
+

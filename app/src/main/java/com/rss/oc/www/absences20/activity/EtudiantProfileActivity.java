@@ -61,10 +61,10 @@ public class EtudiantProfileActivity extends AppCompatActivity {
         final long id_individu = intent.getLongExtra("id_individu", -1);
 
         IndividusDAO individusDAO = new IndividusDAO(context);
-        textAdresse.setText(individusDAO.getAdresseIndividu(id_individu));
+       // textAdresse.setText(individusDAO.getAdresseIndividu(id_individu));
         textNom.setText(individusDAO.getNomIndividu(id_individu));
         textPreNom.setText(individusDAO.getPrenomIndividu(id_individu));
-        textEmail.setText(individusDAO.getEmailIndividu(id_individu));
+        //textEmail.setText(individusDAO.getEmailIndividu(id_individu));
         textStatut.setText(individusDAO.getStatutIndividu(id_individu));
 
 

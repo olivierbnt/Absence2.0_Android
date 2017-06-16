@@ -63,12 +63,12 @@ public class EtudiantSettingsActivity extends AppCompatActivity {
                 .setClosedOnStart(true)
                 .build();
 
-        onClickMenu(ItemAccueil,ItemAbsence,ItemParametres,ItemProfile,ItemDeconnection,toolbar);
+        onClickMenu(ItemAccueil,ItemAbsence,ItemParametres,ItemProfile,ItemDeconnection,toolbar,71);
 
 
     }
 
-    private void onClickMenu(View mViewAc,View mViewAb, View mViewPa, View mViewPr, View mViewDe, final TextView toolbar){
+    private void onClickMenu(View mViewAc, View mViewAb, View mViewPa, View mViewPr, View mViewDe, final TextView toolbar, final long id_individu){
 
         mViewAb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +84,7 @@ public class EtudiantSettingsActivity extends AppCompatActivity {
                 textPr.setTextColor(getResources().getColor(R.color.white));
                 textDe.setTextColor(getResources().getColor(R.color.white));
                 textAb.setTextColor(getResources().getColor(R.color.selected_item_color));
-                loadEtudiantAbsencesActivity();
+                loadEtudiantAbsencesActivity(id_individu);
 
             }
         });
@@ -103,7 +103,7 @@ public class EtudiantSettingsActivity extends AppCompatActivity {
                 textPr.setTextColor(getResources().getColor(R.color.white));
                 textDe.setTextColor(getResources().getColor(R.color.white));
                 textAb.setTextColor(getResources().getColor(R.color.white));
-                loadMainActivity();
+                loadMainActivity(id_individu);
 
             }
         });
@@ -122,39 +122,43 @@ public class EtudiantSettingsActivity extends AppCompatActivity {
                 textPr.setTextColor(getResources().getColor(R.color.selected_item_color));
                 textDe.setTextColor(getResources().getColor(R.color.white));
                 textAb.setTextColor(getResources().getColor(R.color.white));
-                loadEtudiantProfileActivity();
+                loadEtudiantProfileActivity(id_individu);
 
             }
         });
         mViewDe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadLoginActivity();
+                loadLoginActivity(id_individu);
             }
         });
     }
 
-    public void loadEtudiantAbsencesActivity(){
+    public void loadEtudiantAbsencesActivity(long id_individu){
         Intent myintent = new Intent(this, EtudiantAbsencesActivity.class);
+        myintent.putExtra("id_individu", id_individu);
         startActivity(myintent);
         finish();
     }
 
-    public void loadMainActivity(){
+    public void loadMainActivity(long id_individu){
         Intent myintent = new Intent(this, MainActivity.class);
+        myintent.putExtra("id_individu", id_individu);
         startActivity(myintent);
         finish();
     }
 
 
-    public void loadLoginActivity(){
+    public void loadLoginActivity(long id_individu){
         Intent myintent = new Intent(this, LoginActivity.class);
+        myintent.putExtra("id_individu", id_individu);
         startActivity(myintent);
         finish();
     }
 
-    public void loadEtudiantProfileActivity(){
+    public void loadEtudiantProfileActivity(long id_individu){
         Intent myintent = new Intent(this, EtudiantProfileActivity.class);
+        myintent.putExtra("id_individu", id_individu);
         startActivity(myintent);
         finish();
     }

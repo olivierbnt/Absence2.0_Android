@@ -15,6 +15,7 @@ import com.rss.oc.www.absences20.bdd.individu.IndividusDAO;
 import com.yalantis.guillotine.animation.GuillotineAnimation;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class ProfesseurProfilActivity extends AppCompatActivity {
 
@@ -38,6 +39,8 @@ public class ProfesseurProfilActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_professeur_profil);
+        ButterKnife.bind(this);
+
         View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine_prof, null);
         root.addView(guillotineMenu);
 
@@ -57,10 +60,10 @@ public class ProfesseurProfilActivity extends AppCompatActivity {
         final long id_individu = intent.getLongExtra("id_individu", -1);
 
         IndividusDAO individusDAO = new IndividusDAO(context);
-        textAdresse.setText(individusDAO.getAdresseIndividu(id_individu));
+        //textAdresse.setText(individusDAO.getAdresseIndividu(id_individu));
         textNom.setText(individusDAO.getNomIndividu(id_individu));
         textPreNom.setText(individusDAO.getPrenomIndividu(id_individu));
-        textEmail.setText(individusDAO.getEmailIndividu(id_individu));
+        //textEmail.setText(individusDAO.getEmailIndividu(id_individu));
         textStatut.setText(individusDAO.getStatutIndividu(id_individu));
 
 

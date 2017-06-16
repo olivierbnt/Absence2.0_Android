@@ -48,7 +48,7 @@
                 android:id="@+id/imageView4"
                 android:layout_width="113dp"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/mathilda" />
+                app:srcCompat="@drawable/ic_profile" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -123,7 +123,7 @@
                 android:background="@drawable/my_border"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="06523827283" />
+                android:text="0733827283" />
 
         </LinearLayout>
 
@@ -207,7 +207,7 @@
                 android:background="@drawable/my_border"
                 android:gravity="center"
                 android:maxLines="2"
-                android:text="32 Rue de Tilssit 75001 Paris" />
+                android:text="3 Rue bernadotte 75001 Paris" />
         </LinearLayout>
 
     </LinearLayout>

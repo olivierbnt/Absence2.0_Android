@@ -27,9 +27,6 @@
         <activity android:name=".activity.LoginActivity"
             android:screenOrientation="portrait">
 
-        </activity>
-        <activity android:name=".activity.ChargementActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,8 +34,16 @@
             </intent-filter>
 
         </activity>
+        <activity android:name=".activity.ChargementActivity">
+
+
+        </activity>
         <activity android:name=".activity.ProfesseurActivity"
-            android:screenOrientation="portrait"> </activity>
+            android:screenOrientation="portrait">
+
+
+
+        </activity>
         <activity android:name=".activity.EtudiantAbsencesActivity"
             android:screenOrientation="portrait"> </activity>
         <activity android:name=".activity.EtudiantProfileActivity"
@@ -48,7 +53,9 @@
         <activity android:name=".activity.EtudiantSettingsActivity"
             android:screenOrientation="portrait"> </activity>
         <activity android:name=".activity.ProfesseurAccueilActivity"
-            android:screenOrientation="portrait"> </activity>
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity android:name=".activity.ProfesseurProfilActivity"
             android:screenOrientation="portrait"> </activity>
         <activity android:name=".activity.ProfesseurSettingsActivity"

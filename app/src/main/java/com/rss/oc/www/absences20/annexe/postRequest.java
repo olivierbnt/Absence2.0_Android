@@ -12,6 +12,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -28,6 +29,7 @@ public class postRequest {
     private String Resultat = "";
     private String Header = "";
     private JSONObject jsonResponse = null;
+    private JSONArray jsonArray=null;
 
     public postRequest(){
     }
@@ -61,10 +63,11 @@ public class postRequest {
                     }
                     Log.i("Resultat : ", sb.toString());
                     Resultat = sb.toString();
-                    if (Resultat.length()>100){
+                    if (Resultat.startsWith("{")){
                        jsonResponse = new JSONObject(Resultat);
-
                     }
+                    if (Resultat.startsWith("[")==true)
+                        jsonArray = new JSONArray(Resultat);
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (Exception e) {
@@ -94,4 +97,9 @@ public class postRequest {
     public JSONObject getJsonResponse (){
         return this.jsonResponse;
     }
+
+    public JSONArray getJsonArray (){
+        return this.jsonArray;
+    }
+
 }

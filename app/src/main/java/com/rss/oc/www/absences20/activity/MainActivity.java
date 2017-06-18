@@ -30,7 +30,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rss.oc.www.absences20.R;
-import com.rss.oc.www.absences20.annexe.GetMyJson;
 import com.rss.oc.www.absences20.annexe.postRequest;
 import com.rss.oc.www.absences20.bdd.Cours.CoursDAO;
 import com.rss.oc.www.absences20.bdd.groupe_individu.Groupe_individusDAO;
@@ -39,9 +38,10 @@ import com.rss.oc.www.absences20.bdd.individu.IndividusDAO;
 import com.yalantis.guillotine.animation.GuillotineAnimation;
 
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -71,13 +71,16 @@ public class MainActivity extends AppCompatActivity {
     Fragment fragment_beacon;
     public BeaconArrayAdapter arrayAdapter;
     ListView mListView;
-    boolean profPresent;
-    boolean etudiantPresent;
+    boolean profPresent =false;
+    boolean dejaPresentEtudiant =false;
+    boolean etudiantPresentDebut=false;
+    boolean etudiantPresentFin=false;
     ArrayList<String> listCoursJournee;
     private String nomGroupe;
     private ListAdapter adapter;
 
-
+    private long id_individu;
+    private long idCoursInstant;
     private Context context = this;
     private int progressBarStatus = 0;
     private Handler progressBarHandler = new Handler();
@@ -91,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         addListenerOnButton();
         Intent intent = getIntent();
-        final long id_individu = 66;//intent.getLongExtra("id_individu", -1);
+        id_individu = 66;//intent.getLongExtra("id_individu", -1);
         fragment_beacon = new BeaconViewerFragment();
 
 
@@ -104,9 +107,6 @@ public class MainActivity extends AppCompatActivity {
         root.addView(guillotineMenu);
         //View fragment_beacon =  LayoutInflater.from(this).inflate(R.layout.fragment_main, null);
 
-
-        // Demand demand = new Demand();
-        // demand.execute((Void)null);
 
         ItemAccueil = guillotineMenu.findViewById(R.id.accueil_group);
         ItemAbsence = guillotineMenu.findViewById(R.id.absence_group);
@@ -125,8 +125,10 @@ public class MainActivity extends AppCompatActivity {
         final TextView raprochez = (TextView) findViewById(R.id.raprochez);
         final TextView cadenasTexte = (TextView) findViewById(R.id.cadenasText);
         mListView = (ListView) findViewById(R.id.liste_des_prochains_cours);
+        listCoursJournee = new ArrayList<String>();
 
 
+        //validerPresenceDebut(96,idCoursInstant,"fvfvvzv");
 
 
         confirmation.setVisibility(View.INVISIBLE);
@@ -164,6 +166,146 @@ public class MainActivity extends AppCompatActivity {
         // individusDAO.validerPresenceDebut(7);
 
         final BeaconViewerFragment fr = (BeaconViewerFragment) getFragmentManager().findFragmentById(R.id.fragment_beacon);
+
+
+
+
+        Thread t2 = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(1000);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                CoursDAO coursDAO = new CoursDAO(context);
+                                 idCoursInstant = coursDAO.getIdCoursInstant(nomGroupe);
+                                if(idCoursInstant!=-1){
+
+                                    String chaine = coursDAO.getLibelleCoursInstant(idCoursInstant);
+                                    String heureCours = coursDAO.getHeureCoursInstant(idCoursInstant);
+                                    String chaineDepart = coursDAO.getTempsRestant(idCoursInstant);
+                                    Log.i(TAG, "idCoursInstant" + idCoursInstant);
+                                    Log.i("cours",chaine);
+
+
+                                    TextView actuelCours = (TextView) findViewById(R.id.CoursActuel2);
+                                    TextView actuelheureCours = (TextView) findViewById(R.id.textView);
+                                    TextView depart = (TextView) findViewById(R.id.depart);
+                                    actuelheureCours.setText(heureCours);
+                                    actuelCours.setText(chaine);
+                                    depart.setText(chaineDepart);
+
+
+
+                                }
+
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+
+
+
+
+
+       Thread t3 = new Thread(){
+           @Override
+           public void run() {
+               try {
+                   while (!isInterrupted()) {
+
+                       runOnUiThread(new Runnable() {
+                           @Override
+                           public void run() {
+
+                               CoursDAO coursDAO = new CoursDAO(context);
+                               listCoursJournee = coursDAO.getListCoursAvenir2(nomGroupe);
+                               adapter = new ArrayAdapter<String>(context, R.layout.row_prochians_cours, R.id.prochain_cours, listCoursJournee);
+                               mListView.setAdapter(adapter);
+
+
+                           }
+                       });
+                       Thread.sleep(1000);
+                   }
+               } catch (InterruptedException e) {
+
+               }
+           }
+       };
+
+        Thread t4 = new Thread(){
+            @Override
+            public void run() {
+                try {
+                    while (profPresent==false) {
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                               Demand demand = new Demand();
+                                demand.execute((Void)null);
+
+                            }
+                        });
+                        Thread.sleep(10000);
+                    }
+                } catch (InterruptedException e) {
+
+                }
+            }
+        };
+        Thread t5 = new Thread(){
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                               // SituationEtudiant situationEtudiant = new SituationEtudiant();
+                               // situationEtudiant.execute((Void)null);
+                                if(etudiantPresentDebut==true){
+
+                                    aPresent.setVisibility(View.VISIBLE);
+                                    aAbsent.setVisibility(View.INVISIBLE);
+                                    confirmation.setVisibility(View.VISIBLE);
+                                    raprochez.setVisibility(View.INVISIBLE);
+
+                                }
+
+                            }
+                        });
+                        Thread.sleep(10000);
+                    }
+                } catch (InterruptedException e) {
+
+                }
+            }
+        };
+
+
+        t3.start();
+        t2.start();
+
+        if(idCoursInstant!=-1){
+
+            t5.start();
+            t4.start();
+        }
+
+
+
+
         if (fr != null) {
 
 
@@ -192,7 +334,7 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
                     try {
                         while (!isInterrupted()) {
-                            Thread.sleep(500);
+
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -205,22 +347,59 @@ public class MainActivity extends AppCompatActivity {
                                     progressBar.setProgress(nombreBeacons);
                                     progressBar.setProgressDrawable(getResources().getDrawable(my_progress));
 
-                                    if (profPresent == true) {
 
+
+                                    if (profPresent == true) {
 
                                         cadenasTexte.setVisibility(View.INVISIBLE);
                                         cadenasImage.setVisibility(View.INVISIBLE);
                                         aAbsent.setVisibility(View.VISIBLE);
 
-                                        if (nombreBeacons == 4) {
-                                            etudiantPresent = true;
-                                            IndividusDAO individusDAO = new IndividusDAO(context);
-                                            // individusDAO.validerPresenceDebut(7);
 
-                                            aPresent.setVisibility(View.VISIBLE);
-                                            aAbsent.setVisibility(View.INVISIBLE);
-                                            confirmation.setVisibility(View.VISIBLE);
-                                            raprochez.setVisibility(View.INVISIBLE);
+                                        if (nombreBeacons == 4) {
+                                            CoursDAO coursDAO = new CoursDAO(context);
+
+                                            if (etudiantPresentFin==false){
+
+                                                if(etudiantPresentDebut==false){
+
+
+                                                    if(coursDAO.A_LHEURE(idCoursInstant)==true){
+
+                                                        PresenceDebut presence = new PresenceDebut();
+                                                        presence.execute((Void)null);
+                                                        etudiantPresentDebut = true;
+                                                        aPresent.setVisibility(View.VISIBLE);
+                                                        aAbsent.setVisibility(View.INVISIBLE);
+                                                        confirmation.setVisibility(View.VISIBLE);
+                                                        raprochez.setVisibility(View.INVISIBLE);
+                                                    }
+                                                    else if (coursDAO.EN_RETARD(idCoursInstant)==true){
+
+                                                        PresenceDebut presence = new PresenceDebut();
+                                                        presence.execute((Void)null);
+                                                        etudiantPresentDebut = true;
+                                                        aPresent.setVisibility(View.VISIBLE);
+                                                        aAbsent.setVisibility(View.INVISIBLE);
+                                                        confirmation.setVisibility(View.VISIBLE);
+                                                        raprochez.setVisibility(View.INVISIBLE);
+
+                                                    }
+
+                                                }
+                                                else {
+
+                                                    if(coursDAO.A_LA_FIN(idCoursInstant)==true){
+
+                                                        PresenceFin presenceFin = new PresenceFin();
+                                                        presenceFin.execute((Void)null);
+                                                        etudiantPresentFin=true;
+                                                    }
+
+                                                }
+
+                                            }
+
                                         } else {
                                             confirmation.setVisibility(View.INVISIBLE);
                                             raprochez.setVisibility(View.VISIBLE);
@@ -233,6 +412,8 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 }
                             });
+
+                            Thread.sleep(10000);
                         }
                     } catch (InterruptedException e) {
                     }
@@ -246,55 +427,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-        Thread t2 = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    while (!isInterrupted()) {
-                        Thread.sleep(1000);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                CoursDAO coursDAO = new CoursDAO(context);
-                                long idCoursInstant = coursDAO.getIdCoursInstant(nomGroupe);
-                                if(idCoursInstant!=-1){
-
-                                    String chaine = coursDAO.getLibelleCoursInstant(idCoursInstant);
-                                    String heureCours = coursDAO.getHeureCoursInstant(idCoursInstant);
-                                    String chaineDepart = coursDAO.getTempsRestant(idCoursInstant);
-                                    listCoursJournee = coursDAO.getListCoursAvenir(idCoursInstant,nomGroupe);
-                                    Log.i(TAG, "idCoursInstant" + idCoursInstant);
-                                    Log.i("cours",chaine);
-
-
-                                    TextView actuelCours = (TextView) findViewById(R.id.CoursActuel2);
-                                    TextView actuelheureCours = (TextView) findViewById(R.id.textView);
-                                    TextView depart = (TextView) findViewById(R.id.depart);
-                                    actuelheureCours.setText(heureCours);
-                                    actuelCours.setText(chaine);
-                                    depart.setText(chaineDepart);
-
-                                    adapter = new ArrayAdapter<String>(context, R.layout.row_prochians_cours, R.id.prochain_cours, listCoursJournee);
-                                    mListView.setAdapter(adapter);
-
-                                }
-
-                            }
-                        });
-                    }
-                } catch (InterruptedException e) {
-                }
-            }
-        };
-
-        t2.start();
-
-
-
-
-
     }
 
     public class Demand extends AsyncTask<Void, Void, Boolean> {
@@ -304,19 +436,85 @@ public class MainActivity extends AppCompatActivity {
         protected Boolean doInBackground(Void... params) {
 
 
-            String mLogin = "eleve1@epfedu.fr";
-            GetMyJson get = new GetMyJson();
+            String reponse = null;
+            List pairs = new ArrayList();
+            pairs.add(new BasicNameValuePair("id_cours", String.valueOf(idCoursInstant)));
+            pairs.add(new BasicNameValuePair("id_individu", String.valueOf(id_individu)));
+            //pairs.add(new BasicNameValuePair("api_key", api));
+            String urlDuServeur = "https://saliferous-automobi.000webhostapp.com/api/v1/estPresentProfesseur";
+            postRequest maRequete = new postRequest();
+            maRequete.sendRequest(urlDuServeur, pairs);
+            reponse = maRequete.getResultat();
+            if(reponse.equals(true)){
+                profPresent = true;
+            }
+            else
+                Log.i("oooooooooo","ooooooooo");
+            return null;
+        }
+    }
+
+    public class PresenceDebut extends AsyncTask<Void, Void, Boolean> {
+
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+           //  getApi();
+         validerPresenceDebut(66,idCoursInstant,"e4305ded91176c818e91fdd81704555b");
+            return null;
+        }
+    }
+
+    public class PresenceFin extends AsyncTask<Void, Void, Boolean> {
+
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+            //  getApi();
+            validerPresenceFin(66,idCoursInstant,"e4305ded91176c818e91fdd81704555b");
+            return null;
+        }
+    }
+
+    public class SituationEtudiant extends AsyncTask<Void, Void, Boolean> {
+
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+            JSONArray reponse = null;
+            List pairs = new ArrayList();
+            pairs.add(new BasicNameValuePair("id_cours", String.valueOf(idCoursInstant)));
+            String urlDuServeur = "https://saliferous-automobi.000webhostapp.com/api/v1/absences";
+            postRequest maRequete = new postRequest();
+            maRequete.sendRequest(urlDuServeur, pairs);
+            reponse = maRequete.getJsonArray();
             try {
-                URL url = new URL("https://saliferous-automobi.000webhostapp.com/api/v1/key?login=" + mLogin);
-                String api = get.getApi(url);
-                validerPresenceDebut(7, 1, api);
-            } catch (MalformedURLException e) {
+
+                for (int i=0; i<reponse.length(); i++ ){
+                    JSONObject jsonObject = reponse.getJSONObject(i);
+                    if(jsonObject.getLong("id")==id_individu){
+
+                        etudiantPresentDebut=true;
+                        i=reponse.length();
+                    }
+
+                }
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
+
+
+
 
             return null;
         }
     }
+
+
+
 
     private void onClickMenu(View mViewAc, View mViewAb, View mViewPa, View mViewPr, View mViewDe, final TextView toolbar, final long id_individu) {
 
@@ -400,6 +598,7 @@ public class MainActivity extends AppCompatActivity {
     public void loadEtudiantSettingsActivity(long id_individu) {
         Intent myintent = new Intent(this, EtudiantSettingsActivity.class);
         myintent.putExtra("id_individu", id_individu);
+        startActivity(myintent);
         finish();
     }
 
@@ -415,11 +614,11 @@ public class MainActivity extends AppCompatActivity {
         final Context context = this;
     }
 
-    public String validerPresenceDebut(long id_user, long id_cours, String api) {
+    public String validerPresenceDebut(long id_etudiant, long id_cours, String api) {
 
         String reponse = null;
         List pairs = new ArrayList();
-        pairs.add(new BasicNameValuePair("id_etudiant", String.valueOf(id_user)));
+        pairs.add(new BasicNameValuePair("id_etudiant", String.valueOf(id_etudiant)));
         pairs.add(new BasicNameValuePair("id_cours", String.valueOf(id_cours)));
         pairs.add(new BasicNameValuePair("api_key", api));
         String urlDuServeur = "https://saliferous-automobi.000webhostapp.com/api/v1/presenceEtudiant";
@@ -447,7 +646,7 @@ public class MainActivity extends AppCompatActivity {
         String mApi = null;
 
         List pairs = new ArrayList();
-        pairs.add(new BasicNameValuePair("login", "gestion@admin.fr"));
+        pairs.add(new BasicNameValuePair("login", "mathilda.thomas@epfedu.fr"));
         //pairs.add(new BasicNameValuePair("password","admiNEPF2017"));
         String urlDuServeur = "https://saliferous-automobi.000webhostapp.com/api/v1/key";
         postRequest Requete = new postRequest();

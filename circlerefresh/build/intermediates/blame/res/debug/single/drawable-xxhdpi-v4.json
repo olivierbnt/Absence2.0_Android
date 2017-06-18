@@ -8,12 +8,12 @@
         "source": "/Users/famille/.android/build-cache/685c36e6b38bed7c77af21beda21cb8fb9de77a9/output/res/drawable-xxhdpi-v4/abc_ic_menu_selectall_mtrl_alpha.png"
     },
     {
-        "merged": "/Users/famille/Documents/GitHub/Absence/circlerefresh/build/intermediates/res/merged/debug/drawable-xxhdpi-v4/abc_textfield_activated_mtrl_alpha.9.png",
-        "source": "/Users/famille/.android/build-cache/685c36e6b38bed7c77af21beda21cb8fb9de77a9/output/res/drawable-xxhdpi-v4/abc_textfield_activated_mtrl_alpha.9.png"
-    },
-    {
         "merged": "/Users/famille/Documents/GitHub/Absence/circlerefresh/build/intermediates/res/merged/debug/drawable-xxhdpi-v4/abc_list_pressed_holo_dark.9.png",
         "source": "/Users/famille/.android/build-cache/685c36e6b38bed7c77af21beda21cb8fb9de77a9/output/res/drawable-xxhdpi-v4/abc_list_pressed_holo_dark.9.png"
+    },
+    {
+        "merged": "/Users/famille/Documents/GitHub/Absence/circlerefresh/build/intermediates/res/merged/debug/drawable-xxhdpi-v4/abc_textfield_activated_mtrl_alpha.9.png",
+        "source": "/Users/famille/.android/build-cache/685c36e6b38bed7c77af21beda21cb8fb9de77a9/output/res/drawable-xxhdpi-v4/abc_textfield_activated_mtrl_alpha.9.png"
     },
     {
         "merged": "/Users/famille/Documents/GitHub/Absence/circlerefresh/build/intermediates/res/merged/debug/drawable-xxhdpi-v4/abc_btn_rating_star_on_mtrl_alpha.png",

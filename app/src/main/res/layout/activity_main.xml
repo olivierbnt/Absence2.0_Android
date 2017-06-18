@@ -191,7 +191,6 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/CoursActuel2"
                 android:layout_centerHorizontal="true"
-                android:text="12h-13h"
                 android:textColor="@color/text" />
 
         </RelativeLayout>

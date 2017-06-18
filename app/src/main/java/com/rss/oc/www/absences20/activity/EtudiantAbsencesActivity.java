@@ -53,7 +53,7 @@ public class EtudiantAbsencesActivity extends AppCompatActivity {
         View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null);
         root.addView(guillotineMenu);
         Intent intent = getIntent();
-        final long id_individu = intent.getLongExtra("id_individu", -1);
+        final long id_individu = 66;//intent.getLongExtra("id_individu", -1);
 
         ItemAccueil = guillotineMenu.findViewById(R.id.accueil_group);
         ItemAbsence = guillotineMenu.findViewById(R.id.absence_group);

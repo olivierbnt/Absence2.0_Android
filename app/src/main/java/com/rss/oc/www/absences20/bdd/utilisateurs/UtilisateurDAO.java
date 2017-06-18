@@ -154,6 +154,15 @@ public class UtilisateurDAO extends DAOBase {
         return id;
     }
 
+    public void modifierMDP(long id,String passWord){
+
+        String query = "UPDATE "+TABLE_NAME+" SET "+PASSWORD+" = "+passWord+" WHERE "+KEY+" = "+id;
+        openDBWrite();
+        mDb.execSQL(query);
+        close();
+
+    }
+
 
 
     public void supprimer(long id) {
@@ -170,7 +179,8 @@ public class UtilisateurDAO extends DAOBase {
 
 
     public void modifier(Utilisateurs u) {
-        // CODE
+
+
     }
 
 

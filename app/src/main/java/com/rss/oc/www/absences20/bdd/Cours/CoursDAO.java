@@ -499,12 +499,114 @@ public class CoursDAO extends DAOBase {
 
             }while (cursor.moveToNext());
         }
-
+        close();
 
         return list;
     }
 
-    private Boolean A_LHEURE (long idCoursInstant){
+    public ArrayList<String> getListCoursAvenir2 (String libelleGroupe){
+        ArrayList<String> list = new ArrayList<String>();
+
+        Calendar c = Calendar.getInstance(locale);
+        Date now = c.getTime();
+        Log.i("string",now.toString());
+        String mJour= "18";
+        String mMois= "06";
+        String mAnnee= "2017";
+        String resultat=null;
+        int j=0;
+
+        openDBRead();
+
+        Cursor cursor = mDb.rawQuery("select " +KEY+","+HEURE_DEBUT+","+HEURE_FIN+","+LIB_CLASSE+","+SALLE_NOM+","+JOUR+","+MOIS+","+ANNEE+","+GROUPE+ " from " + TABLE_NAME, null);
+
+
+        if (cursor.moveToNext()){
+            int indexId = cursor.getColumnIndex(KEY);
+            int indexGroupe = cursor.getColumnIndex(GROUPE);
+            int indexHeureDebut = cursor.getColumnIndex(HEURE_DEBUT);
+            int indexHeureFin = cursor.getColumnIndex(HEURE_FIN);
+            int indexSalleNom = cursor.getColumnIndex(SALLE_NOM);
+            int indexLibClasse = cursor.getColumnIndex(LIB_CLASSE);
+            int indexJour = cursor.getColumnIndex(JOUR);
+            int indexMois = cursor.getColumnIndex(MOIS);
+            int indexAnnee = cursor.getColumnIndex(ANNEE);
+
+            do{
+
+                String jourbis = cursor.getString(indexJour);
+                String groupe = cursor.getString(indexGroupe);
+                String moisbis = cursor.getString(indexMois);
+                String anneebis = cursor.getString(indexAnnee);
+                String heureDebut = cursor.getString(indexHeureDebut);
+                String heureFin = cursor.getString(indexHeureFin);
+                String dateDebut = chaineDate(heureDebut,jourbis,moisbis,anneebis);
+                String dateFin = chaineDate(heureFin,jourbis,moisbis,anneebis);
+                String lib = cursor.getString(indexLibClasse);
+                String salle = cursor.getString(indexSalleNom);
+                long id = cursor.getInt(indexId);
+
+
+                Log.i("DATE_DATE",jourbis+" "+moisbis+" "+anneebis+" "+groupe+" "+libelleGroupe+" "+libelleGroupe.indexOf(groupe)+" "+mJour+" "+mMois+" "+mAnnee);
+
+
+                if ((mJour.equals(jourbis)) && (mMois.equals(moisbis)) && (mAnnee.equals(anneebis)) && (libelleGroupe.indexOf(groupe)!=-1)){
+
+
+
+                    String pattern = "dd-MM-yyyy HH:mm:ss";
+                    SimpleDateFormat dt = new SimpleDateFormat(pattern);
+                    try {
+                        Date debut = dt.parse(dateDebut);
+                        Date instant = c.getTime();
+                        //Date instant=dt.parse("13-06-2017 11:30:00");
+                        Boolean valeur = isHour(dateDebut,dateFin);
+
+                        if(valeur==false){
+
+                            if(instant.compareTo(debut)>0){
+                                resultat = lib+"\n"+heureDebut.substring(0,5)+
+                                        "-"+heureFin.substring(0,5)+"\n"+
+                                        salle+"  Terminé";
+                                list.add(j,resultat);
+                                j++;
+                            }
+                        }
+                        else{
+
+                            resultat = lib+"\n"+heureDebut.substring(0,5)+
+                                    "-"+heureFin.substring(0,5)+"\n"+
+                                    salle+"   En cours";
+                            list.add(j,resultat);
+                            j++;
+                        }
+
+                        if (valeur==false&&instant.compareTo(debut)<=0){
+
+                            resultat = lib+"\n"+heureDebut.substring(0,5)+
+                                    "-"+heureFin.substring(0,5)+"\n"+
+                                    salle+"     A venir";
+                            list.add(j,resultat);
+                            j++;
+
+                        }
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+
+
+                }
+
+            }while (cursor.moveToNext());
+        }
+
+        close();
+        return list;
+    }
+
+    public Boolean A_LHEURE (long idCoursInstant){
         Boolean valeur = false;
         Calendar cProf = Calendar.getInstance();
         String heure = null;
@@ -551,7 +653,7 @@ public class CoursDAO extends DAOBase {
         return valeur;
     }
 
-    private Boolean EN_RETARD (long idCoursInstant){
+    public Boolean EN_RETARD (long idCoursInstant){
         Boolean valeur = false;
         Calendar cProf= Calendar.getInstance();
         String heureDebut =null;
@@ -600,7 +702,7 @@ public class CoursDAO extends DAOBase {
         return valeur;
     }
 
-    private Boolean A_LA_FIN (long idCoursInstant){
+    public Boolean A_LA_FIN (long idCoursInstant){
         Boolean valeur = false;
 
         String heureDebut =null;

@@ -58,7 +58,7 @@ public class EtudiantProfileActivity extends AppCompatActivity {
         TextView textPr = (TextView) findViewById(R.id.profile_group_text);
         textPr.setTextColor(getResources().getColor(R.color.selected_item_color));
         Intent intent = getIntent();
-        final long id_individu = intent.getLongExtra("id_individu", -1);
+        final long id_individu = 66;//intent.getLongExtra("id_individu", -1);
 
         IndividusDAO individusDAO = new IndividusDAO(context);
        // textAdresse.setText(individusDAO.getAdresseIndividu(id_individu));

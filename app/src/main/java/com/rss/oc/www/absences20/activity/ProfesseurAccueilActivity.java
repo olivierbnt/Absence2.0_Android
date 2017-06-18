@@ -64,8 +64,8 @@ public class ProfesseurAccueilActivity extends AppCompatActivity {
     ArrayList<String> listCoursJournee;
     private String nomGroupe;
     private ListAdapter adapter;
-    private long id_individu=-1;
-    private long idCoursInstant=-1;
+    private long id_individu;
+    private long idCoursInstant;
     private String login;
 
     private Context context = this;
@@ -134,30 +134,27 @@ public class ProfesseurAccueilActivity extends AppCompatActivity {
             String heureCours = coursDAO.getHeureCoursInstant(idCoursInstant);
             //String chaineDepart = coursDAO.getTempsRestant(idCoursInstant);
 
-            String[] values = new String[] { "Systeme et reseau CM - Amphi B 8h15-10h15", "Systeme et reseau TD - 3L 10h30-12h30", "Systeme et reseau TD - 3L 14h00-16h00",};
-
 
             TextView actuelCours = (TextView) findViewById(R.id.CoursActuel2);
             TextView actuelheureCours = (TextView) findViewById(R.id.Date);
             actuelheureCours.setText(heureCours);
             Log.i("chaine",chaine);
             actuelCours.setText(chaine);
-            Button bouttonDebutCours = (Button) findViewById(R.id.debutcours);
-            bouttonDebutCours.setOnClickListener( new View.OnClickListener() {
 
-                @Override
-                public void onClick(View v) {
-                    //Demand demand = new Demand();
-                   // demand.execute((Void) null);
-
-                }
-            });
-
-            adapter = new ArrayAdapter<String>(context, R.layout.row_prochians_cours, R.id.prochain_cours, values);
-            mListView.setAdapter(adapter);
 
 
         }
+
+        Button bouttonDebutCours = (Button) findViewById(R.id.debutcours);
+        bouttonDebutCours.setOnClickListener( new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Demand demand = new Demand();
+                demand.execute((Void) null);
+
+            }
+        });
 
 
 
@@ -169,6 +166,8 @@ public class ProfesseurAccueilActivity extends AppCompatActivity {
                 .build();
 
         onClickMenu(ItemAccueil, ItemAbsence, ItemParametres, ItemProfile, ItemDeconnection, toolbar, id_individu);
+
+
 
         // IndividusDAO individusDAO =new IndividusDAO(context);
         // individusDAO.validerPresenceDebut(7);
@@ -221,6 +220,33 @@ public class ProfesseurAccueilActivity extends AppCompatActivity {
 
         t2.start();*/
 
+        Thread t3 = new Thread(){
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                CoursDAO coursDAO = new CoursDAO(context);
+                                listCoursJournee = coursDAO.getListCoursAvenir2("TICA");
+                                adapter = new ArrayAdapter<String>(context, R.layout.row_prochians_cours, R.id.prochain_cours, listCoursJournee);
+                                mListView.setAdapter(adapter);
+
+
+                            }
+                        });
+                        Thread.sleep(10000);
+                    }
+                } catch (InterruptedException e) {
+
+                }
+            }
+        };
+        t3.start();
+
 
 
     }
@@ -232,10 +258,11 @@ public class ProfesseurAccueilActivity extends AppCompatActivity {
         protected Boolean doInBackground(Void... params) {
 
 
+            //getApi();
             List pairs = new ArrayList() ;
             pairs.add(new BasicNameValuePair("id_cours", String.valueOf(idCoursInstant)));
             pairs.add(new BasicNameValuePair("id_individu",String.valueOf(id_individu)));
-            pairs.add(new BasicNameValuePair("api_key","8d706470100238b2056a93baef452116"));
+            pairs.add(new BasicNameValuePair("api_key","7aa434ccbaefd931459abd17402d4c3d"));
             String urlDuServeur = "https://saliferous-automobi.000webhostapp.com/api/v1/presenceProfesseur";
             postRequest maRequete = new postRequest();
             maRequete.sendRequest(urlDuServeur, pairs);
@@ -253,12 +280,12 @@ public class ProfesseurAccueilActivity extends AppCompatActivity {
 
 
     private void toast1(){
-        Toast.makeText(context, "Echec de connexion",
+        Toast.makeText(getApplicationContext(), "Echec de connexion",
                 Toast.LENGTH_LONG).show();
     }
 
     private void toast2(){
-        Toast.makeText(context, "Le cours peut commencer !",
+        Toast.makeText(getApplicationContext(), "Le cours peut commencer !",
                 Toast.LENGTH_LONG).show();
     }
 
@@ -345,6 +372,7 @@ public class ProfesseurAccueilActivity extends AppCompatActivity {
     public void loadEtudiantSettingsActivity(long id_individu) {
         Intent myintent = new Intent(this, ProfesseurSettingsActivity.class);
         myintent.putExtra("id_individu", id_individu);
+        startActivity(myintent);
         finish();
     }
 
@@ -392,7 +420,7 @@ public class ProfesseurAccueilActivity extends AppCompatActivity {
         String mApi = null;
 
         List pairs = new ArrayList();
-        pairs.add(new BasicNameValuePair("login", "gestion@admin.fr"));
+        pairs.add(new BasicNameValuePair("login", "houpert.frederique@outlook.com"));
         //pairs.add(new BasicNameValuePair("password","admiNEPF2017"));
         String urlDuServeur = "https://saliferous-automobi.000webhostapp.com/api/v1/key";
         postRequest Requete = new postRequest();

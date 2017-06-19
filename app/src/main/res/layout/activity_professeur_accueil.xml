@@ -100,22 +100,32 @@ android:orientation="vertical">
                     android:id="@+id/texteinfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="27dp"
                     android:text="Une fois les étudiant installés, vous pouvez: "
                     android:layout_below="@+id/CoursActuel2"
                     android:layout_centerHorizontal="true" />
+
+                <TextView
+                    android:id="@+id/texteinfo2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:text="Le cours est lancé, votre présence est prise en compte, bon cours!"
+                    android:textAlignment="center"
+                    android:textSize="24sp"
+                    android:layout_below="@+id/texteinfo"
+                    android:layout_alignParentStart="true" />
 
                 <Button
                     android:id="@+id/debutcours"
                     android:layout_width="300dp"
                     android:layout_height="70dp"
-                    android:backgroundTint="@color/progress_start"
+                    android:background="@color/progress_start"
                     android:elevation="0dp"
                     android:text="Lancer le début du cours"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:layout_below="@+id/texteinfo"
+                    android:layout_below="@+id/texteinfo2"
                     android:layout_centerHorizontal="true" />
 
             </RelativeLayout>

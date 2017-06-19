@@ -103,8 +103,13 @@ public class ProfesseurAccueilActivity extends AppCompatActivity {
         TextView textAc = (TextView) findViewById(R.id.accueil_group_text);
         textAc.setTextColor(getResources().getColor(R.color.selected_item_color));
         mListView = (ListView) findViewById(R.id.liste_des_prochains_cours);
+        final TextView textinfo = (TextView) findViewById(R.id.texteinfo);
+        final TextView textinfo2 = (TextView) findViewById(R.id.texteinfo);
 
 
+
+
+        textinfo2.setVisibility(View.VISIBLE);
 
 
 
@@ -152,6 +157,9 @@ public class ProfesseurAccueilActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Demand demand = new Demand();
                 demand.execute((Void) null);
+                textinfo.setVisibility(View.INVISIBLE);
+                textinfo2.setVisibility(View.VISIBLE);
+
 
             }
         });

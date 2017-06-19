@@ -510,7 +510,7 @@ public class CoursDAO extends DAOBase {
         Calendar c = Calendar.getInstance(locale);
         Date now = c.getTime();
         Log.i("string",now.toString());
-        String mJour= "18";
+        String mJour= "19";
         String mMois= "06";
         String mAnnee= "2017";
         String resultat=null;

@@ -43,6 +43,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
     boolean dejaPresentEtudiant =false;
     boolean etudiantPresentDebut=false;
     boolean etudiantPresentFin=false;
+    private Date dateProf;
     ArrayList<String> listCoursJournee;
     private String nomGroupe;
     private ListAdapter adapter;
@@ -84,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
     private Context context = this;
     private int progressBarStatus = 0;
     private Handler progressBarHandler = new Handler();
+    public int inst=0;
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -232,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
 
                            }
                        });
-                       Thread.sleep(1000);
+                       Thread.sleep(10000);
                    }
                } catch (InterruptedException e) {
 
@@ -255,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
 
                             }
                         });
-                        Thread.sleep(10000);
+                        Thread.sleep(3000);
                     }
                 } catch (InterruptedException e) {
 
@@ -272,8 +275,8 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void run() {
 
-                               // SituationEtudiant situationEtudiant = new SituationEtudiant();
-                               // situationEtudiant.execute((Void)null);
+                                SituationEtudiant situationEtudiant = new SituationEtudiant();
+                                situationEtudiant.execute((Void)null);
                                 if(etudiantPresentDebut==true){
 
                                     aPresent.setVisibility(View.VISIBLE);
@@ -285,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
 
                             }
                         });
-                        Thread.sleep(10000);
+                        Thread.sleep(3000);
                     }
                 } catch (InterruptedException e) {
 
@@ -351,12 +354,20 @@ public class MainActivity extends AppCompatActivity {
 
                                     if (profPresent == true) {
 
+
                                         cadenasTexte.setVisibility(View.INVISIBLE);
                                         cadenasImage.setVisibility(View.INVISIBLE);
-                                        aAbsent.setVisibility(View.VISIBLE);
+                                         if(etudiantPresentDebut==true){
+                                             aPresent.setVisibility(View.VISIBLE);
+                                             aAbsent.setVisibility(View.INVISIBLE);
+                                             confirmation.setVisibility(View.VISIBLE);
+                                             raprochez.setVisibility(View.INVISIBLE);
+                                         }
+                                         else
+                                             aAbsent.setVisibility(View.VISIBLE);
 
 
-                                        if (nombreBeacons == 4) {
+                                        if (nombreBeacons != 4) {
                                             CoursDAO coursDAO = new CoursDAO(context);
 
                                             if (etudiantPresentFin==false){
@@ -394,6 +405,8 @@ public class MainActivity extends AppCompatActivity {
                                                         PresenceFin presenceFin = new PresenceFin();
                                                         presenceFin.execute((Void)null);
                                                         etudiantPresentFin=true;
+                                                        dPresent.setVisibility(View.VISIBLE);
+                                                        dAbsent.setVisibility(View.INVISIBLE);
                                                     }
 
                                                 }
@@ -413,7 +426,7 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             });
 
-                            Thread.sleep(10000);
+                            Thread.sleep(3000);
                         }
                     } catch (InterruptedException e) {
                     }
@@ -445,11 +458,12 @@ public class MainActivity extends AppCompatActivity {
             postRequest maRequete = new postRequest();
             maRequete.sendRequest(urlDuServeur, pairs);
             reponse = maRequete.getResultat();
-            if(reponse.equals(true)){
+            if(reponse.equals("true")){
                 profPresent = true;
             }
             else
                 Log.i("oooooooooo","ooooooooo");
+
             return null;
         }
     }
@@ -485,6 +499,7 @@ public class MainActivity extends AppCompatActivity {
         protected Boolean doInBackground(Void... params) {
 
             JSONArray reponse = null;
+            Boolean test = true;
             List pairs = new ArrayList();
             pairs.add(new BasicNameValuePair("id_cours", String.valueOf(idCoursInstant)));
             String urlDuServeur = "https://saliferous-automobi.000webhostapp.com/api/v1/absences";
@@ -495,16 +510,22 @@ public class MainActivity extends AppCompatActivity {
 
                 for (int i=0; i<reponse.length(); i++ ){
                     JSONObject jsonObject = reponse.getJSONObject(i);
-                    if(jsonObject.getLong("id")==id_individu){
+                    if(jsonObject.optLong("id_individu",-2)==id_individu){
 
-                        etudiantPresentDebut=true;
+                        test = false;
                         i=reponse.length();
                     }
 
                 }
+
+
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
+            if (test==true)
+                etudiantPresentDebut=true;
 
 
 

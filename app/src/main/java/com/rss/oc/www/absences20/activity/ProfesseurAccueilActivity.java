@@ -268,10 +268,7 @@ public class ProfesseurAccueilActivity extends AppCompatActivity {
             maRequete.sendRequest(urlDuServeur, pairs);
             String resultat = maRequete.getResultat();
 
-            if (resultat.equals(true))
-                toast2();
-            else
-                toast1();
+
 
 
             return null;

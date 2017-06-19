@@ -630,13 +630,17 @@ public class CoursDAO extends DAOBase {
                     heureDebut = cursor.getString(indexHeureDebut);
                     heureFin  = cursor.getString(indexHeureFin);
                     Calendar c = Calendar.getInstance();
-                    long heureInst = c.getTimeInMillis()/1000/60/60;
+                    Date dateInstant = c.getTime();
+                    long hi = Long.parseLong(dateInstant.toString().substring(11,13));
+                    long mi = Long.parseLong(dateInstant.toString().substring(14,16));
+                    long heureInst = hi*60 + mi;
+
                     long h = Long.parseLong(heureDebut.substring(0,2))*60;
                     long m = Long.parseLong(heureDebut.substring(3,5));
 
-                    long heureD = cProf.getTimeInMillis()/1000/60/60;
+                    long heureD = h+m;
 
-                    long heureRetard = cProf.getTimeInMillis()/1000/60/60 + 5;
+                    long heureRetard = heureD + 5;
 
 
                     if(heureInst<heureRetard&&heureInst>heureD)
@@ -725,13 +729,16 @@ public class CoursDAO extends DAOBase {
                     heureDebut = cursor.getString(indexHeureDebut);
                     heureFin  = cursor.getString(indexHeureFin);
                     Calendar c = Calendar.getInstance();
-                    long heureInst = c.getTimeInMillis()/1000/60/60;
+                    Date dateInstant = c.getTime();
+                    long hi = Long.parseLong(dateInstant.toString().substring(11,13));
+                    long mi = Long.parseLong(dateInstant.toString().substring(14,16));
+                    long heureInst = hi*60 + mi;
                     long h = Long.parseLong(heureFin.substring(0,2))*60;
                     long m = Long.parseLong(heureFin.substring(3,5));
 
                     long heureF = h+m;
 
-
+                   Log.i("hbdddddd", String.valueOf(heureInst));
 
                     if(heureInst<heureF+5&&heureInst>heureF-5)
                         valeur = true;

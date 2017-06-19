@@ -180,6 +180,7 @@
                 android:layout_above="@+id/Date"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
+                android:gravity="center"
                 android:text="Pas de cours pour l'instant"
                 android:textAlignment="center"
                 android:textColor="@color/text"

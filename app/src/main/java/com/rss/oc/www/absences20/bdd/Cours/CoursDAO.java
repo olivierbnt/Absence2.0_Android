@@ -653,7 +653,7 @@ public class CoursDAO extends DAOBase {
             }while (cursor.moveToNext());
         }
 
-
+         close();
         return valeur;
     }
 
@@ -675,27 +675,29 @@ public class CoursDAO extends DAOBase {
 
                 long id = cursor.getInt(indexId);
 
-                if(id==idCoursInstant){
+                if (id==idCoursInstant){
+
                     heureDebut = cursor.getString(indexHeureDebut);
                     heureFin  = cursor.getString(indexHeureFin);
                     Calendar c = Calendar.getInstance();
-                    long heureInst = c.getTimeInMillis()/1000/60/60;
+                    Date dateInstant = c.getTime();
+                    long hi = Long.parseLong(dateInstant.toString().substring(11,13));
+                    long mi = Long.parseLong(dateInstant.toString().substring(14,16));
+                    long heureInst = hi*60 + mi;
+
                     long h = Long.parseLong(heureDebut.substring(0,2))*60;
                     long m = Long.parseLong(heureDebut.substring(3,5));
 
-                    long heureD = cProf.getTimeInMillis()/1000/60/60;
+                    long heureD = h+m;
 
-                    long heureRetard = cProf.getTimeInMillis()/1000/60/60 + 5;
+                    long heureRetard = heureD + 5;
+                    long heureAbsence = heureD + 15;
 
-                    long heureAbsence = cProf.getTimeInMillis()/1000/60/60 + 15;
 
-
-                    if(heureInst<heureAbsence&&heureInst>heureRetard)
+                    if(heureInst>heureRetard&&heureInst<heureAbsence)
                         valeur = true;
 
-
                     cursor.moveToLast();
-
                 }
 
 

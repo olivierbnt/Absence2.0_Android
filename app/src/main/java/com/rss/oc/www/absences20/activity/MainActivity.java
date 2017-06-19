@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> listCoursJournee;
     private String nomGroupe;
     private ListAdapter adapter;
+    private Thread t;
 
     private long id_individu;
     private long idCoursInstant;
@@ -163,7 +164,6 @@ public class MainActivity extends AppCompatActivity {
                 .setClosedOnStart(true)
                 .build();
 
-        onClickMenu(ItemAccueil, ItemAbsence, ItemParametres, ItemProfile, ItemDeconnection, toolbar, id_individu);
 
         // IndividusDAO individusDAO =new IndividusDAO(context);
         // individusDAO.validerPresenceDebut(7);
@@ -247,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    while (profPresent==false) {
+                    while (!isInterrupted()) {
 
                         runOnUiThread(new Runnable() {
                             @Override
@@ -332,7 +332,7 @@ public class MainActivity extends AppCompatActivity {
             Log.i(TAG, "ArrayAdapterUpdate");
 
             //Nouveau thread pour la recuperation des beacons
-            Thread t = new Thread() {
+             t = new Thread() {
                 @Override
                 public void run() {
                     try {
@@ -351,7 +351,8 @@ public class MainActivity extends AppCompatActivity {
                                     progressBar.setProgressDrawable(getResources().getDrawable(my_progress));
 
 
-
+                                    Log.i("profPresent", String.valueOf(profPresent));
+                                    Log.i("etudiantPresenDebut", String.valueOf(etudiantPresentDebut));
                                     if (profPresent == true) {
 
 
@@ -419,6 +420,7 @@ public class MainActivity extends AppCompatActivity {
                                         }
                                     } else {
                                         aAbsent.setVisibility(View.INVISIBLE);
+                                        aPresent.setVisibility(View.INVISIBLE);
                                         cadenasTexte.setVisibility(View.VISIBLE);
                                         cadenasImage.setVisibility(View.VISIBLE);
 
@@ -438,6 +440,9 @@ public class MainActivity extends AppCompatActivity {
             // ... do some fun stuff
         }
 
+        onClickMenu(ItemAccueil, ItemAbsence, ItemParametres, ItemProfile, ItemDeconnection, toolbar, id_individu,t,t2,t3,t4,t5);
+
+
 
 
     }
@@ -452,7 +457,7 @@ public class MainActivity extends AppCompatActivity {
             String reponse = null;
             List pairs = new ArrayList();
             pairs.add(new BasicNameValuePair("id_cours", String.valueOf(idCoursInstant)));
-            pairs.add(new BasicNameValuePair("id_individu", String.valueOf(id_individu)));
+            pairs.add(new BasicNameValuePair("id_individu", String.valueOf(71)));
             //pairs.add(new BasicNameValuePair("api_key", api));
             String urlDuServeur = "https://saliferous-automobi.000webhostapp.com/api/v1/estPresentProfesseur";
             postRequest maRequete = new postRequest();
@@ -508,17 +513,18 @@ public class MainActivity extends AppCompatActivity {
             reponse = maRequete.getJsonArray();
             try {
 
-                for (int i=0; i<reponse.length(); i++ ){
-                    JSONObject jsonObject = reponse.getJSONObject(i);
-                    if(jsonObject.optLong("id_individu",-2)==id_individu){
+                if(reponse!=null){
 
-                        test = false;
-                        i=reponse.length();
+                    for (int i=0; i<reponse.length(); i++ ){
+                        JSONObject jsonObject = reponse.getJSONObject(i);
+                        if(jsonObject.optLong("id_individu",-2)==id_individu){
+
+                            test = false;
+                            i=reponse.length();
+                        }
+
                     }
-
                 }
-
-
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -537,7 +543,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private void onClickMenu(View mViewAc, View mViewAb, View mViewPa, View mViewPr, View mViewDe, final TextView toolbar, final long id_individu) {
+    private void onClickMenu(View mViewAc, View mViewAb, View mViewPa, View mViewPr, View mViewDe, final TextView toolbar, final long id_individu, final Thread t1, final Thread t2, final Thread t3, final Thread t4, final Thread t5) {
 
         mViewAb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -553,7 +559,7 @@ public class MainActivity extends AppCompatActivity {
                 textPr.setTextColor(getResources().getColor(R.color.white));
                 textDe.setTextColor(getResources().getColor(R.color.white));
                 textAb.setTextColor(getResources().getColor(R.color.selected_item_color));
-                loadEtudiantAbsencesActivity(id_individu);
+                loadEtudiantAbsencesActivity(id_individu,t1,t2,t3,t4,t5);
 
             }
         });
@@ -572,7 +578,7 @@ public class MainActivity extends AppCompatActivity {
                 textPr.setTextColor(getResources().getColor(R.color.selected_item_color));
                 textDe.setTextColor(getResources().getColor(R.color.white));
                 textAb.setTextColor(getResources().getColor(R.color.white));
-                loadEtudiantProfileActivity(id_individu);
+                loadEtudiantProfileActivity(id_individu,t1,t2,t3,t4,t5);
 
             }
         });
@@ -591,42 +597,63 @@ public class MainActivity extends AppCompatActivity {
                 textPr.setTextColor(getResources().getColor(R.color.white));
                 textDe.setTextColor(getResources().getColor(R.color.white));
                 textAb.setTextColor(getResources().getColor(R.color.white));
-                loadEtudiantSettingsActivity(id_individu);
+                loadEtudiantSettingsActivity(id_individu,t1,t2,t3,t4,t5);
             }
         });
         mViewDe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadLoginActivity(id_individu);
+                loadLoginActivity(id_individu,t1,t2,t3,t4,t5);
             }
         });
     }
 
-    public void loadEtudiantAbsencesActivity(long id_individu) {
+    public void loadEtudiantAbsencesActivity(long id_individu,Thread t1,Thread t2, Thread t3, Thread t4, Thread t5) {
         Intent myintent = new Intent(this, EtudiantAbsencesActivity.class);
         myintent.putExtra("id_individu", id_individu);
+        t1.interrupt();
+        t2.interrupt();
+        t3.interrupt();
+        t4.interrupt();
+        t5.interrupt();
         startActivity(myintent);
         finish();
+
     }
 
-    public void loadEtudiantProfileActivity(long id_individu) {
+    public void loadEtudiantProfileActivity(long id_individu,Thread t1,Thread t2, Thread t3, Thread t4, Thread t5) {
         Intent myintent = new Intent(this, EtudiantProfileActivity.class);
         myintent.putExtra("id_individu", id_individu);
         startActivity(myintent);
+        t1.interrupt();
+        t2.interrupt();
+        t3.interrupt();
+        t4.interrupt();
+        t5.interrupt();
         finish();
     }
 
-    public void loadEtudiantSettingsActivity(long id_individu) {
+    public void loadEtudiantSettingsActivity(long id_individu,Thread t1,Thread t2, Thread t3, Thread t4, Thread t5) {
         Intent myintent = new Intent(this, EtudiantSettingsActivity.class);
         myintent.putExtra("id_individu", id_individu);
         startActivity(myintent);
+        t1.interrupt();
+        t2.interrupt();
+        t3.interrupt();
+        t4.interrupt();
+        t5.interrupt();
         finish();
     }
 
-    public void loadLoginActivity(long id_individu) {
+    public void loadLoginActivity(long id_individu,Thread t1,Thread t2, Thread t3, Thread t4, Thread t5) {
         Intent myintent = new Intent(this, LoginActivity.class);
         myintent.putExtra("id_individu", id_individu);
         startActivity(myintent);
+        t1.interrupt();
+        t2.interrupt();
+        t3.interrupt();
+        t4.interrupt();
+        t5.interrupt();
         finish();
     }
 

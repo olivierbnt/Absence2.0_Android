@@ -27,15 +27,16 @@
         <activity android:name=".activity.LoginActivity"
             android:screenOrientation="portrait">
 
-
-
-        </activity>
-        <activity android:name=".activity.ChargementActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+        <activity android:name=".activity.ChargementActivity">
+
+
 
         </activity>
         <activity android:name=".activity.ProfesseurActivity"

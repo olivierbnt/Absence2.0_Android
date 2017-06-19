@@ -88,7 +88,7 @@ public class EtudiantSettingsActivity extends AppCompatActivity {
                 if(mdp1.equals(mdp2)){
 
                     UtilisateurDAO utilisateurDAO = new UtilisateurDAO(context);
-                    utilisateurDAO.modifierMDP(71,mdp1);
+                    utilisateurDAO.modifierMDP(96,mdp1);
 
                     Toast.makeText(getApplicationContext(), "La modification a été prise en compte",
                             Toast.LENGTH_LONG).show();
@@ -110,6 +110,7 @@ public class EtudiantSettingsActivity extends AppCompatActivity {
 
 
     }
+
 
     private void onClickMenu(View mViewAc, View mViewAb, View mViewPa, View mViewPr, View mViewDe, final TextView toolbar, final long id_individu){
 
@@ -205,6 +206,8 @@ public class EtudiantSettingsActivity extends AppCompatActivity {
         startActivity(myintent);
         finish();
     }
+
+
 
 
 }
